@@ -1,3 +1,5 @@
+set sqlformat
+set verify off
 set pagesize 1000
 set linesize 300
 col n format 99
@@ -29,9 +31,6 @@ event
 from gv$session s
 where 1=1
 and type = 'USER'
---and module not like 'sqlplus%'
---and event not like 'SQL*Net%'
 and status = 'ACTIVE'
-and username = 'SAPPD5'
 and module = '&1'
 order by s.logon_time;

@@ -1,14 +1,18 @@
 -- query para comparar o tempo de execucao das querys das sessoes ativas vs historico do AWR
+set sqlformat
 COL CN FOR 99999
+set pages 100
 set lines 1000
 col sql_text for a20
 col username for a15
-col "EXE_AVG" for 9999999999.00000
-col "CPU_AVG" for 9999999999.00000
-col "EXE_AVG_AWR" for 9999999999.0000000000
-col "X_VEZES" for 99999.000
+col EXE_AVG for 999,999,999.9999
+col CPU_AVG for 999,999,999.9999
+col EXE_AVG_AWR for 999,999,999.9999
+col X_VEZES for 999,999.99
 col X_VEZES for a50
- 
+
+spool compara_online.txt
+select to_char(sysdate,'dd/mm/yyyy hh24:mi:ss') as horario from dual; 
 select status, sql_id, min(exe_avg) exe_avg, min(cpu_avg) cpu_avg, phv, EXE_AVG_AWR, PHV_AWR,
 (case when PHV = PHV_AWR then 'PHV IGUAL' else 'PHV DIFERENTE' end) PHV_STATUS ,
 (case when status = 'PIOR' then to_char(min(exe_avg)/EXE_AVG_AWR,'999.99')||' x PIOR' else to_char(EXE_AVG_AWR/decode(min(exe_avg),0,1,min(exe_avg)),'999.99')||' x MELHOR' end) X_VEZES from
@@ -16,11 +20,11 @@ select status, sql_id, min(exe_avg) exe_avg, min(cpu_avg) cpu_avg, phv, EXE_AVG_
 select distinct vsql.executions,
 (case when decode(vsql.executions,0,0,vsql.elapsed_time/vsql.executions)/1000000 < SS.min_exe_avg then 'MELHOR' else 'PIOR' end) STATUS,
 vs.sql_id,
-decode(vsql.executions,0,0,vsql.elapsed_time/vsql.executions)/1000000 "EXE_AVG",
-decode(vsql.executions,0,0,vsql.cpu_time/vsql.executions)/1000000 "CPU_AVG",
+decode(vsql.executions,0,0,vsql.elapsed_time/vsql.executions)/1000000 EXE_AVG,
+decode(vsql.executions,0,0,vsql.cpu_time/vsql.executions)/1000000 CPU_AVG,
 vsql.plan_hash_value phv,
-SS.min_exe_avg "EXE_AVG_AWR",
-SS.PHV "PHV_AWR",
+SS.min_exe_avg EXE_AVG_AWR,
+SS.PHV PHV_AWR,
 vs.username,
 vs.sql_child_number CN
 /*vsql.executions,
@@ -45,10 +49,7 @@ where vs.sql_id = vsql.sql_id
 and vs.sql_child_number = vsql.child_number
 and vs.inst_id = vsql.inst_id
 and vs.sql_id = ss.sql_id
---and vs.module = 'SAPLZGCBMASS_RELAT_REGUA'
 and vs.type='USER'
-and vs.username='SAPPD5'
---and vs.module not like 'sqlplus%'
 and ss.rn = 1
 )
 group by status, sql_id, phv, EXE_AVG_AWR, PHV_AWR

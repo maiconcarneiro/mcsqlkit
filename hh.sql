@@ -1,30 +1,12 @@
-/*
-*
-*  Purpose    : Display Execution plan from AWR
-*  Parameters : 1 - SQL_ID
-*             : 2 - PLAN_HASH_VALUE (Use % for ALL)
-*/
 SET verify OFF
+SET feedback OFF
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY HH24:MI:SS';
+ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS';
+SET feedback ON
+
 VARIABLE sql_id VARCHAR2(13)
-VARIABLE plan_hash_value VARCHAR2(20)
-variable dbid       number;
-BEGIN
-   SELECT DISTINCT dbid
-              INTO :dbid
-              FROM gv$database;
-END;
-/
-BEGIN
-   :sql_id := '&&1';
-   :plan_hash_value := '%';
-   IF :plan_hash_value = '' OR :plan_hash_value IS NULL THEN
-      :plan_hash_value := '0';
-   END IF;
-   IF :plan_hash_value = '%' THEN
-          :plan_hash_value := NULL;
-   END IF;
-END;
-/
+DEF sql_id = '&&1';
+
 PROMPT
 PROMPT #################################################################
 PROMPT #       A L L    S Q L     P L A N   H A S H   V A L U E
@@ -32,20 +14,23 @@ PROMPT #################################################################
 COLUMN sql_id               HEADING "SQL_ID"                 FORMAT a13
 COLUMN plan_hash_value      HEADING "PLAN_HASH_VALUE"        FORMAT 9999999999999999
 COLUMN cost                 HEADING "Cost"                   FORMAT 9999999999
-COLUMN last_used            HEADING "Last_Used"               FORMAT a20
-COLUMN first_used           HEADING "First_Used"              FORMAT a20
-COLUMN first_parsed         HEADING "First_Parsed"            FORMAT a20
+COLUMN last_used            HEADING "Last_Used"              FORMAT a20
+COLUMN first_used           HEADING "First_Used"             FORMAT a20
+COLUMN first_parsed         HEADING "First_Parsed"           FORMAT a20
+COLUMN avg_et_secs          HEADING "AVG Secs"               FORMAT 999,999,999.999999
 set lin 1000
+set pages 50
 SELECT p.sql_id
      , p.plan_hash_value
      , p.cost
-     , to_char(MAX(s.end_interval_time) ,'DD-MON-YY HH24:MI:SS') last_used
-     , to_char(MIN(s.end_interval_time) ,'DD-MON-YY HH24:MI:SS') first_used
-     , to_char(MIN(p.timestamp) ,'DD-MON-YY HH24:MI:SS')         first_parsed
+     , MAX(s.end_interval_time)  last_used
+     , MIN(s.end_interval_time)  first_used
+     , MIN(p.timestamp)          first_parsed
+     , ROUND(SUM(ss.elapsed_time_total)/SUM(ss.executions_total) /1e6 ,4) avg_et_secs
   FROM gv$database d
-        , dba_hist_sql_plan p
+     , dba_hist_sql_plan p
      , dba_hist_sqlstat ss
-        , dba_hist_snapshot s
+     , dba_hist_snapshot s
 WHERE d.dbid = p.dbid
    AND p.dbid = ss.dbid (+)
    AND p.sql_id = ss.sql_id (+)
@@ -54,12 +39,12 @@ WHERE d.dbid = p.dbid
    AND ss.instance_number = s.instance_number (+)
    AND ss.snap_id = s.snap_id (+)
    AND p.id = 0 -- Top row which has cost as well
-   AND p.sql_id = :sql_id
+   AND p.sql_id = '&1'
 GROUP BY p.sql_id
        , p.plan_hash_value
-       , p.cost      
-ORDER BY MAX(s.end_interval_time) ASC
-/
+       , p.cost
+ORDER BY first_parsed;
+
 DEF sql_id = '&&1';
 PRO
 WITH

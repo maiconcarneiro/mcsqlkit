@@ -1,6 +1,7 @@
   set pagesize 5000
-  col x_melhor format 999.99
-  with atual as (
+  col x_melhor format 999999999999999.9999
+  set lines 400  
+with atual as (
      select sql_id, 
                phv , 
                min(exe_avg) min_exe_avg
@@ -12,7 +13,7 @@
             and ss.instance_number = s.instance_number
             and ss.snap_id = s.snap_id
             and ss.executions_delta > 0
-            and s.BEGIN_INTERVAL_TIME >= to_date('01/02/2022 00:00:00','dd/mm/yyyy hh24:mi:ss')
+            and s.BEGIN_INTERVAL_TIME >= to_date('18/09/2022 00:00:00','dd/mm/yyyy hh24:mi:ss')
         group by ss.sql_id, ss.plan_hash_value
         )
         group by sql_id, phv
@@ -39,7 +40,7 @@
             and ss.instance_number = s.instance_number
             and ss.snap_id = s.snap_id
             and ss.executions_delta > 0
-            and s.BEGIN_INTERVAL_TIME <= to_date('04/01/2022 00:00:00','dd/mm/yyyy hh24:mi:ss')
+            and s.BEGIN_INTERVAL_TIME <= to_date('17/09/2022 23:59:59','dd/mm/yyyy hh24:mi:ss')
         group by ss.sql_id, ss.plan_hash_value)
         group by sql_id, phv
      ) h on a.sql_id = h.sql_id and a.phv = h.phv
