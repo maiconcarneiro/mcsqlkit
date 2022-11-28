@@ -4,7 +4,7 @@ from v$session s
 where 1=1
 and s.type <>'BACKGROUND'
 and s.status = 'ACTIVE'
-and s.module='SAPLZGCT_EXTR_CYBER_CUSTCODE'
+and s.module='&1'
 group by s.sql_id
 order by 2 desc
 )

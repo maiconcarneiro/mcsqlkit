@@ -50,7 +50,6 @@ and vs.inst_id = vsql.inst_id
 and vs.sql_id = ss.sql_id
 and vs.module = '&1'
 and vs.type='USER'
---and vs.username='SAPPD5'
 --and vs.module not like 'sqlplus%'
 and ss.rn = 1
 )

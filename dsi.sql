@@ -1,4 +1,4 @@
-set sqlformat
+--set sqlformat
 SET VERIFY OFF
 SET PAGES 50
 SET LINES 400
@@ -12,8 +12,9 @@ col Disk_Reads     HEADING "(Disk Reads avg)"      format 999,999,999,999.99
 col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a20
+col inst_id        HEADING  "Node"                 format 999
 select sql_id, 
-	   plan_hash_value,
+	   plan_hash_value, inst_id,
        sum(executions) Execs,
        sum(buffer_gets)       / sum(case when executions = 0 then 1 else executions end) Buffer_Gets,
 	   sum(disk_reads)        / sum(case when executions = 0 then 1 else executions end) Disk_Reads,
@@ -22,5 +23,5 @@ select sql_id,
 	   sum(elapsed_time/1000) / sum(case when executions = 0 then 1 else executions end) Elapsed_Time
 from gv$sql
 where sql_id in ('&1')
-group by sql_id, plan_hash_value
-order by sql_id, plan_hash_value;
+group by sql_id, plan_hash_value, inst_id
+order by plan_hash_value, inst_id;
