@@ -1,5 +1,3 @@
-set sqlformat
-set verify off
 set pagesize 1000
 set linesize 300
 col n format 99
@@ -14,23 +12,27 @@ col last_time format a20
 col event format a40 trunc
 col snap format a12
 col module format a30 trunc
-select inst_id n, 
-sid, 
-serial#, 
-machine, 
-username,
+col child format 9999
+select s.inst_id n, 
+s.sid, 
+s.serial#, 
+--s.machine, 
+s.username,
 --osuser,
-module, 
+s.module, 
 --program, 
 --status, 
 '@n ' || sid as snap,
-sql_id,
+s.sql_id,
+sq.plan_hash_value,
+s.sql_child_number as child,
 --to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as last_time, 
-to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
+to_char(NVL(s.SQL_EXEC_START,s.PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
 event
 from gv$session s
+join gv$sql sq on s.inst_id = sq.inst_id and s.sql_id = sq.sql_id and s.sql_child_number = sq.child_number
 where 1=1
-and type = 'USER'
-and status = 'ACTIVE'
-and module = '&1'
+and s.type = 'USER'
+and s.status = 'ACTIVE'
+and s.sql_id = '&1'
 order by s.logon_time;
