@@ -9,12 +9,13 @@ COL USERNAME FORMAT A15
 COL SQL_ADDRESS FORMAT A20
 COL SQL_ID FORMAT A18
 SELECT DECODE(request, 0, 'Holder: ', 'Waiter: ') || gv$lock.sid sess,
+       gv$session.sid,
        gv$session.serial#,
        gv$session.status,
        gv$lock.INST_ID,
        gv$session.sql_id,
        --gv$session.username,
-       substr(machine,1,instr(machine,'.')-1) as machine,
+       --substr(machine,1,instr(machine,'.')-1) as machine,
        do.object_name as locked_object,
        id1,
        id2,

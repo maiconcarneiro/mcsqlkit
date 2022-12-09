@@ -79,7 +79,7 @@ with awr as (
  	  and sql_id in ('&1')
  	  and executions_delta > 0
  	  and (&3 = 0 or b.instance_number = &3)
- 	and b.begin_interval_time >= trunc(sysdate) - &2
+ 	  and b.begin_interval_time >= trunc(sysdate) - &2
  group by a.sql_id,
           a.snap_id,         
           trunc(b.begin_interval_time),

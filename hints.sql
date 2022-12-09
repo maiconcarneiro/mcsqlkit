@@ -8,7 +8,7 @@ select p.name, p.signature, p.category,
 from sqlobj$data sd, dba_sql_profiles p,
      table(xmlsequence(extract(xmltype(sd.comp_data),
                                '/outline_data/hint'))) t
-where sd.obj_type = 1
+where sd.	 = 1
 and p.signature = sd.signature
 and p.name like nvl('&1',name)
 )

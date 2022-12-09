@@ -25,6 +25,7 @@ ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD/MM/YYYY HH24:MI:SS';
 
 SELECT 
     node,
+	snap_id,
     begin_interval_time,
     sql_id,
     plan_hash_value,
@@ -73,5 +74,5 @@ WHERE sql_id = nvl('&&1', sql_id)
     AND ss.instance_number = s.instance_number
     AND executions_delta > 0
 )
-ORDER BY 1,2
+ORDER BY 2,1
 /

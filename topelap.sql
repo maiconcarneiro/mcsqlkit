@@ -3,7 +3,7 @@ set sqlformat
 set pages 50
 set head on
 column module format a20
-set lines 200
+set lines 400
 
 col elapsed heading "Elapsed Time(s)" format 999,999,999.99
 col cpu_time heading "CPU Time(s)" format 999,999,999.99
@@ -16,7 +16,7 @@ col cpu_avg heading "CPU avg (s)" format 999,999.99
 col buffer_gets_avg heading "Gets avg" format 999,999,999.99
 col top heading "Ranking" format 999
 col disk_read_avg heading "Disk Read avg" format 999,999,999.99
-
+col sql_text format a50
 -- obtem o nome da instancia
 column NODE new_value VNODE 
 SET termout off
@@ -56,8 +56,9 @@ select
 	 cpu_time,
 	 round(buffer_gets/executions,4) as buffer_gets_avg,
 	 round(disk_reads/executions,4) as disk_read_avg
+	 ,translate(sql_text, chr(10) || chr(13) || chr(09), ' ') as sql_text
 from (
-	select sql_id,     
+	select h.sql_id,     
 		   greatest(sum(executions_delta) ,1) as executions,
 		   sum(CPU_TIME_DELTA)/1e6     as cpu_time,
 		   sum(ELAPSED_TIME_DELTA)/1e6 as elapsed,
@@ -65,13 +66,15 @@ from (
 		   sum(iowait_delta)/1000000   as iowait,
 		   sum(BUFFER_GETS_DELTA)      as buffer_gets,
 		   sum(DISK_READS_DELTA)       as disk_reads
+		   , dbms_lob.substr(t.sql_text,50,1) as sql_text
 	  from dba_hist_sqlstat h
+ left join dba_hist_sqltext t on (h.dbid = t.dbid and h.sql_id = t.sql_id)
 	 where 1=1 
 	   and (&3 = 0 or h.instance_number = &3)
 	   and h.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
 	   and h.snap_id <= &2 
 	   and h.executions_delta > 0
-  group by sql_id
+  group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)
   order by elapsed desc
   )
 ) x where rownum <= 20
