@@ -2,8 +2,8 @@ VARIABLE v_rep CLOB
 
 BEGIN
   :v_rep := DBMS_XPLAN.COMPARE_PLANS( 
-    reference_plan    => awr_object('0rd8md03qz6np', null, null, 4181245179),
-    compare_plan_list => plan_object_list( awr_object('0rd8md03qz6np', null, null, 1702681034) ),
+    reference_plan    => awr_object('&1', null, null, &2),
+    compare_plan_list => plan_object_list( awr_object('&1', null, null, &2) ),
     type              => 'TEXT',
     level             => 'TYPICAL', 
     section           => 'ALL');

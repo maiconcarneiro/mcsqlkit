@@ -11,7 +11,7 @@ declare
 begin
   for i in listaCursores loop
     -- 11g
-	vJobName := '"PURGE_' || i.sql_id || '_' || i.hash_value || '_' || i.inst_id || '"';
+	vJobName := '"P_' || i.sql_id || '_' || i.hash_value || '_' || i.inst_id || '"';
     -- cria job com auto_drop para executar o comando de purge
     dbms_scheduler.create_job 
     (  

@@ -1,3 +1,8 @@
+/*
+ sid.sql -> @sid <SESSION ID> <INST_ID>
+ Maicon Carneiro - 26/02/2023
+*/
+
 set sqlformat
 set pagesize 1000
 set linesize 400
@@ -15,38 +20,20 @@ col snap format a12
 col module format a30 trunc
 col sql_id format a15
 col secs format 999,999,999.9999
-
--- obtem o nome da instancia
-column NODE new_value VNODE 
-SET termout off
-SELECT CASE WHEN &1 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&1 = 0 or inst_id = &3);
-SET termout ON
-
--- resumo do relatorio
-PROMP
-PROMP Metrica...: Sessoes Ativas na GV$SESSION
-PROMP Instance..: &VNODE
-PROMP
-
 select inst_id n, 
 sid, 
 serial#, 
 machine, 
 username,
---osuser,
 module, 
---program, 
---status, 
-'@n ' || sid as snap,
+status, 
 sql_id,
---to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as last_time, 
+to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as logon_time, 
 to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
 --(sysdate-SQL_EXEC_START)*24*60*60 secs,
 event
 from gv$session s
 where 1=1
-and type = 'USER'
-and status = 'ACTIVE'
-and module <> 'GoldenGate'
-and (&1 = 0 or inst_id = &1)
+and sid = &1
+and inst_id = &2
 order by s.logon_time;

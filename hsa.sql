@@ -20,6 +20,21 @@ ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY';
 set feedback on
 
+-- obtem o nome da instancia
+column NODE new_value VNODE 
+SET termout off
+SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SET termout ON
+
+-- resumo do relatorio
+PROMP
+PROMP Metrica...: Historico do SQL_ID por Snapshot
+PROMP SQL ID....: &1
+PROMP Qt. Dias..: &2
+PROMP Instance..: &VNODE
+PROMP
+
+
 select sql_id,
 plan_hash_value,
 a.snap_id,
@@ -37,6 +52,7 @@ join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.ins
 where 1=1
 and sql_id in ('&1')
 --and executions_delta > 0
-and b.begin_interval_time >= trunc(sysdate) - &2
+and b.begin_interval_time >= sysdate - &2
+and (&3 = 0 or b.instance_number = &3)
 group by sql_id, plan_hash_value, a.snap_id
 order by snap_id, plan_hash_value;

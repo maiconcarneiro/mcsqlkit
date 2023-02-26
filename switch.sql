@@ -23,7 +23,7 @@ col h20 format 999
 col h21 format 999
 col h22 format 999
 col h23 format 999
-SELECT TRUNC (first_time) "Date", inst_id, TO_CHAR (first_time, 'Dy') "Day",
+SELECT TRUNC (first_time) "Date", TO_CHAR (first_time, 'Dy') "Day",
  COUNT (1) "Total",
  SUM (DECODE (TO_CHAR (first_time, 'hh24'), '00', 1, 0)) "h0",
  SUM (DECODE (TO_CHAR (first_time, 'hh24'), '01', 1, 0)) "h1",
@@ -53,5 +53,5 @@ SELECT TRUNC (first_time) "Date", inst_id, TO_CHAR (first_time, 'Dy') "Day",
 FROM gv$log_history
 WHERE thread# = inst_id
 AND first_time > trunc(sysdate) - &1
-GROUP BY TRUNC (first_time), inst_id, TO_CHAR (first_time, 'Dy')
+GROUP BY TRUNC (first_time), TO_CHAR (first_time, 'Dy')
 ORDER BY 1,2;

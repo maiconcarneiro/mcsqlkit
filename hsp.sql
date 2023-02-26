@@ -18,6 +18,20 @@ col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed ms avg)"      format 999,999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a20
 
+-- obtem o nome da instancia
+column NODE new_value VNODE 
+SET termout off
+SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SET termout ON
+
+-- resumo do relatorio
+PROMP
+PROMP Metrica...: Historico do SQL_ID por Data e Plan Hash Value
+PROMP SQL ID....: &1
+PROMP Qt. Dias..: &2
+PROMP Instance..: &VNODE
+PROMP
+
 select sql_id, plan_hash_value,
 trunc(b.begin_interval_time) data,
 to_char(min(b.begin_interval_time),'hh24:mi:ss')    as menor,
@@ -32,7 +46,8 @@ from dba_hist_sqlstat a
 join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
 and sql_id in ('&1')
-and executions_delta > 0
+--and executions_delta > 0
 and b.begin_interval_time >= trunc(sysdate) - &2
+and (&3 = 0 or b.instance_number = &3)
 group by sql_id, trunc(b.begin_interval_time), plan_hash_value
 order by data, plan_hash_value;

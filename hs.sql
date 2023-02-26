@@ -52,7 +52,7 @@ select sql_id,
  join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
   and sql_id in ('&1')
-  and executions_delta > 0
+  --and executions_delta > 0
   and b.begin_interval_time >= trunc(sysdate) - &2
   and (&3 = 0 or b.instance_number = &3)
 group by sql_id, trunc(b.begin_interval_time)
