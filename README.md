@@ -1,3 +1,6 @@
+v6.7
+--------
+
 ce.sql -- Contagem de sessoes por evento     
 ch.sql -- Consulta CHILD de um SQL
 compara_geral.sql  -- Compara planos de execucao AWR atual vs AWR historico
