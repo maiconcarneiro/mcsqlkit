@@ -1,5 +1,3 @@
-v6.7
---------
 
 ce.sql -- Contagem de sessoes por evento     
 ch.sql -- Consulta CHILD de um SQL

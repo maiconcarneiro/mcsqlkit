@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 /*
 Maicon Carneiro 24/11/2022
 Script para executar o SQL Tune Advisor para um SQL ID automaticamente em Background pegando dados do AWR

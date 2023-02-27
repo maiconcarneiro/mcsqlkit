@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set feedback off
 set sqlformat 
 set pages 50

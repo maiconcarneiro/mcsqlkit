@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 /*
  Script para gerar uma matriz com a lista de SNAP ID do AWR do início de cada Hora do Dia
  Sintaxe: SQL>@snaps <Qtd. Dias>

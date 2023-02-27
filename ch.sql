@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set linesize 300
 col sql_id format a18
 col first_load_time format a20

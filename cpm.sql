@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 -- query para comparar o tempo de execucao das querys das sessoes ativas vs historico do AWR
 set verify off
 COL CN FOR 99999

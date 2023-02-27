@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set sqlformat
 set lines 400
 set pages 50

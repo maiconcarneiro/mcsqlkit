@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 /*
  getawr2.sql v1.0
  Script para gerar relatorio AWR do lado do Client (SQL*PLUS ou SQLcl) em modo silent

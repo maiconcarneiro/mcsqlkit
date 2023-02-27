@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set pagesize 1000
 set linesize 300
 col n format 99

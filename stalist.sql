@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set feedback off
 SET SQLFORMAT
 SET PAGES 50

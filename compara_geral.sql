@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
   set pagesize 5000
   col x_melhor format 999999999999999.9999
   set lines 400  

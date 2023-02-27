@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set sqlformat
 set pagesize 1000
 set linesize 400

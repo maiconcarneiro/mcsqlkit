@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 PROMP ******************************* SGA Advisor ******************************************************
 SET LINES 400
 SET PAGES 100

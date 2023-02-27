@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set pagesize 100
 col event format a50
 SELECT EVENT, COUNT(*) 

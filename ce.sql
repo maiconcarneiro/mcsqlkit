@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set lin 1000
 col event format a40 trunc
 select * from (

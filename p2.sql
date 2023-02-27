@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 SET LIN 1000
 SET PAGESIZE 10000
 SELECT * FROM table(DBMS_XPLAN.DISPLAY_CURSOR(SQL_ID=>'&1', CURSOR_CHILD_NO=>&2));

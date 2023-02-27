@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 SET LINES 400
 SET PAGES 100
 COL OWNER FORMAT A30

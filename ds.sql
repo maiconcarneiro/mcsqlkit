@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set sqlformat
 SET VERIFY OFF
 SET PAGES 50
