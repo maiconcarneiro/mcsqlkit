@@ -19,7 +19,7 @@ col secs format 999,999,999.9999
 -- obtem o nome da instancia
 column NODE new_value VNODE 
 SET termout off
-SELECT CASE WHEN &1 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&1 = 0 or inst_id = &3);
+SELECT CASE WHEN &1 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&1 = 0 or inst_id = &1);
 SET termout ON
 
 -- resumo do relatorio
