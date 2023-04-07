@@ -1,12 +1,11 @@
 /*
- Script para gerar uma matriz com a contagem de execucoes do SQL ID por dia e hora
- Sintaxe: SQL>@execs <SQL_ID> <Qtd. Dias> <Inst ID> <medida> (Onde Inst ID = 0 soma todas as instancias do cluster)
- "medida" pode ser ms para Milisegundos ou sec para segundos
+ Script para gerar uma matriz com o tempo medio de execucoes do SQL ID por dia e hora
+ Sintaxe: SQL>@elap <SQL_ID> <Qtd. Dias> <Inst ID> <medida> (Onde Inst ID = 0 soma todas as instancias do cluster)
+ "medida" pode ser 'ms' para Milisegundos, 'sec' para segundos ou 'min' para minutos
  Exemplo: SQL>@execs c3bpu9sapxhpw 10 1 ms
  
  Maicon Carneiro | Salvador-BA, 11/11/2022
 */
-
 set feedback off
 alter session set nls_date_format='dd/mm Dy';
 set sqlformat 
@@ -37,15 +36,12 @@ col h21 format 999.99
 col h22 format 999.99
 col h23 format 999.99
 set feedback ON
-
 -- obtem o nome da instancia
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
-
 DEFINE vMedida = "'&4'";
-
 -- resumo do relatorio
 PROMP
 PROMP Metrica...: Average Elapsed Time (&vMedida)
@@ -53,33 +49,32 @@ PROMP SQL ID....: &1
 PROMP Qt. Dias..: &2 
 PROMP Instance..: &VNODE
 PROMP
-
 -- query
 with awr as (
  select sql_id,
         snap_id,
         begin_snap,
         hora,
-        sum(elapsed_time)/greatest(sum(executions),1) as elapsed_time_avg		
+        sum(elapsed_time)/greatest(sum(executions),1) as elapsed_time_avg        
  from (
    select a.sql_id,
           a.snap_id,         
           trunc(b.begin_interval_time)           as begin_snap,
           to_char(b.begin_interval_time, 'hh24') as hora,
- 	      sum(executions_delta)                  as executions,
-		  sum(case when  &vMedida = 'ms'  then elapsed_time_delta/1000 
-		           when  &vMedida = 'sec' then elapsed_time_delta/1000000 
-			       when  &vMedida = 'min' then elapsed_time_delta/1000000/60
-			       else elapsed_time_delta
-		      end
-		    ) as elapsed_time
- 	 from dba_hist_sqlstat a
- 	 join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.dbid = b.dbid and a.instance_number = b.instance_number)
- 	where 1=1
- 	  and sql_id in ('&1')
- 	  and executions_delta > 0
- 	  and (&3 = 0 or b.instance_number = &3)
- 	  and b.begin_interval_time >= trunc(sysdate) - &2
+           sum(executions_delta)                  as executions,
+          sum(case when  &vMedida = 'ms'  then elapsed_time_delta/1000 
+                   when  &vMedida = 'sec' then elapsed_time_delta/1000000 
+                   when  &vMedida = 'min' then elapsed_time_delta/1000000/60
+                   else elapsed_time_delta
+              end
+            ) as elapsed_time
+      from dba_hist_sqlstat a
+      join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.dbid = b.dbid and a.instance_number = b.instance_number)
+     where 1=1
+       and sql_id in ('&1')
+       and executions_delta > 0
+       and (&3 = 0 or b.instance_number = &3)
+       and b.begin_interval_time >= trunc(sysdate) - &2
  group by a.sql_id,
           a.snap_id,         
           trunc(b.begin_interval_time),
