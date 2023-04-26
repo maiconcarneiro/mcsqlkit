@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set pages 999 lines 400
 col h0 format 999
 col h1 format 999

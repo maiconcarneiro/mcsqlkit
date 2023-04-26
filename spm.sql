@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 SET VERIFY OFF
 SET LINESIZE 400
 SET PAGESIZE 500

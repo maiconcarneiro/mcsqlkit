@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 /*
  sid.sql -> @sid <SESSION ID> <INST_ID>
  Maicon Carneiro - 26/02/2023

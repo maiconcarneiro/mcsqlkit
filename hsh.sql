@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
 SET VERIFY OFF
 SET PAGES 50

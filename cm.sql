@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 select * from (
 select s.sql_id, count(*) as qtde
 from v$session s

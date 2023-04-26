@@ -42,7 +42,6 @@ select sum(value_diff) as time_total from (
 group by instance_number, snap_id, value
  )
 )
-
 select rownum as top, 
        x.* 
 from (

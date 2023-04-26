@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 undefine sql_id
 clear breaks
 

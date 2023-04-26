@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 SET linesize 300
 SET pages 50
 COL diskgroup    HEADING "Diskgroup Name"   FORMAT a10

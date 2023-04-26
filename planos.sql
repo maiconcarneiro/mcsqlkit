@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 DEF SQL_ID=&1
 SET VERIFY OFF
 SET LINESIZE 400

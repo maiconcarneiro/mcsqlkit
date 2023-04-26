@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set heading off
 set verify off
 set lines 400

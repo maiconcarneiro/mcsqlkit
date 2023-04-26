@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 -- NAME: LFSDIAG.SQL
 -- ------------------------------------------------------------------------
 -- AUTHOR: Oracle Support Services

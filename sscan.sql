@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set sqlformat
 set verify off
 col mbytes format 999,999,999,999.99

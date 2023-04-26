@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set linesize 200
 col dbid format 99999999999999
 col snap_interval format a30

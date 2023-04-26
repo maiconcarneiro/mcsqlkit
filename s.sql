@@ -1,4 +1,5 @@
 set sqlformat
+set verify off
 set pagesize 1000
 set linesize 400
 col n format 99

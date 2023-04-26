@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 set verify off
 set lines 400
 set pages 100

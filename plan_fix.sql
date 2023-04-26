@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
 DECLARE
  vSnapMin number ;           
  vSQL_ID varchar2(200) := '';

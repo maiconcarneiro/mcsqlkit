@@ -1,3 +1,4 @@
+-- Author: Maicon Carneiro (dibiei.com)
   SET LIN 1000
   COL INDEX_NAME FORMAT A40
   COL LAST_ANALYZED FORMAT A20
