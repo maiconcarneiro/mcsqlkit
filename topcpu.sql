@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set feedback off
 set sqlformat 
 set pages 50
@@ -45,7 +44,6 @@ select sum(cputime) as cpu_time_total from (
 group by instance_number, snap_id, value
  )
 )
-
 select rownum as top, 
        x.* 
 from (

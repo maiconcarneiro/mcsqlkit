@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set verify off
 set pagesize 1000
 set linesize 300

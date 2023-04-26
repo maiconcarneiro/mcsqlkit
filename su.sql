@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set sqlformat
 set pagesize 1000
 set linesize 400
@@ -34,14 +33,7 @@ event
 from gv$session s
 where 1=1
 and type = 'USER'
---and module not like 'sqlplus%'
---and event not like 'SQL*Net%'
 and status = 'ACTIVE'
---and sql_id not in ('44r41gfztjgw6')
 and module <> 'GoldenGate'
 and username = '&1'
-and machine like '&2%'
---and machine like '%sqlplus%'
---and username not IN ('SYS','PUBLIC')
---and sql_id='42j3td55kgj61'
 order by s.logon_time;
