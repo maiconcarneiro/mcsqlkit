@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 
 set feedback off
 set heading off

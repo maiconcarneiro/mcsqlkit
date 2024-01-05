@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 ----------------------------------------------------------------------------------------
 --
 -- File name:   profile_hints.sql

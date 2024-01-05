@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set verify off
 set feedback off
 alter session set nls_date_format='dd/mm/yyyy';

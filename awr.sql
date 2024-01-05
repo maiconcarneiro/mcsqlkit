@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 --set sqlformat ansiconsole
 set pagesize 9
 set feedback off

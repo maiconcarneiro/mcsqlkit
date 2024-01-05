@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 
 set sqlformat
 set verify off
@@ -12,6 +11,8 @@ col start_time format a20
 col end_time format a20
 col output_gbytes for 9,999,999 heading "OUTPUT|GBYTES"
 col input_gbytes for 9,999,999 heading "INPUT|GBYTES"
+col compression_ratio for 99.99 heading "Compression|Ratio"
+COL COMMAND_ID FORMAT a40
 alter session set NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS';
 select
 SESSION_RECID,
@@ -22,7 +23,9 @@ to_char(END_TIME,'dd/mm/yyyy hh24:mi')   end_time,
 elapsed_seconds/3600 as hrs,
 elapsed_seconds/60 as minutes,
 (input_bytes/1024/1024/1024) input_gbytes,
-(output_bytes/1024/1024/1024) output_gbytes
+(output_bytes/1024/1024/1024) output_gbytes,
+compression_ratio,
+COMMAND_ID
 from V$RMAN_BACKUP_JOB_DETAILS
 where START_TIME >= trunc(sysdate) - &2
 and INPUT_TYPE like upper('%&1%')

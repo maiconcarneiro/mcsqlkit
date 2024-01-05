@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SELECT
     s.sid,
     s.serial#,

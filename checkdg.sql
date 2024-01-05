@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET FEEDBACK OFF
 
 PROMPT

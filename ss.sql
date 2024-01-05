@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set pagesize 1000
 set linesize 300
 col n format 99
@@ -21,13 +20,11 @@ s.machine,
 s.username,
 osuser,
 s.module, 
---program, 
---status, 
-s.sql_id,
 sq.plan_hash_value,
 s.sql_child_number as child,
---to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as last_time, 
-to_char(NVL(s.SQL_EXEC_START,s.PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
+to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as logon_time, 
+--to_char(NVL(s.SQL_EXEC_START,s.PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
+to_char(s.SQL_EXEC_START,'dd/mm/yyyy hh24:mi:ss') as last_time, 
 event
 from gv$session s
 join gv$sql sq on s.inst_id = sq.inst_id and s.sql_id = sq.sql_id and s.sql_child_number = sq.child_number

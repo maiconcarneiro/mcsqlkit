@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
  Script para gerar uma matriz com a contagem de execucoes do SQL ID por dia e hora
  Sintaxe: SQL>@execs <SQL_ID> <Qtd. Dias> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)

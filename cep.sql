@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set verify off
 set lin 1000
 col event format a40 trunc

@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET VERIFY OFF
 SET PAGES 50
 SET LINES 400

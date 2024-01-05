@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 -- query para comparar o tempo de execucao das querys das sessoes ativas vs historico do AWR
 set verify off
 COL CN FOR 99999
@@ -51,6 +50,7 @@ and vs.inst_id = vsql.inst_id
 and vs.sql_id = ss.sql_id
 and vs.module = '&1'
 and vs.type='USER'
+--and vs.username='SIEBEL'
 --and vs.module not like 'sqlplus%'
 and ss.rn = 1
 )

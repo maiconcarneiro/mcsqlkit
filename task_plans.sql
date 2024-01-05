@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set lines 400
 set pages 1000
 col exec_name  format a15

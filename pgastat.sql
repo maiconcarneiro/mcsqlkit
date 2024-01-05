@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET SQLFORMAT
 SET LINES 400
 SET FEEDBACK OFF 

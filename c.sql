@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 select * from (
 select nvl(s.sql_id, s.prev_sql_id) as sql_id, count(*) as qtde
 from gv$session s

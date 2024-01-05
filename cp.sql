@@ -1,5 +1,5 @@
 -- query para comparar o tempo de execucao das querys das sessoes ativas vs historico do AWR
-set sqlformat
+--set sqlformat
 COL CN FOR 99999
 set pages 100
 set lines 1000
@@ -49,7 +49,10 @@ where vs.sql_id = vsql.sql_id
 and vs.sql_child_number = vsql.child_number
 and vs.inst_id = vsql.inst_id
 and vs.sql_id = ss.sql_id
+--and vs.module = 'SAPLZGCBMASS_RELAT_REGUA'
 and vs.type='USER'
+--and vs.username='SIEBEL'
+--and vs.module not like 'sqlplus%'
 and ss.rn = 1
 )
 group by status, sql_id, phv, EXE_AVG_AWR, PHV_AWR

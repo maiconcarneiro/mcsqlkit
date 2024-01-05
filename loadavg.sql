@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET SQLFORMAT 
 SET FEEDBACK OFF
 SET VERIFY OFF

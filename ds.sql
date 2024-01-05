@@ -1,6 +1,15 @@
--- Author: Maicon Carneiro (dibiei.com)
-set sqlformat
+-- resumo do relatorio
+PROMP
+PROMP Metrica...: Estatisticas da GV$SQL
+PROMP SQL ID....: &1
+PROMP
+
+SET TERMOUT OFF;
 SET VERIFY OFF
+set sqlformat
+SET TERMOUT ON;
+
+
 SET PAGES 50
 SET LINES 400
 col Data           HEADING "Data"                  format a10

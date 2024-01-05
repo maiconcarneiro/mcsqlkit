@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set verify off
 set lines 400
 col servidor format a30

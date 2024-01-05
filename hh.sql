@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET verify OFF
 SET feedback OFF
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY HH24:MI:SS';

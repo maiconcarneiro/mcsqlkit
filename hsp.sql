@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET FEEDBACK OFF
 SET SQLFORMAT
 ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';

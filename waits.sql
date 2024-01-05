@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
  Script para gerar uma matriz com a contagem de waits de um evento de espera
  Sintaxe: SQL>@waits <dias> '<nome do evento>'

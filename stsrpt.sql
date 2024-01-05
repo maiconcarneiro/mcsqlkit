@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set long 10000000;
 set longchunksize 1000
 set pagesize 10000

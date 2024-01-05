@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set linesize 400
 set pages 100
 col inst_id format 99

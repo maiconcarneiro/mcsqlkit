@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set lines 400
 set pages 100
 COL NAME FORMAT A30

@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 VARIABLE v_rep CLOB
 
 BEGIN

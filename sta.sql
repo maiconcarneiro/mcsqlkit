@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
 Maicon Carneiro 04/11/2022
 Script para executar o SQL Tune Advisor para um SQL ID automaticamente em Background
@@ -10,7 +9,7 @@ stmt_task VARCHAR2(40);
 stmt_sqlid VARCHAR2(40) := '&1';
 vJobName VARCHAR2(100);
 begin 
- stmt_task := dbms_sqltune.create_tuning_task(sql_id => stmt_sqlid);
+ stmt_task := dbms_sqltune.create_tuning_task(sql_id => stmt_sqlid,  time_limit => 86400);
  vJobName := 'STA_' || stmt_task || '_' || stmt_sqlid;
  
    dbms_scheduler.create_job 

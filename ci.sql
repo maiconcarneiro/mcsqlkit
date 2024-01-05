@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 set lin 1000
 col inst_id format 99
 col qtde format 999,999,999s

@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
 
  getawr.sql v1.0

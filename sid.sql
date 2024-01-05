@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
  sid.sql -> @sid <SESSION ID> <INST_ID>
  Maicon Carneiro - 26/02/2023
@@ -21,7 +20,9 @@ col snap format a12
 col module format a30 trunc
 col sql_id format a15
 col secs format 999,999,999.9999
-select inst_id n, 
+
+select sid, serial#, 
+inst_id n, 
 sid, 
 serial#, 
 machine, 
@@ -38,3 +39,5 @@ where 1=1
 and sid = &1
 and inst_id = &2
 order by s.logon_time;
+
+select blocking_session, blocking_instance from gv$session where sid = &1 and inst_id = &2;

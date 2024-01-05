@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 /*
  Script para gerar uma matriz com o Load Average da CPU do DB Node (capturado pelo AWR)
  Sintaxe: SQL>@load <Qtd. Dias> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)

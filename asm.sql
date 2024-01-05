@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 SET SQLFORMAT
 COL NAME HEADING "Disksgroup"
 COL TYPE HEADING "Redundancy"

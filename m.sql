@@ -1,4 +1,3 @@
--- Author: Maicon Carneiro (dibiei.com)
 select module, count(*) as qtde
 from v$session s
 where 1=1
