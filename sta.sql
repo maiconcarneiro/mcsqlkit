@@ -3,6 +3,7 @@ Maicon Carneiro 04/11/2022
 Script para executar o SQL Tune Advisor para um SQL ID automaticamente em Background
 Exemplo: SQL> @sta <SQL_ID>
 */
+PROMP
 SET SERVEROUTPUT ON;
 declare
 stmt_task VARCHAR2(40);

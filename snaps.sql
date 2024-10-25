@@ -38,11 +38,16 @@ col h22 format 999999
 col h23 format 999999
 set feedback ON
 
+column NODE new_value VNODE 
+SET termout off
+SELECT sys_context('USERENV','CON_NAME') as node FROM dual;
+SET termout ON
+
 -- resumo do relatorio
 PROMP
 PROMP Metrica...: Snap ID do AWR
 PROMP Qt. Dias..: &1
-
+PROMP Con. Name.: &VNODE 
 
 -- query
 with awr as (

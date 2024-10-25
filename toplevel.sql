@@ -1,3 +1,8 @@
+/*
+ Consulta os SQL ID de queries executados pelo SQL_ID de um PLSQL
+ Rodrigo Gonçalves
+*/
+
 SELECT * FROM (
 SELECT sql_id, count(*) 
 FROM GV$ACTIVE_SESSION_HISTORY 

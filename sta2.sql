@@ -11,7 +11,7 @@ stmt_sqlid VARCHAR2(40) := '&1';
 vJobName VARCHAR2(100);
 begin 
  stmt_task := dbms_sqltune.create_tuning_task(begin_snap => &2, end_snap=> &3, sql_id => stmt_sqlid, time_limit => 86400);
- vJobName := 'STA_' || stmt_task || '_' || stmt_sqlid || '_awr';
+ vJobName := 'STA_' || stmt_task || '_' || stmt_sqlid;
  
    dbms_scheduler.create_job 
    (  

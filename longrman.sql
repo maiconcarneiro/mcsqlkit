@@ -27,5 +27,4 @@ where l.inst_id = s.inst_id
 and l.time_remaining > 0
 and param.name = 'db_block_size'
 and l.message like 'RMAN%'
---and s.machine = 'ocilnx0304.internal.timbrasil.com.br'
 order by 1, 9;

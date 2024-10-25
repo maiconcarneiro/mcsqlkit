@@ -6,6 +6,7 @@ SET PAGES 50
 SET LINES 400
 SET FEEDBACK ON
 
+col con_id         HEADING "Con|ID"                format 99
 col Data           HEADING "Data"                  format a10
 col menor          HEADING "Min"                   format a10
 col maior          HEADING "Max"                   format a10
@@ -32,7 +33,7 @@ PROMP Qt. Dias..: &2
 PROMP Instance..: &VNODE
 PROMP
 
-select sql_id, plan_hash_value,
+select a.con_id, sql_id, plan_hash_value,
 trunc(b.begin_interval_time) data,
 to_char(min(b.begin_interval_time),'hh24:mi:ss')    as menor,
 to_char(max(b.end_interval_time),'hh24:mi:ss')      as maior,
@@ -43,11 +44,11 @@ sum(rows_processed_delta)    / greatest(sum(executions_delta),1) as rows_process
 sum(cpu_time_delta/1000)     / greatest(sum(executions_delta),1) as CPU_Time,
 sum(elapsed_time_delta/1000) / greatest(sum(executions_delta),1) as Elapsed_Time
 from dba_hist_sqlstat a
-join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.instance_number)
+join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.instance_number and a.con_id=b.con_id)
 where 1=1
 and sql_id in ('&1')
 --and executions_delta > 0
 and b.begin_interval_time >= trunc(sysdate) - &2
 and (&3 = 0 or b.instance_number = &3)
-group by sql_id, trunc(b.begin_interval_time), plan_hash_value
+group by a.con_id, sql_id, trunc(b.begin_interval_time), plan_hash_value
 order by data, plan_hash_value;

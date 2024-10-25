@@ -1,3 +1,6 @@
+-- 30/12/2023 - Maicon Carneiro - Criação do Script para exibir o TOP 20 eventos do AWR
+-- 25/04/2024 - Maicon Carneiro - Correção do calculo de "% of Total" e ajuste do begin_snap_id
+
 set sqlformat
 set pagesize 40
 set feedback off
@@ -10,7 +13,7 @@ col total_waits heading "Waits" format 999,999,999,999,999
 col event_name heading "Event Name" format a60
 
 with time_model as (
-select sum(value_diff) as time_total from (
+select sum(value_diff)/1000000 as time_total from (
   select m.snap_id, 
          (value - LAG(value, 1, value) OVER (PARTITION BY instance_number ORDER BY snap_id)) AS value_diff
     from dba_hist_sys_time_model m
@@ -25,7 +28,7 @@ select rownum as top,
 from (
 select
   event_name,
-  wait_class,
+  nvl(wait_class,'DB CPU') AS wait_class,
   sum(total_waits) total_waits,
   sum(time_waited) time_waited,
   round( sum(time_waited)/(select time_total from time_model) * 100 ,2) as perc_total
@@ -54,15 +57,15 @@ from (
       where stats.instance_number=s.instance_number
        and stats.snap_id=s.snap_id
        and stats.dbid=s.dbid
-       and s.dbid=(select dbid from v$database)
+       --and s.dbid=(select dbid from v$database)
        and (&3 = 0 or s.instance_number = &3)
-       and s.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
+       and s.snap_id >=  &1 -- O TOP 10 Wait Event no AWR em HTML considera o snapshot inicial (diferente do TOP SQL)
        and s.snap_id <= &2 
     ) 
   where snap_id > min_snap_id 
     and nvl(total_waits,1) > 0
 	and event_name!='DB time' 
-group by event_name, wait_class
+group by event_name, nvl(wait_class,'DB CPU')
 order by time_waited desc
 ) x
 where rownum <= 20

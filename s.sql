@@ -34,13 +34,8 @@ sid,
 serial#, 
 machine, 
 username,
---osuser,
 module, 
---program, 
---status, 
---'@n ' || sid as snap,
 sql_id,
---to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as last_time, 
 to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/Mon hh24:mi:ss') as last_time, 
 (sysdate-SQL_EXEC_START)*24*60*60 secs,
 event
@@ -48,6 +43,6 @@ from gv$session s
 where 1=1
 and type = 'USER'
 and status = 'ACTIVE'
-and module <> 'GoldenGate'
+--and module <> 'GoldenGate'
 and (&1 = 0 or inst_id = &1)
 order by s.logon_time;

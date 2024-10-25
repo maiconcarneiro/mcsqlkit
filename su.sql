@@ -1,3 +1,4 @@
+set verify off
 set sqlformat
 set pagesize 1000
 set linesize 400
@@ -15,12 +16,16 @@ col snap format a12
 col module format a30 trunc
 col sql_id format a15
 col secs format 999,999,999.9999
+
+PROMP ======================
+PROMP USERNAME: &1
+
 select inst_id n, 
 sid, 
 serial#, 
 machine, 
-username,
---osuser,
+--username,
+osuser,
 module, 
 --program, 
 --status, 
@@ -34,6 +39,5 @@ from gv$session s
 where 1=1
 and type = 'USER'
 and status = 'ACTIVE'
-and module <> 'GoldenGate'
-and username = '&1'
+and username = upper('&1')
 order by s.logon_time;

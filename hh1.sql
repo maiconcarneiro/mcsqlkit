@@ -26,7 +26,7 @@ SELECT p.sql_id
      , MAX(s.end_interval_time)  last_used
      , MIN(s.end_interval_time)  first_used
      , MIN(p.timestamp)          first_parsed
-     , ROUND(SUM(ss.elapsed_time_total)/SUM(ss.executions_total) /1e6 ,4) avg_et_secs
+     , ROUND(SUM(ss.elapsed_time_total/1e6)/ decode(SUM(ss.executions_total /1e6),0,1,1) ,4) avg_et_secs
   FROM gv$database d
      , dba_hist_sql_plan p
      , dba_hist_sqlstat ss

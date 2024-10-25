@@ -11,37 +11,40 @@ alter session set nls_date_format='dd/mm Dy';
 set sqlformat
 set pages 999 lines 400
 col snap_date heading "Date" format a10
-col h0  format 999.999
-col h1  format 999.999
-col h2  format 999.999
-col h3  format 999.999
-col h4  format 999.999
-col h5  format 999.999
-col h6  format 999.999
-col h7  format 999.999
-col h8  format 999.999
-col h9  format 999.999
-col h10 format 999.999
-col h11 format 999.999
-col h12 format 999.999
-col h13 format 999.999
-col h14 format 999.999
-col h15 format 999.999
-col h16 format 999.999
-col h17 format 999.999
-col h18 format 999.999
-col h19 format 999.999
-col h20 format 999.999
-col h21 format 999.999
-col h22 format 999.999
-col h23 format 999.999
+define COL_NUM_FORMAT='999.99' -- define the format used in numeric columns
+col h0  format &&COL_NUM_FORMAT
+col h1  format &&COL_NUM_FORMAT
+col h2  format &&COL_NUM_FORMAT
+col h3  format &&COL_NUM_FORMAT
+col h4  format &&COL_NUM_FORMAT
+col h5  format &&COL_NUM_FORMAT
+col h6  format &&COL_NUM_FORMAT
+col h7  format &&COL_NUM_FORMAT
+col h8  format &&COL_NUM_FORMAT
+col h9  format &&COL_NUM_FORMAT
+col h10 format &&COL_NUM_FORMAT
+col h11 format &&COL_NUM_FORMAT
+col h12 format &&COL_NUM_FORMAT
+col h13 format &&COL_NUM_FORMAT
+col h14 format &&COL_NUM_FORMAT
+col h15 format &&COL_NUM_FORMAT
+col h16 format &&COL_NUM_FORMAT
+col h17 format &&COL_NUM_FORMAT
+col h18 format &&COL_NUM_FORMAT
+col h19 format &&COL_NUM_FORMAT
+col h20 format &&COL_NUM_FORMAT
+col h21 format &&COL_NUM_FORMAT
+col h22 format &&COL_NUM_FORMAT
+col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
 
 -- obtem o nome da instancia
 column NODE new_value VNODE 
+column CNAME new_value VCNAME 
 SET termout off
-SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
 -- resumo do relatorio
@@ -50,6 +53,7 @@ PROMP Metrica...: Wait AVG Time (ms)
 PROMP Evento....: &1
 PROMP Qt. Dias..: &2 
 PROMP Instance..: &VNODE
+PROMP Con. Name.: &VCNAME
 PROMP
 
 --PROMP Valoes sao exibidos em multiplos de 1.000 (Ex: 10 = 10.000 / 100 = 100.000 / 1.000 = 1.000.000)
@@ -78,7 +82,7 @@ from (
    where stats.instance_number=s.instance_number
      and stats.snap_id=s.snap_id
      and stats.dbid=s.dbid
-     and s.dbid=(select dbid from v$database)
+     --and s.dbid=(select dbid from v$database) /* removido para CDB */
      and s.begin_interval_time >= trunc(sysdate) - &2
      and (&3 = 0 or s.instance_number = &3) 
 order by snap_id

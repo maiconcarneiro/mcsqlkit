@@ -13,8 +13,10 @@ col avg_time_ms heading "Avg time (ms)"     format 999,999,999,999.99
 
 -- obtem o nome da instancia
 column NODE new_value VNODE 
+column CNAME new_value VCNAME 
 SET termout off
-SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
 -- resumo do relatorio
@@ -23,6 +25,7 @@ PROMP Metrica...: Event Wait AVG Time (ms) per snapshot
 PROMP Evento....: &1
 PROMP Qt. Horas.: &2 
 PROMP Instance..: &VNODE
+PROMP Con. Name.: &VCNAME
 PROMP
 
 select

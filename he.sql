@@ -12,6 +12,25 @@ col total_waits heading "Waits"   format 999,999,999,999
 col min_wait_ms heading "Min Time (ms)" format 999,999.9999
 col max_wait_ms heading "Max Time (ms)" format 999,999,999.9999
 
+-- obtem o nome da instancia
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
+
+-- resumo do relatorio
+PROMP
+PROMP Metrica...: Historico do Wait Event por dia
+PROMP Event.....: &1
+PROMP Qt. Dias..: &2
+PROMP Instance..: &VNODE
+PROMP Con. Name.: &VCNAME
+PROMP
+
+set feedback on
+
 select
   trunc(begin_snap) as begin_snap,
   event_name,
@@ -36,13 +55,14 @@ select
 from (
  select dbid, instance_number, snap_id, event_name, wait_class, total_waits, (time_waited_micro/1000000) time_waited
   from dba_hist_system_event
-  where event_name = '&2' -- filtro especifico
+  where event_name = '&1' -- filtro especifico
 ) stats, dba_hist_snapshot s
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
-  and s.dbid=(select dbid from v$database)
-  and s.begin_interval_time >= trunc(sysdate) - &1
+  --and s.dbid=(select dbid from v$database) /* removido para CDB */
+  and s.begin_interval_time >= trunc(sysdate) - &2
+  and (&3 = 0 or s.instance_number = &3) 
 order by snap_id
 ) where snap_id > min_snap_id 
         and nvl(total_waits,1) > 0
@@ -51,4 +71,3 @@ GROUP BY trunc(begin_snap),
          wait_class
 ORDER BY 1;
 
-set feedback on

@@ -12,30 +12,31 @@ alter session set nls_date_format='dd/mm Dy';
 set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
-col h0  format 999,999
-col h1  format 999,999
-col h2  format 999,999
-col h3  format 999,999
-col h4  format 999,999
-col h5  format 999,999
-col h6  format 999,999
-col h7  format 999,999
-col h8  format 999,999
-col h9  format 999,999
-col h10 format 999,999
-col h11 format 999,999
-col h12 format 999,999
-col h13 format 999,999
-col h14 format 999,999
-col h15 format 999,999
-col h16 format 999,999
-col h17 format 999,999
-col h18 format 999,999
-col h19 format 999,999
-col h20 format 999,999
-col h21 format 999,999
-col h22 format 999,999
-col h23 format 999,999
+define COL_NUM_FORMAT='99,999' -- define the format used in numeric columns
+col h0  format &&COL_NUM_FORMAT
+col h1  format &&COL_NUM_FORMAT
+col h2  format &&COL_NUM_FORMAT
+col h3  format &&COL_NUM_FORMAT
+col h4  format &&COL_NUM_FORMAT
+col h5  format &&COL_NUM_FORMAT
+col h6  format &&COL_NUM_FORMAT
+col h7  format &&COL_NUM_FORMAT
+col h8  format &&COL_NUM_FORMAT
+col h9  format &&COL_NUM_FORMAT
+col h10 format &&COL_NUM_FORMAT
+col h11 format &&COL_NUM_FORMAT
+col h12 format &&COL_NUM_FORMAT
+col h13 format &&COL_NUM_FORMAT
+col h14 format &&COL_NUM_FORMAT
+col h15 format &&COL_NUM_FORMAT
+col h16 format &&COL_NUM_FORMAT
+col h17 format &&COL_NUM_FORMAT
+col h18 format &&COL_NUM_FORMAT
+col h19 format &&COL_NUM_FORMAT
+col h20 format &&COL_NUM_FORMAT
+col h21 format &&COL_NUM_FORMAT
+col h22 format &&COL_NUM_FORMAT
+col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
 -- obtem o nome da instancia

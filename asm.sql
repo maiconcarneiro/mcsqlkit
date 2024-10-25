@@ -1,3 +1,5 @@
+set lines 9999
+set pages 9999
 SET SQLFORMAT
 COL NAME HEADING "Disksgroup"
 COL TYPE HEADING "Redundancy"
