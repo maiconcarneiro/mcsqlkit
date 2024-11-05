@@ -15,13 +15,13 @@ set lines 400
 
 col top heading "Ranking" format 999
 col sql_id heading "SQL Id" format a20 
-col elapsed heading "Elapsed Time(s)"  format 999,999,999.99
+col elapsed heading "Elapsed | Time(s)"  format 999,999,999.99
 col executions heading "Executions" format 999,999,999
-col disk_reads heading "Disk Reads" format 999,999,999,999
+col disk_reads heading "Disk Reads (blocks)" format 999,999,999,999
 col perc_total heading "% of|Total" format 999.99
 col perc_cpu heading "% CPU" format 999.99
 col perc_io heading  "% IO"  format 999.99
-col disk_read_avg heading "Disk Reads|Per exec" format 999,999,999.99
+col disk_read_avg heading "Reads avg | per Exec" format 999,999,999.99
 col sql_text format a50
 
 -- get the instance name
@@ -86,4 +86,6 @@ from (
 ) x where rownum <= 20
 /
 
+PROMP
+PROMP How to Interpret the "SQL ordered by Physical Reads (UnOptimized)" Section in AWR Reports (11.2 onwards) for Smart Flash Cache Database (Doc ID 1466035.1)
 PROMP

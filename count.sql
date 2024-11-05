@@ -28,4 +28,4 @@ where 1=1
 and s.type <>'BACKGROUND'
 and (nvl(&2,0) = 0 or inst_id = &2)
 group by &1
-order by &1;
+order by total desc;

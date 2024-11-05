@@ -6,7 +6,7 @@ SET PAGES 50
 SET LINES 400
 SET FEEDBACK ON
 
-col con_id         HEADING "Con|ID"                format 99
+col con_id         HEADING "Con|ID"                format 999
 col Data           HEADING "Data"                  format a10
 col menor          HEADING "Min"                   format a10
 col maior          HEADING "Max"                   format a10
@@ -17,7 +17,7 @@ col Disk_Reads     HEADING "(Disk Reads avg)"      format 999,999,999,999.99
 col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed ms avg)"      format 999,999,999,999.99
-col sql_id         HEADING  "SQL Id"               format a20
+col sql_id         HEADING  "SQL Id"               format a18
 
 -- obtem o nome da instancia
 column NODE new_value VNODE 

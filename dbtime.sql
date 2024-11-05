@@ -69,8 +69,8 @@ from (
     from dba_hist_snapshot s
     join dba_hist_sys_time_model m on (s.snap_id = m.snap_id and s.dbid = m.dbid and s.instance_number = m.instance_number)
     where 1=1
-    and s.begin_interval_time >= trunc(sysdate)-&1
     and m.stat_name = 'DB time'
+    and s.begin_interval_time >= trunc(sysdate)-&1
 	and (&2 = 0 or s.instance_number = &2)
     group by s.snap_id, s.instance_number
  )

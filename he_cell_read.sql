@@ -55,7 +55,7 @@ from (
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
-  and s.dbid=(select dbid from v$database)
+  --and s.dbid=(select dbid from v$database)
   and s.begin_interval_time >= trunc(sysdate) - &1
 order by snap_id
 ) where snap_id > min_snap_id 
