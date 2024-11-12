@@ -21,23 +21,25 @@ alter session set nls_timestamp_format='dd/mm/yyyy hh24:mi:ss';
 -- check the release version of the database
 -- 12cR1+ include the CON_ID column in the views
 column FILER_LINE new_value vFILER_LINE
+column NEW_COLS   new_value vNEW_COLS
 set termout off;
 select (case when VERSION < '12.1'
            then 'and dbid = (select dbid from v$database)'
            else 'and con_id = sys_context(''USERENV'',''CON_ID'')'
-        end)  as FILER_LINE
+        end)  as FILER_LINE,
+       (case when VERSION < '12.1'
+           then 'dbid'
+           else 'dbid,con_id'
+        end) as NEW_COLS
  from v$instance;
 set termout on;
 set feedback on;
 
 
-select dbid, 
-       snap_interval, 
+select snap_interval, 
        retention, 
-       topnsql, 
-       con_id, 
-       src_dbid, 
-       src_dbname 
+       topnsql,
+       &vNEW_COLS
   from dba_hist_wr_control
  where 1=1
  &vFILER_LINE -- dynamic filter for 11gR2- or 12cR1+

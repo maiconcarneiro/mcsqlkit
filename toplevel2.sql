@@ -1,0 +1,1 @@
+@ds_filter sql_id "sql_id in (select distinct sql_id from GV$ACTIVE_SESSION_HISTORY where top_level_sql_id = '&1')" 2

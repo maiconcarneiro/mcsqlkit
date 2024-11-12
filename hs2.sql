@@ -1,5 +1,5 @@
 /*
- Script to query metrics from AWR for an specific SQL ID
+ Script to query metrics from AWR + Cursor Cache for an specific SQL ID
  Syntax: @hs2 <SQL_ID> <QT. DAYS> <INST ID>
   
   Examples:
@@ -18,6 +18,7 @@ SET PAGES 50
 SET LINES 400
 SET FEEDBACK ON
 
+col source         HEADING "Source"                format a6
 col sql_id         HEADING "SQL Id"               format a18
 col Data           HEADING "Data"                  format a15
 col Inicio         HEADING "First"                 format a5
@@ -42,7 +43,7 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Historico do SQL_ID por Data
+PROMP Metrica...: Historico do SQL_ID por Data (AWR + Cursor Cache)
 PROMP SQL ID....: &1
 PROMP Qt. Dias..: &2
 PROMP Instance..: &VNODE
@@ -50,7 +51,8 @@ PROMP Con. Name.: &VCNAME
 PROMP
 
 -- query
-select sql_id,
+select 'AWR' as source,
+ sql_id,
  trunc(b.begin_interval_time)                                     as data,
  to_char(min(b.begin_interval_time),'hh24:mi')                    as Inicio,
  to_char(max(b.end_interval_time),'hh24:mi')                      as Final,
@@ -64,9 +66,27 @@ select sql_id,
  from dba_hist_sqlstat a
  join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
-  and sql_id in ('&1')
+  and sql_id = '&1'
   and executions_delta > 0
   and b.begin_interval_time >= trunc(sysdate) - &2
   and (&3 = 0 or b.instance_number = &3)
 group by sql_id, trunc(b.begin_interval_time)
-order by 2;
+union all
+select 'Cache' as source,
+       sql_id,
+       sysdate,
+       null,
+       null,
+       count(distinct(PLAN_HASH_VALUE)) ,
+       sum(executions)                                            as Execs,
+       sum(buffer_gets)             / greatest(sum(executions),1) as Buffer_Gets,
+       sum(disk_reads)              / greatest(sum(executions),1) as Disk_Reads,
+      -- sum(direct_reads)            / greatest(sum(executions),1) as direct_reads,
+       sum(rows_processed)          / greatest(sum(executions),1) as rows_processed,
+       sum(cpu_time/1000)           / greatest(sum(executions),1) as CPU_Time,
+      -- sum(user_io_wait_time/1000)  / greatest(sum(executions),1) as io_time,
+       sum(elapsed_time/1000)       / greatest(sum(executions),1) as Elapsed_Time
+  from gv$sql
+ where sql_id = '&1'
+group by sql_id
+order by 1,3;

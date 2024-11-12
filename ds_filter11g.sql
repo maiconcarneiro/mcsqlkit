@@ -45,7 +45,7 @@ select &1,
        sum(executions)                                      as Execs,
        sum(buffer_gets)             / greatest(sum(executions),1) as Buffer_Gets,
        sum(disk_reads)              / greatest(sum(executions),1) as Disk_Reads,
-       sum(direct_reads)            / greatest(sum(executions),1) as direct_reads,
+       --sum(direct_reads)            / greatest(sum(executions),1) as direct_reads, -- NOT SUPPORTED IN 11G
        sum(rows_processed)          / greatest(sum(executions),1) as rows_processed,
        sum(cpu_time/1000)           / greatest(sum(executions),1) as CPU_Time,
        sum(user_io_wait_time/1000)  / greatest(sum(executions),1) as io_time,

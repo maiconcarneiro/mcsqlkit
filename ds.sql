@@ -4,4 +4,4 @@
 
  Maicon Carneiro | dibiei.blog
 */
-@ds_filter sql_id sql_id='&1' 1
+@ds_filter&_VERSION_SUFFIX sql_id sql_id='&1' 1

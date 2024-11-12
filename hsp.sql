@@ -33,22 +33,22 @@ PROMP Qt. Dias..: &2
 PROMP Instance..: &VNODE
 PROMP
 
-select a.con_id, sql_id, plan_hash_value,
-trunc(b.begin_interval_time) data,
-to_char(min(b.begin_interval_time),'hh24:mi:ss')    as menor,
-to_char(max(b.end_interval_time),'hh24:mi:ss')      as maior,
-sum(executions_delta)                                            as Execs,
-sum(buffer_gets_delta)       / greatest(sum(executions_delta),1) as Buffer_Gets,
-sum(disk_reads_delta)        / greatest(sum(executions_delta),1) as Disk_Reads,
-sum(rows_processed_delta)    / greatest(sum(executions_delta),1) as rows_processed,
-sum(cpu_time_delta/1000)     / greatest(sum(executions_delta),1) as CPU_Time,
-sum(elapsed_time_delta/1000) / greatest(sum(executions_delta),1) as Elapsed_Time
+select sql_id, plan_hash_value,
+       trunc(b.begin_interval_time) data,
+       to_char(min(b.begin_interval_time),'hh24:mi:ss')    as menor,
+       to_char(max(b.end_interval_time),'hh24:mi:ss')      as maior,
+       sum(executions_delta)                                            as Execs,
+       sum(buffer_gets_delta)       / greatest(sum(executions_delta),1) as Buffer_Gets,
+       sum(disk_reads_delta)        / greatest(sum(executions_delta),1) as Disk_Reads,
+       sum(rows_processed_delta)    / greatest(sum(executions_delta),1) as rows_processed,
+       sum(cpu_time_delta/1000)     / greatest(sum(executions_delta),1) as CPU_Time,
+       sum(elapsed_time_delta/1000) / greatest(sum(executions_delta),1) as Elapsed_Time
 from dba_hist_sqlstat a
-join dba_hist_snapshot b on (a.snap_id = b.snap_id and a.instance_number = b.instance_number and a.con_id=b.con_id)
+join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
 and sql_id in ('&1')
 --and executions_delta > 0
 and b.begin_interval_time >= trunc(sysdate) - &2
 and (&3 = 0 or b.instance_number = &3)
-group by a.con_id, sql_id, trunc(b.begin_interval_time), plan_hash_value
+group by sql_id, trunc(b.begin_interval_time), plan_hash_value
 order by data, plan_hash_value;

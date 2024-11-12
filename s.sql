@@ -38,7 +38,7 @@ module,
 sql_id,
 to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/Mon hh24:mi:ss') as last_time, 
 (sysdate-SQL_EXEC_START)*24*60*60 secs,
-event
+''''|| event || '''' as event
 from gv$session s
 where 1=1
 and type = 'USER'

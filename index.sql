@@ -1,3 +1,14 @@
+  /*
+ Script to list columns of all indexes for a specific table
+ Syntax: @index <SCHEMA> <TABLE>
+  
+  Examples:
+   @index SOE ORDERS
+   @index sh sales
+
+ Author: Maicon Carneiro | dibiei.blog
+*/
+
   PROMP
   PROMP Report..: Column list of indexes
   PROMP Schema..: &1     

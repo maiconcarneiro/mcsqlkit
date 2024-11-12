@@ -1,0 +1,1 @@
+@ashtop sql_Plan_line_id,sql_plan_operation "sql_id='&1' and sql_plan_hash_value=&2 and sql_child_number = &3" sysdate-1/24 sysdate

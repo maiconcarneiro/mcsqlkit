@@ -70,3 +70,5 @@ order by time_waited desc
 ) x
 where rownum <= 20
 ;
+
+PROMP

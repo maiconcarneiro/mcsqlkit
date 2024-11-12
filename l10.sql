@@ -1,0 +1,1 @@
+@ashtop sql_id 1=1 sysdate-(10/1440) sysdate
