@@ -34,7 +34,7 @@ begin
   -- try to get sql_text of the sql_id from CursorCache
   select count(*) into vCount from gv$sql where sql_id = vSQL_ID and rownum=1;
   if vCount > 0 then 
-   vSource := 'Cursor Cahce';
+   vSource := 'Cursor Cache';
    vTASK := dbms_sqltune.create_tuning_task(sql_id => vSQL_ID, time_limit => vTimeLimit);
   end if;
   
