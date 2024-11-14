@@ -4,8 +4,8 @@
  Updated: 19/10/2024
 */
 
-set sqlformat
 set feedback off
+set sqlformat
 SET SQLFORMAT
 SET PAGES 50
 SET LINES 400

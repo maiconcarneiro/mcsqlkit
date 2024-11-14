@@ -39,8 +39,17 @@ col h23 format 999999
 set feedback ON
 
 column NODE new_value VNODE 
-SET termout off
-SELECT sys_context('USERENV','CON_NAME') as node FROM dual;
+column SUBQUERY_DBID new_value _SUBQUERY_DBID
+column DB_NAME       new_value _DBNAME
+SET TERMOUT OFF
+SELECT
+       sys_context('USERENV','CON_NAME') as node,
+       MAX(CASE WHEN VERSION < '12.1' 
+            THEN 'SELECT DBID FROM V$DATABASE' 
+            ELSE 'SELECT DBID FROM V$CONTAINERS WHERE CON_ID = SYS_CONTEXT(''USERENV'',''CON_ID'')'
+       END) AS SUBQUERY_DBID
+FROM GV$INSTANCE;
+
 SET termout ON
 
 -- resumo do relatorio
@@ -56,33 +65,34 @@ SELECT TO_CHAR (END_INTERVAL_TIME, 'dd/mm/yyyy hh24') as hora,
 	   min(SNAP_ID) as snap_id
  FROM DBA_HIST_SNAPSHOT
  WHERE END_INTERVAL_TIME >= trunc(sysdate) - &1
+   AND DBID = (&_SUBQUERY_DBID)
 GROUP BY TO_CHAR (END_INTERVAL_TIME, 'dd/mm/yyyy hh24')
 )
 SELECT TRUNC(begin_snap) snap_date,
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '00', snap_id, 0)) "h0",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '01', snap_id, 0)) "h1",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '02', snap_id, 0)) "h2",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '03', snap_id, 0)) "h3",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '04', snap_id, 0)) "h4",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '05', snap_id, 0)) "h5",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '06', snap_id, 0)) "h6",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '07', snap_id, 0)) "h7",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '08', snap_id, 0)) "h8",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '09', snap_id, 0)) "h9",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '10', snap_id, 0)) "h10",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '11', snap_id, 0)) "h11",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '12', snap_id, 0)) "h12",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '13', snap_id, 0)) "h13",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '14', snap_id, 0)) "h14",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '15', snap_id, 0)) "h15",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '16', snap_id, 0)) "h16",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '17', snap_id, 0)) "h17",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '18', snap_id, 0)) "h18",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '19', snap_id, 0)) "h19",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '20', snap_id, 0)) "h20",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '21', snap_id, 0)) "h21",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '22', snap_id, 0)) "h22",
- max (DECODE (TO_CHAR (begin_snap, 'hh24'), '23', snap_id, 0)) "h23"
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '00', snap_id, null)) "h0",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '01', snap_id, null)) "h1",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '02', snap_id, null)) "h2",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '03', snap_id, null)) "h3",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '04', snap_id, null)) "h4",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '05', snap_id, null)) "h5",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '06', snap_id, null)) "h6",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '07', snap_id, null)) "h7",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '08', snap_id, null)) "h8",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '09', snap_id, null)) "h9",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '10', snap_id, null)) "h10",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '11', snap_id, null)) "h11",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '12', snap_id, null)) "h12",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '13', snap_id, null)) "h13",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '14', snap_id, null)) "h14",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '15', snap_id, null)) "h15",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '16', snap_id, null)) "h16",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '17', snap_id, null)) "h17",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '18', snap_id, null)) "h18",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '19', snap_id, null)) "h19",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '20', snap_id, null)) "h20",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '21', snap_id, null)) "h21",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '22', snap_id, null)) "h22",
+ max (DECODE (TO_CHAR (begin_snap, 'hh24'), '23', snap_id, null)) "h23"
 FROM awr
 GROUP BY TRUNC(begin_snap)
 order by 1;

@@ -11,7 +11,7 @@ COL ENABLED    FORMAT A8
 COL ACCEPTED   FORMAT A7
 COL ADAPTIVE   FORMAT A8
 COL PLAN_HASH_VALUE FORMAT A15
-ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS';
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY HH24:MI:SS';
 SELECT SIGNATURE, 
        SQL_HANDLE, 
        PLAN_NAME, 
@@ -19,8 +19,8 @@ SELECT SIGNATURE,
        CREATED,
        LAST_MODIFIED as MODIFIED, 
        ENABLED, 
-       ACCEPTED, 
-       ADAPTIVE 
+       ACCEPTED
+    --   ADAPTIVE 
      ,(select replace(plan_table_output,'Plan hash value: ','')
          from table(dbms_xplan.display_sql_plan_baseline('' || SQL_HANDLE || '','' || PLAN_NAME || ''))
         where plan_table_output like '%Plan hash value%'
