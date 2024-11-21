@@ -1,3 +1,4 @@
+set feedback off
 set sqlformat
 set verify off
 set pagesize 1000
@@ -16,6 +17,7 @@ col snap format a12
 col module format a20 trunc
 col sql_id format a15
 col secs format 999,999
+set feedback on
 
 -- obtem o nome da instancia
 column NODE new_value VNODE 
@@ -46,3 +48,5 @@ and status = 'ACTIVE'
 --and module <> 'GoldenGate'
 and (&1 = 0 or inst_id = &1)
 order by s.logon_time;
+
+PROMP

@@ -30,8 +30,8 @@
          LISTAGG(i.column_name, ', ') WITHIN GROUP (ORDER BY i.column_position) AS INDEX_COLUMNS
     FROM dba_ind_columns i
    WHERE 1=1 
-     AND i.table_owner=upper('&1')
-     AND i.table_name=upper('&2')
+     AND i.table_owner like '%&1%'
+     AND i.table_name  like '%&2%'
 GROUP BY i.index_name;
 
 PROMP

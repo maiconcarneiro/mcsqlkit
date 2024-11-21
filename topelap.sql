@@ -76,5 +76,6 @@ from (
   group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)
   order by elapsed desc
   )
-) x where rownum <= 20
-/
+) x where rownum <= 20;
+
+PROMP

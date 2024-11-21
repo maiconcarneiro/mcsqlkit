@@ -1,16 +1,17 @@
 -- 30/12/2023 - Maicon Carneiro - Criação do Script para exibir o TOP 20 eventos do AWR
 -- 25/04/2024 - Maicon Carneiro - Correção do calculo de "% of Total" e ajuste do begin_snap_id
 
+set feedback off
 set sqlformat
 set pagesize 40
-set feedback off
 set verify off
 col avg_time heading "Avg wait(ms)" format 999,999.99
-col dbtime_percent heading "% DB time" format 999.99
+col dbtime_percent heading "% DB time" format 99.99
 col wait_class heading "Wait Class" format a20
 col time_waited heading "Time(s)" format 999,999,999,999
+col avg_time heading "Avg Time(ms)" format 999,999.99
 col total_waits heading "Waits" format 999,999,999,999,999
-col event_name heading "Event Name" format a60
+col event_name heading "Event Name" format a40
 
 with time_model as (
 select sum(value_diff)/1000000 as time_total from (
@@ -31,7 +32,8 @@ select
   nvl(wait_class,'DB CPU') AS wait_class,
   sum(total_waits) total_waits,
   sum(time_waited) time_waited,
-  round( sum(time_waited)/(select time_total from time_model) * 100 ,2) as perc_total
+  (sum(time_waited*1000)/sum(total_waits)) as avg_time,
+  round( sum(time_waited)/(select time_total from time_model) * 100 ,2) as dbtime_percent
 from (
      select
        s.instance_number inst_id,

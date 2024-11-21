@@ -20,6 +20,7 @@
 */
 
 PROMP
+set feedback off;
 SET SERVEROUTPUT ON;
 declare
 vTASK VARCHAR2(40);
@@ -64,3 +65,5 @@ begin
  dbms_output.put_line ('JOB ' || vJobName || ' executing Task ' || vTASK || ' using ' || vSource);
 end;
 /
+
+set feedback on;

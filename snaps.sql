@@ -43,7 +43,10 @@ column SUBQUERY_DBID new_value _SUBQUERY_DBID
 column DB_NAME       new_value _DBNAME
 SET TERMOUT OFF
 SELECT
-       sys_context('USERENV','CON_NAME') as node,
+       MAX(CASE WHEN VERSION < '12.1' 
+            THEN  sys_context('USERENV','DB_NAME')
+            ELSE  sys_context('USERENV','CON_NAME')
+       END) AS node,
        MAX(CASE WHEN VERSION < '12.1' 
             THEN 'SELECT DBID FROM V$DATABASE' 
             ELSE 'SELECT DBID FROM V$CONTAINERS WHERE CON_ID = SYS_CONTEXT(''USERENV'',''CON_ID'')'

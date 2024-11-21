@@ -1,4 +1,4 @@
-set long 10000000;
+set long 1000;
 set longchunksize 1000
 set pagesize 10000
 set lines 1000
