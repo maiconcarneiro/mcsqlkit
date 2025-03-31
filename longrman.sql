@@ -17,10 +17,10 @@ select s.machine,
        round(l.elapsed_seconds/60,2)  as "Min Elapsed",
        round(time_remaining/60,2)     as "Min Remaining",
        round(sofar/totalwork*100,2)   as "% Work",
-	   round((sofar*param.value)/1024/1024/1024,2)   as "GB Done",
-	   round((totalwork*param.value) /1024/1024/1024,2) as "GB Total",
-	   round( ((sofar*param.value)/1024/1024/1024) / (elapsed_seconds/60) , 2) as "GB per Min"
-from gv$session_longops l, gv$session s, v$parameter param
+	     round((sofar*param.value)/1024/1024/1024,2)   as "GB Done",
+	     round((totalwork*param.value) /1024/1024/1024,2) as "GB Total",
+	     round( ((sofar*param.value)/1024/1024/1024) / (elapsed_seconds/60) , 2) as "GB per Min"
+ from gv$session_longops l, gv$session s, v$parameter param
 where l.inst_id = s.inst_id
   and l.sid = s.sid
   and l.serial# = s.serial#

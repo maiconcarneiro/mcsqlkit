@@ -1,6 +1,13 @@
 undef SQLID
 set pages 4000
-select * from table(dbms_xplan.display_awr(sql_id => '&1', plan_hash_value => '&2', format=>'ALL ALLSTATS LAST +OUTLINE +NOTE +PEEKED_BINDS +PROJECTION +ALIAS +COST +BYTES +PARALLEL +PARTITION +REMOTE'));
+select * from table
+(dbms_xplan.display_awr
+  (sql_id => '&1', 
+   plan_hash_value => '&2', 
+   db_id => (select dbid from v$database),
+   format=>'ALL ALLSTATS LAST +OUTLINE +NOTE +PEEKED_BINDS +PROJECTION +ALIAS +COST +BYTES +PARALLEL +PARTITION +REMOTE'
+  )
+ );
 
 
 /*

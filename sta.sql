@@ -30,7 +30,10 @@ vJobName VARCHAR2(100);
 vCount number := 0;
 vSource varchar2(20);
 vMaxSnap number;
+vDBID number;
 begin 
+
+  select dbid into vDBID from v$database;
 
   -- try to get sql_text of the sql_id from CursorCache
   select count(*) into vCount from gv$sql where sql_id = vSQL_ID and rownum=1;
@@ -44,8 +47,19 @@ begin
    select count(*) into vCount from dba_hist_sqltext where sql_id = vSQL_ID and rownum=1;
    if vCount > 0 then 
     vSource := 'AWR';
-    select max(snap_id) into vMaxSnap from dba_hist_sqlstat where sql_id=vSQL_ID;
-    vTASK := dbms_sqltune.create_tuning_task(begin_snap => vMaxSnap-1, end_snap=> vMaxSnap, sql_id => vSQL_ID, time_limit => vTimeLimit);
+    select max(snap_id) into vMaxSnap 
+      from dba_hist_sqlstat 
+     where sql_id=vSQL_ID
+       and dbid = vDBID;
+
+    vTASK := dbms_sqltune.create_tuning_task
+             (
+              begin_snap => vMaxSnap-1, 
+              end_snap=> vMaxSnap, 
+              sql_id => vSQL_ID, 
+              time_limit => vTimeLimit,
+              dbid       => vDBID
+             );
    end if;
   end if;
 

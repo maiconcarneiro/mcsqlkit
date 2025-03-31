@@ -2,9 +2,9 @@
  Script: create_sqlpatch_hint.sql
  Available here: https://github.com/maiconcarneiro/blog-dibiei/blob/main/create_sqlpatch_hint.sql
 
- This script can create a SQL Patch for an SQL ID using the specified hint
- The code was adjusted and tested to work properly in versions 11.2 to 19c.
- The script will be search the SQL_TEXT for the SQL_ID in CursorCache, AWR and STS respectivelly.
+ This script can create a SQL Patch for an SQL ID using the specified hint.
+ The code was adjusted and tested to work properly in versions from 11.2 to 19c.
+ The script will search the SQL_TEXT for the SQL_ID in CursorCache, AWR and STS respectivelly.
  You can disable the AWR and or STS option chaning the vUseAWR and vUseSTS variables.
 
  Syntax:
@@ -13,9 +13,10 @@
  Author: Maicon Carneiro  (dibiei.blog)
 */
 
+PROMP
 SET VERIFY OFF
 SET SERVEROUTPUT ON
-SET FEEDBACK ON
+SET FEEDBACK OFF
 
 DECLARE
 
@@ -50,7 +51,7 @@ BEGIN
 select count(*) into vCount from gv$sql where sql_id = vSQL_ID and rownum=1;
 if vCount > 0 then 
  SELECT sql_text INTO vSQL_TEXT  FROM gv$sql WHERE sql_id = vSQL_ID AND rownum=1;
- vSource := 'Cursor Cahce';
+ vSource := 'Cursor Cache';
 end if;
 
 -- if no present in CursorCache, try to get sql_text of the sql_id from AWR
@@ -123,3 +124,5 @@ select version into vVersion from v$instance;
 
 END;
 /
+
+set feedback on;

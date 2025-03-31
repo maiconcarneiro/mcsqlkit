@@ -52,6 +52,6 @@ SELECT TRUNC (first_time) "Date", TO_CHAR (first_time, 'Dy') "Day",
  ROUND (COUNT (1) / 24, 2) "Avg"
 FROM gv$log_history
 WHERE thread# = inst_id
-AND first_time > trunc(sysdate) - &1
+AND first_time > trunc(sysdate) - 30
 GROUP BY TRUNC (first_time), TO_CHAR (first_time, 'Dy')
 ORDER BY 1,2;

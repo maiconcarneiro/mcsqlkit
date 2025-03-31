@@ -31,12 +31,6 @@ from gv$session s
 join gv$sql sq on s.inst_id = sq.inst_id and s.sql_id = sq.sql_id and s.sql_child_number = sq.child_number
 where 1=1
 and s.type = 'USER'
---and module not like 'sqlplus%'
---and event not like 'SQL*Net%'
 and s.status = 'ACTIVE'
 and s.sql_id = '&1'
---and program like '%DM00%'
---and machine like '%sqlplus%'
---and username not IN ('SYS','PUBLIC')
---and sql_id='42j3td55kgj61'
 order by s.logon_time;

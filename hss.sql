@@ -7,9 +7,8 @@ SET LINES 400
 SET FEEDBACK ON
 
 col con_id         HEADING "Con|ID"                format 999
-col Data           HEADING "Data"                  format a10
-col menor          HEADING "Min|hh:mi"             format a6
-col maior          HEADING "Max|hh:mi"             format a6
+col first          HEADING "First|Seen"             format a15
+col last           HEADING "Last|Seen"             format a15
 col Buffer_Gets    HEADING "Buffer Gets"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "Elapsed | Time (ms)" format 999,999,999,999.99
 col Execs          HEADING "Execs"                 format 999,999,999,999
@@ -26,31 +25,38 @@ col plan_hash_value HEADING "Plan|Hash Value"      format 99999999999999
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Historico do SQL_ID por Data e Plan Hash Value
+PROMP Metric....: Summary for all Plan Hash Value in AWR
 PROMP SQL ID....: &1
-PROMP Qt. Dias..: &2
+PROMP Qt. Days..: AWR Retention
 PROMP Instance..: &VNODE
 PROMP
 
-select plan_hash_value                                                                 as plan_hash_value,
-       trunc(b.begin_interval_time)                                                    as data,
-       to_char(min(b.begin_interval_time),'hh24:mi')                                   as menor,
-       to_char(max(b.end_interval_time),'hh24:mi')                                     as maior,
+with phv_list as (
+ SELECT p.sql_id, p.plan_hash_value, x.adaptive_plan
+ FROM dba_hist_sql_plan p,
+      XMLTABLE('/other_xml/info[@type="adaptive_plan"]' 
+               PASSING XMLTYPE(p.other_xml) 
+               COLUMNS adaptive_plan VARCHAR2(10) PATH 'text()') x
+ WHERE p.other_xml IS NOT NULL
+ and sql_id = '&1'
+)
+select a.plan_hash_value                                                               as plan_hash_value,
+       max(p.adaptive_plan)                                                            as adaptive_plan,
+       to_char(min(b.begin_interval_time),'dd/mm/yy hh24:mi')                          as first,
+       to_char(max(b.end_interval_time),'dd/mm/yy hh24:mi')                            as last,
        sum(executions_delta)                                                           as Execs,
        sum(rows_processed_delta)                   / greatest(sum(executions_delta),1) as rows_processed,
        sum(disk_reads_delta)                       / greatest(sum(executions_delta),1) as Disk_Reads,
-       sum(io_interconnect_bytes_delta/1024/1024)  / greatest(sum(executions_delta),1) as io_mbytes,
        sum(iowait_delta/1000)                      / greatest(sum(executions_delta),1) as iowait_delta,
        sum(buffer_gets_delta)                      / greatest(sum(executions_delta),1) as Buffer_Gets,
        sum(cpu_time_delta/1000)                    / greatest(sum(executions_delta),1) as CPU_Time,
        sum(elapsed_time_delta/1000)                / greatest(sum(executions_delta),1) as Elapsed_Time
 from dba_hist_sqlstat a
 join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
+left join phv_list p on a.sql_id = p.sql_id and a.plan_hash_value = p.plan_hash_value
 where 1=1
-and sql_id in ('&1')
+and a.sql_id in ('&1')
 and executions_delta > 0
-and b.begin_interval_time >= trunc(sysdate) - &2
-and (&3 = 0 or b.instance_number = &3)
 and b.dbid = (&_SUBQUERY_DBID)
-group by trunc(b.begin_interval_time), plan_hash_value
-order by data, plan_hash_value;
+group by a.plan_hash_value
+order by Elapsed_Time;

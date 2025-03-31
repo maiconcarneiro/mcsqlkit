@@ -38,14 +38,6 @@ col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
 
--- obtem o nome da instancia
-column NODE new_value VNODE 
-column CNAME new_value VCNAME 
-SET termout off
-SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
-SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
-SET termout ON
-
 -- resumo do relatorio
 PROMP
 PROMP Metrica...: Waits Count
@@ -79,7 +71,7 @@ from (
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
-  --and s.dbid=(select dbid from v$database) /* removido para CDB */
+  and s.dbid = (&_CON_DBID)
   and s.begin_interval_time >= trunc(sysdate) - &2
   and (&3 = 0 or s.instance_number = &3) 
 order by snap_id

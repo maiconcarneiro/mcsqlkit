@@ -17,6 +17,7 @@ col buffer_gets_avg heading "Gets avg" format 999,999,999.99
 col top heading "Ranking" format 999
 col disk_read_avg heading "Disk Read avg" format 999,999,999.99
 col sql_text format a50
+
 -- obtem o nome da instancia
 column NODE new_value VNODE 
 SET termout off

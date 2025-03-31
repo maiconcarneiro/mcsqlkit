@@ -36,18 +36,12 @@ col h20 format 999.99
 col h21 format 999.99
 col h22 format 999.99
 col h23 format 999.99
-set feedback ON
-
--- obtem o nome da instancia
-column NODE new_value VNODE 
-SET termout off
-SELECT CASE WHEN &2 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&2 = 0 or inst_id = &2);
-SET termout ON
+set feedback on;
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Load Average
-PROMP Qt. Dias..: &1
+PROMP Metric....: OS Load Average
+PROMP Qt. Days..: &1
 PROMP Instance..: &VNODE
 PROMP
 
@@ -61,6 +55,7 @@ with awr as (
 	and a.STAT_NAME = 'LOAD'
 	and (&2 = 0 or b.instance_number = &2)
 	and b.begin_interval_time >= trunc(sysdate) - &1
+	and b.dbid = (&_DBID)
 	group by a.snap_id, b.begin_interval_time
 )
 SELECT TRUNC(begin_snap) snap_date,

@@ -18,7 +18,7 @@ SET PAGES 50
 SET LINES 400
 SET FEEDBACK ON
 
-col sql_id         HEADING "SQL Id"               format a18
+col sql_id         HEADING "SQL Id"                format a18
 col Data           HEADING "Data"                  format a15
 col Inicio         HEADING "First"                 format a5
 col Final          HEADING "Last"                  format a5
@@ -30,7 +30,7 @@ col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed ms avg)"      format 999,999,999,999.99
 col planos         HEADING "PHVs"                  format 999
-col writes_mbytes   HEADING "(Writes MBytes)"        format 999,999,999,999
+col writes_mbytes   HEADING "(Writes MBytes)"      format 999,999,999,999
 
 -- obtem o nome da instancia
 column NODE new_value VNODE 

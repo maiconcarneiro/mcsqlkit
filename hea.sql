@@ -11,13 +11,9 @@ col wait_class  heading "Wait class"            format a15
 col total_waits heading "Waits (qtde)"             format 999,999,999,999
 col avg_time_ms heading "Avg time (ms)"     format 999,999,999,999.99
 
+
 -- obtem o nome da instancia
-column NODE new_value VNODE 
-column CNAME new_value VCNAME 
-SET termout off
-SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
-SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
-SET termout ON
+@_query_dbid
 
 -- resumo do relatorio
 PROMP
@@ -57,6 +53,7 @@ from (
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
+  and s.dbid = (&_SUBQUERY_DBID)
   and s.begin_interval_time >= sysdate - &2/24
   and (&3 = 0 or s.instance_number = &3) 
 order by snap_id

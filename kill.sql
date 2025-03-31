@@ -7,5 +7,6 @@ promp
 select 'ALTER SYSTEM KILL SESSION '''||b.SID||','||b.SERIAL#||',@'||b.INST_ID||''' immediate;' as comando
 from gv$session b
 where type = 'USER'
+and program like 'rman%'
 and &1
 ;

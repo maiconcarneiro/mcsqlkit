@@ -45,7 +45,6 @@ from gv$session s
 where 1=1
 and type = 'USER'
 and status = 'ACTIVE'
---and module <> 'GoldenGate'
 and (&1 = 0 or inst_id = &1)
 order by s.logon_time;
 

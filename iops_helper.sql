@@ -14,7 +14,7 @@ set lines 400
 set pages 50
 col begin_time         heading "Date"                             format a15
 col instance_number    heading "Inst ID"                          format 999
-col snap_id            heading "Snap ID"                          format 99999
+col snap_id            heading "Snap ID"                          format 999999
 col inicio             heading 'Begin'                            format a5
 col fim                heading 'End'                              format a5
 col Phys_IOPS_Read     heading 'Physical IOPS|Read (&AGGR_FUNC)'  format 999,999,999,999.99
@@ -69,5 +69,6 @@ round( &AGGR_FUNC(case metric_name when 'Physical Read Total Bytes Per Sec' then
 from dba_hist_sysmetric_summary 
 where begin_time >= sysdate-&2
  and (&3 = 0 or instance_number = &3)
+ and dbid=(select dbid from v$database) 
 group by trunc(&1) 
 order by 1;

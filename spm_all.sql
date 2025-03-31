@@ -19,11 +19,12 @@ SELECT SIGNATURE,
        CREATED,
        LAST_MODIFIED as MODIFIED, 
        ENABLED, 
-       ACCEPTED
-    --   ADAPTIVE 
+       ACCEPTED,
+       ADAPTIVE 
      ,(select replace(plan_table_output,'Plan hash value: ','')
          from table(dbms_xplan.display_sql_plan_baseline('' || SQL_HANDLE || '','' || PLAN_NAME || ''))
         where plan_table_output like '%Plan hash value%'
+          and rownum = 1
        ) as PLAN_HASH_VALUE
 FROM DBA_SQL_PLAN_BASELINES
 WHERE 1=1

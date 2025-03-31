@@ -38,20 +38,7 @@ col h22 format 999999
 col h23 format 999999
 set feedback ON
 
-column NODE new_value VNODE 
-column SUBQUERY_DBID new_value _SUBQUERY_DBID
-column DB_NAME       new_value _DBNAME
-SET TERMOUT OFF
-SELECT
-       MAX(CASE WHEN VERSION < '12.1' 
-            THEN  sys_context('USERENV','DB_NAME')
-            ELSE  sys_context('USERENV','CON_NAME')
-       END) AS node,
-       MAX(CASE WHEN VERSION < '12.1' 
-            THEN 'SELECT DBID FROM V$DATABASE' 
-            ELSE 'SELECT DBID FROM V$CONTAINERS WHERE CON_ID = SYS_CONTEXT(''USERENV'',''CON_ID'')'
-       END) AS SUBQUERY_DBID
-FROM GV$INSTANCE;
+@_query_dbid.sql
 
 SET termout ON
 
