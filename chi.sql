@@ -32,10 +32,10 @@ select s.child_number,
        s.is_bind_aware,
        s.is_shareable,
        s.is_bind_sensitive,
-       s.is_reoptimizable,
-       s.is_resolved_adaptive_plan,
+       --s.is_reoptimizable, --12c
+       --s.is_resolved_adaptive_plan, --12c
        s.is_obsolete,
-       s.sql_quarantine,
+       --s.sql_quarantine, -- 19c only
        executions as executions,
        round((elapsed_time / 1000) / greatest(executions,1),4) as elapsed_avg
 from gv$sql s

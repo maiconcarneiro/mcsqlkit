@@ -1,0 +1,1 @@
+exec dbms_application_info.set_module('&1','&2');

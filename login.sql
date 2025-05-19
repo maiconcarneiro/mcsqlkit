@@ -46,3 +46,6 @@ PROMP
 PROMP &_CONN_TYOE_MSG_INFO 
 PROMP &_MSG_AWR_PDB
 PROMP
+
+set sqlformat
+set verify off

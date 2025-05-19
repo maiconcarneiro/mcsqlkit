@@ -11,8 +11,14 @@
 
   PROMP
   PROMP Report..: Column list of indexes
-  PROMP Schema..: &1     
-  PROMP Table...: &2
+  PROMP Table...: &1
+
+  set feedback off;
+  var ownName varchar2(30);
+  var tabName varchar2(30);
+  exec :ownName := upper(substr('&1',1,instr('&1','.',1)-1));
+  exec :tabName := upper(substr('&1',instr('&1','.',1)+1));
+  set feedback on;
 
   SET LIN 1000
   COL INDEX_NAME    heading 'Index|Name'         FORMAT A30
@@ -30,8 +36,8 @@
          LISTAGG(i.column_name, ', ') WITHIN GROUP (ORDER BY i.column_position) AS INDEX_COLUMNS
     FROM dba_ind_columns i
    WHERE 1=1 
-     AND i.table_owner = '&1'
-     AND i.table_name  = '&2'
-GROUP BY i.index_name;
-
+     AND i.table_owner = :ownName
+     AND i.table_name  = :tabName
+GROUP BY i.index_name
+ORDER BY i.index_name;
 PROMP

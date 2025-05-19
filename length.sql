@@ -1,0 +1,1 @@
+select length('&1') as string_length from dual;

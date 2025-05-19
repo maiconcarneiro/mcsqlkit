@@ -6,6 +6,6 @@ SELECT dbid, snap_id,
        min(END_INTERVAL_TIME)  END_INTERVAL_TIME
   FROM DBA_HIST_SNAPSHOT
  WHERE END_INTERVAL_TIME >= (sysdate - &1)
-   AND DBID = (select con_dbid from v$database)
+   AND DBID = (select dbid from v$database)
  GROUP BY  dbid, snap_id
  ORDER By dbid, snap_id;

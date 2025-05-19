@@ -4,7 +4,7 @@ set pages 105
 set pause off
 set echo off
 set feedb on
-column tablespace_name      heading 'Tablespace Name' format a20
+column tablespace_name      heading 'Tablespace Name' format a30
 column TOTAL_ALLOC_GB       heading '[Maxsize] | Total (GB)'     format 9,999,990.00
 column TOTAL_APHYS_ALLOC_GB heading '[Current]| Allocated (GB)'  format 9,999,990.00
 column USED_GB              heading 'Used (GB)'             format 9,999,990.00
