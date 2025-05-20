@@ -20,7 +20,7 @@ col object_type heading 'Object Type' format a15
 col obj# heading 'Obj#' format 9999999999
 col dataobj# heading 'Dataobj#' format 9999999999
 col pct_total heading '% of Capture' format 999.99
-col value heading '&_AWR_TOPSEG_DESCRIPTION' format 999,999,999
+col value heading '&_AWR_TOPSEG_DESCRIPTION' format 999,999,999,999
 
 with total as (
  SELECT sum(value) as total_value
