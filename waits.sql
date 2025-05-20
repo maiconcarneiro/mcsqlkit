@@ -71,7 +71,7 @@ from (
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
-  and s.dbid = (&_CON_DBID)
+  and s.dbid = (&_DBID)
   and s.begin_interval_time >= trunc(sysdate) - &2
   and (&3 = 0 or s.instance_number = &3) 
 order by snap_id
