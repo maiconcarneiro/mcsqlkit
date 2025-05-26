@@ -103,4 +103,4 @@ SELECT TRUNC(begin_snap) snap_date,
  SUM (DECODE (TO_CHAR (begin_snap, 'hh24'), '23', total_waits, null)) "h23"
 FROM awr
 GROUP BY TRUNC(begin_snap)
-order by 1;
+order by 1

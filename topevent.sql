@@ -59,7 +59,7 @@ from (
       where stats.instance_number=s.instance_number
        and stats.snap_id=s.snap_id
        and stats.dbid=s.dbid
-       --and s.dbid=(select dbid from v$database)
+       and s.dbid = (&_SUBQUERY_DBID)
        and (&3 = 0 or s.instance_number = &3)
        and s.snap_id >=  &1 -- O TOP 10 Wait Event no AWR em HTML considera o snapshot inicial (diferente do TOP SQL)
        and s.snap_id <= &2 

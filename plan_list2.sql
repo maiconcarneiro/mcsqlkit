@@ -9,7 +9,7 @@ SET VERIFY OFF
 COL SIGNATURE  FORMAT 9999999999999999999999
 COL SQL_HANDLE FORMAT A20
 COL PLAN_NAME  FORMAT A30
-COL ORIGIN     FORMAT A25
+COL ORIGIN     FORMAT A30
 COL CREATED    HEADING "Created" FORMAT A15
 COL MODIFIED   HEADING "Modified" FORMAT A15
 COL ENABLED    HEADING "Enab" FORMAT A5
@@ -21,7 +21,7 @@ COL PLAN_HASH_VALUE heading "Plan | Hash Value" FORMAT a15
 SELECT /*+ PARALLEL(2) */ 
        SQL_HANDLE, 
        PLAN_NAME, 
-	   (select replace(plan_table_output,'Plan hash value: ','')
+	(select replace(plan_table_output,'Plan hash value: ','')
          from table( dbms_xplan.display_sql_plan_baseline('' || SQL_HANDLE || '','' || PLAN_NAME || '') )
         where plan_table_output like '%Plan hash value%'
        ) as PLAN_HASH_VALUE,

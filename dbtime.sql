@@ -59,13 +59,13 @@ with awr as (
 select snap_id,
        begin_snap,
        --round( (value - LAG(value, 1, value) OVER (ORDER BY snap_id)) /60 ,2) AS dbtime_diff
-	   round( (value - LAG(value, 1, value) OVER (PARTITION BY startup_time, instance_number ORDER BY snap_id)) /60 ,2) AS dbtime_diff
+	   round( (value - LAG(value, 1, value) OVER (PARTITION BY startup_time, instance_number ORDER BY snap_id)) /1e6/60 ,2) AS dbtime_diff
 from (
     select min(s.startup_time) as startup_time,
 	       s.instance_number,
 		   s.snap_id, 
            min(s.begin_interval_time) as begin_snap,
-           sum(m.value)/1000/1000 as value
+           sum(m.value) as value
     from dba_hist_snapshot s
     join dba_hist_sys_time_model m on (s.snap_id = m.snap_id and s.dbid = m.dbid and s.instance_number = m.instance_number)
     where 1=1

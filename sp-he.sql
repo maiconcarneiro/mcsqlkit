@@ -19,12 +19,14 @@ col x              heading "|"                 format a1
 
 -- obtem o nome da instancia
 @_query_dbid
+def _DATE_FILTER=&2
+@_get_interval
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Historico do Wait Event por dia
+PROMP Metric....: History of Event wais per day (STATSPACK)
 PROMP Event.....: &1
-PROMP Qt. Dias..: &2
+PROMP Days......: &2 (&_START_DATE_TRUNC to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP
@@ -51,8 +53,8 @@ from (
 select
   s.instance_number inst_id,
   s.snap_id,
-  s.begin_interval_time begin_snap,
-  s.end_interval_time end_snap,
+  LAG(s.snap_time, 1, null) OVER (PARTITION BY s.dbid, s.startup_time, s.instance_number ORDER BY s.snap_id) as begin_snap,
+  s.snap_time end_snap,
   event_name,
   wait_class,
   total_waits_fg-lag(total_waits_fg, 1, total_waits_fg) over
@@ -68,21 +70,23 @@ from (
  select dbid, 
         instance_number, 
         snap_id, 
-        event_name, 
-        wait_class, 
+        e.event as event_name, 
+        n.wait_class, 
         total_waits_fg, 
-        total_waits, 
+        total_waits,
         (time_waited_micro_fg/1000000) as time_waited_fg,
-        (time_waited_micro/1000000) time_waited
-  from dba_hist_system_event
-  where event_name = '&1' -- filtro especifico
-) stats, dba_hist_snapshot s
+        (time_waited_micro/1000000) as time_waited
+  from STATS$SYSTEM_EVENT e
+  join V$EVENT_NAME n on (e.event_id = n.event_id)
+  where e.event = '&1'
+) stats, STATS$SNAPSHOT s
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id
   and stats.dbid=s.dbid
   and s.dbid = (&_SUBQUERY_DBID)
-  and s.begin_interval_time >= trunc(sysdate) - &2
+  and s.snap_time >= trunc(sysdate) - &2
   and (&3 = 0 or s.instance_number = &3) 
+  --and s.snap_id between 31 and 67 -- test
 order by snap_id
 ) where snap_id > min_snap_id 
         and nvl(total_waits,1) > 0

@@ -1,6 +1,7 @@
 
 SET SQLBLANKLINES ON
 set termout off;
+set feedback off;
 
 COLUMN INSTANCE_VERSION NEW_VALUE _ORA_VERSION
 COLUMN VERSION_SUFFIX NEW_VALUE _VERSION_SUFFIX
@@ -36,6 +37,12 @@ select case when nvl(max(value),'TRUE') = 'FALSE'
       end MSG_AWR_PDB
 from v$parameter
 where name = 'awr_pdb_autoflush_enabled';
+
+COLUMN ora_edition NEW_VALUE _ORA_EDITION
+COLUMN repo_type NEW_VALUE _REPO_TYPE
+select case when banner like '%Enterprise%' then 'EE' else 'SE' end as ora_edition,
+       case when banner like '%Enterprise%' then 'awr' else 'sp' end as repo_type 
+from v$version;
 
 set termout on;
 

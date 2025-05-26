@@ -1,8 +1,8 @@
 /*
  Maicon Carneiro - 30/12/2023
- script : topread.sql
- sintaxe: @topread <begin snap> <end snap> <inst id>
- exemplo: @topread 141817 141821 1 (inst id = 0 para considerar todo o cluster)
+ script : topreads.sql
+ sintaxe: @topreads <begin snap> <end snap> <inst id>
+ exemplo: @topreads 141817 141821 1 (inst id = 0 para considerar todo o cluster)
 */
 
 set verify off

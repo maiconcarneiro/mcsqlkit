@@ -7,8 +7,8 @@ COL SGA_SIZE_FACTOR         FORMAT 999.99
 COL ESTD_DB_TIME            FORMAT 999,999,999,999,999
 COL ESTD_DB_TIME_FACTOR     FORMAT 999.99
 COL ESTD_PHYSICAL_READS     FORMAT 999,999,999,999,999
-COL ESTD_BUFFER_CACHE_SIZE  HEADING "Buffer Cache (GB)" FORMAT 999,999,999,999,999
-COL ESTD_SHARED_POOL_SIZE   heading "Shared Pool (GB)"  FORMAT 999,999,999,999,999
+COL ESTD_BUFFER_CACHE_SIZE  HEADING "Buffer Cache (GB)" FORMAT 999,999,999,999,999.99
+COL ESTD_SHARED_POOL_SIZE   heading "Shared Pool (GB)"  FORMAT 999,999,999,999,999.99
 COL CON_ID                  FORMAT 999,999,999,999,999
 SELECT INST_ID,
 SGA_SIZE/1024 AS SGA_SIZE,
@@ -26,7 +26,7 @@ PROMP ******************************* Buffer Cache Advisor *********************
 SET PAGES 100
 COLUMN inst_id                    FORMAT 999
 COLUMN block_size                 FORMAT a10 heading 'Block Size'
-COLUMN size_for_estimate          FORMAT 999,999,999,999 heading 'Cache Size (GB)'
+COLUMN size_for_estimate          FORMAT 999,999,999,999.99 heading 'Cache Size (GB)'
 COLUMN buffers_for_estimate       FORMAT 999,999,999 heading 'Buffers'
 COLUMN estd_physical_read_factor  FORMAT 999.99 heading 'Estd Phys|Read Factor'
 COLUMN estd_physical_reads        FORMAT 999,999,999,999,999 heading 'Estd Phys| Reads'
