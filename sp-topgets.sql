@@ -37,11 +37,11 @@ PROMP
 with time_model as (
 select sum(value_diff) as value_total from (
   select m.snap_id, 
-         (value - LAG(value, 1, value) OVER (PARTITION BY s.startup_time, s.instance_number ORDER BY s.snap_id)) AS value_diff
+         (value - LAG(value, 1, value) OVER (PARTITION BY m.name, s.startup_time, s.instance_number ORDER BY s.snap_id)) AS value_diff
     from STATS$SNAPSHOT s
     join STATS$SYSSTAT m on (s.snap_id = m.snap_id and s.dbid = m.dbid and s.instance_number = m.instance_number)
-   where m.name = 'session logical reads'
-     and m.snap_id between &1 AND &2
+   where m.name = 'session logical reads' -- (db block gets + consistent gets)
+     and m.snap_id between &1 AND &2      
 	 and (&3 = 0 or m.instance_number = &3)
  )
 ),
@@ -90,20 +90,20 @@ select sql_id,
        elapsed,
        round(elapsed/executions ,4) as elap_avg,
        round( cpu_time / elapsed * 100 ,2) as perc_cpu,
-	   round( iowait   / elapsed * 100 ,2) as perc_io,
+	round( iowait   / elapsed * 100 ,2) as perc_io,
        cpu_time,
        round(cpu_time/executions,4) as cpu_avg,
        old_hash_value
 from (
 	select h.sql_id, h.old_hash_value,  
-		   greatest(sum(executions_delta) ,1) as executions,
-		   sum(CPU_TIME_DELTA)/1e6     as cpu_time,
-		   sum(ELAPSED_TIME_DELTA)/1e6 as elapsed,
-		   sum(ROWS_PROCESSED_DELTA)   as rows_processed,
-		   sum(iowait_delta)/1000000   as iowait,
-		   sum(BUFFER_GETS_DELTA)      as buffer_gets,
-		   sum(DISK_READS_DELTA)       as disk_reads
-	  from sp_sql_stat h
+		greatest(sum(executions_delta) ,1) as executions,
+		sum(CPU_TIME_DELTA)/1e6            as cpu_time,
+		sum(ELAPSED_TIME_DELTA)/1e6        as elapsed,
+		sum(ROWS_PROCESSED_DELTA)          as rows_processed,
+		sum(iowait_delta)/1000000          as iowait,
+		sum(BUFFER_GETS_DELTA)             as buffer_gets,
+		sum(DISK_READS_DELTA)              as disk_reads
+	  from sp_sql_stat h       
 	 where executions_delta > 0
   group by h.sql_id, old_hash_value
   order by buffer_gets desc

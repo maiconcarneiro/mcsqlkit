@@ -3,7 +3,7 @@ SET SQLBLANKLINES ON
 set termout off;
 set feedback off;
 
-COLUMN INSTANCE_VERSION NEW_VALUE _ORA_VERSION
+COLUMN VERSION NEW_VALUE _ORA_VERSION
 COLUMN VERSION_SUFFIX NEW_VALUE _VERSION_SUFFIX
 COLUMN CON_DBID_COL NEW_VALUE _CON_DBID_COL
 COLUMN CON_NAME_COL NEW_VALUE _CON_NAME_COL
@@ -30,19 +30,29 @@ select dbid,
         end CONN_TYOE_MSG_INFO
 from v$database;
 
+begin
+  if '&_ORA_VERSION' >= '12.1' then
+    
+  end if;
+end;
+/
+
+/*
 COLUMN MSG_AWR_PDB NEW_VALUE _MSG_AWR_PDB
-select case when nvl(max(value),'TRUE') = 'FALSE' 
-            then 'WARNING: The AWR is disabled in PDB level. See parameter awr_pdb_autoflush_enabled'
+select case when '&_ORA_VERSION' < '12.1' then ''
+            when nvl(max(value),'TRUE') = 'FALSE' then 'WARNING: The AWR is disabled in PDB level. See parameter awr_pdb_autoflush_enabled'
             else ''
       end MSG_AWR_PDB
 from v$parameter
 where name = 'awr_pdb_autoflush_enabled';
+*/
 
 COLUMN ora_edition NEW_VALUE _ORA_EDITION
 COLUMN repo_type NEW_VALUE _REPO_TYPE
-select case when banner like '%Enterprise%' then 'EE' else 'SE' end as ora_edition,
-       case when banner like '%Enterprise%' then 'awr' else 'sp' end as repo_type 
-from v$version;
+select case when v.banner like '%Enterprise%' then 'EE' else 'SE' end as ora_edition,
+       case when v.banner like '%Enterprise%' and p.value like 'DIAGNOSTIC%' then 'awr' else 'sp' end as repo_type 
+from v$version v, v$parameter p
+where p.name = 'control_management_pack_access';
 
 set termout on;
 
@@ -50,8 +60,8 @@ set termout on;
 -- format sqlcl
 PROMP
 @f1
-PROMP &_CONN_TYOE_MSG_INFO 
-PROMP &_MSG_AWR_PDB
+PROMP &&_CONN_TYOE_MSG_INFO 
+--PROMP &&_MSG_AWR_PDB
 PROMP
 
 set sqlformat

@@ -1,0 +1,1 @@
+def _REPO_TYPE="awr"

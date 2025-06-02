@@ -4,7 +4,7 @@
 
 -- resumo do relatorio
 PROMP
-PROMP Metric....: Top Segments by "&_AWR_TOPSEG_DESCRIPTION"
+PROMP Metric....: Top Segments by "&_AWR_TOPSEG_DESCRIPTION" (AWR)
 PROMP Snaps.....: &1 &2 
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME

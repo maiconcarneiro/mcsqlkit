@@ -1,3 +1,4 @@
+def LAST_DAYS="&1"
 set verify off
 set lines 400
 set pages 100
@@ -17,7 +18,7 @@ SELECT /*+ PARALLEL(2) */
        TASK_EXEC_NAME                                 AS EXEC_NAME, 
 	   translate(SUBSTR(SQL_TEXT,1,70), chr(10) || chr(13) || chr(09), ' ') as sql_text
 FROM DBA_SQL_PROFILES P
- where (created >= trunc(sysdate)-&1 
-  or last_modified >= trunc(sysdate)-&1
+ where (created >= trunc(sysdate)-&&LAST_DAYS
+  or last_modified >= trunc(sysdate)-&&LAST_DAYS
   )
 ORDER BY LAST_MODIFIED;
