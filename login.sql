@@ -1,4 +1,6 @@
 
+@_query_dbid
+
 SET SQLBLANKLINES ON
 set termout off;
 set feedback off;
@@ -14,7 +16,8 @@ SELECT VERSION,
        CASE WHEN VERSION < '12.1' THEN 'DB_NAME' ELSE 'CON_NAME' END AS CON_NAME_COL
   FROM V$INSTANCE;
 
-
+column NODE new_value vNODE 
+column CNAME new_value vCNAME 
 COLUMN DBID NEW_VALUE _DBID
 COLUMN CON_DBID NEW_VALUE _CON_DBID
 COLUMN CON_NAME NEW_VALUE _CON_NAME
@@ -27,15 +30,19 @@ select dbid,
        case when sys_context('USERENV','&_CON_NAME_COL') = 'CDB$ROOT' 
             then 'WARNING: Connected in the CDB$ROOT'
             else 'INFO: Connected in the PDB'
-        end CONN_TYOE_MSG_INFO
-from v$database;
+        end CONN_TYOE_MSG_INFO,
+        instance_name AS NODE,
+        sys_context('USERENV','DB_NAME') as CNAME 
+from v$database, v$instance;
 
+/*
 begin
   if '&_ORA_VERSION' >= '12.1' then
     
   end if;
 end;
 /
+
 
 /*
 COLUMN MSG_AWR_PDB NEW_VALUE _MSG_AWR_PDB
@@ -52,7 +59,8 @@ COLUMN repo_type NEW_VALUE _REPO_TYPE
 select case when v.banner like '%Enterprise%' then 'EE' else 'SE' end as ora_edition,
        case when v.banner like '%Enterprise%' and p.value like 'DIAGNOSTIC%' then 'awr' else 'sp' end as repo_type 
 from v$version v, v$parameter p
-where p.name = 'control_management_pack_access';
+where v.banner like 'Oracle Database%'
+  and p.name = 'control_management_pack_access';
 
 set termout on;
 
@@ -60,7 +68,7 @@ set termout on;
 -- format sqlcl
 PROMP
 @f1
-PROMP &&_CONN_TYOE_MSG_INFO 
+--PROMP &&_CONN_TYPE_MSG_INFO 
 --PROMP &&_MSG_AWR_PDB
 PROMP
 
