@@ -1,7 +1,8 @@
 
 @_query_dbid
 
-SET SQLBLANKLINES ON
+SET TAB OFF;
+SET SQLBLANKLINES ON;
 set termout off;
 set feedback off;
 
@@ -41,7 +42,7 @@ begin
     
   end if;
 end;
-/
+*/
 
 
 /*
@@ -72,5 +73,6 @@ PROMP
 --PROMP &&_MSG_AWR_PDB
 PROMP
 
-set sqlformat
-set verify off
+set verify off;
+set feedback on;
+set termout on;

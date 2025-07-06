@@ -20,4 +20,4 @@ select vault_name                                    as vault_name
       ,(hc_space_used/greatest(hc_space_prov,1)*100) as hc_percent_used
       ,flash_cache_prov/1024/1024/1024               as flash_cache_prov
       ,xrmem_cache_prov/1024/1024/1024               as xrmem_cache_prov
-from sys.v_$exa_vault;
+from sys.v$exa_vault;

@@ -1,3 +1,11 @@
+/*
+ Script: asmstats.sql
+ Usage: @asmstats.sql
+
+ Maicon Carneiro - 20/10/2024
+*/
+
+
 SET linesize 300
 SET pages 50
 COL diskgroup    HEADING "Diskgroup Name"   FORMAT a10

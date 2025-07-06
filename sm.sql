@@ -17,6 +17,7 @@ col action format a30
 select inst_id n, 
 sid, 
 serial#, 
+status,
 machine, 
 username,
 module,
@@ -28,6 +29,6 @@ event
 from gv$session s
 where 1=1
 and type = 'USER'
-and status = 'ACTIVE'
+--and status = 'ACTIVE'
 and module LIKE '%&1%'
 order by s.logon_time;

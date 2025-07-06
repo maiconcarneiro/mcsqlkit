@@ -1,10 +1,13 @@
 set feedback off;
 set termout off;
-COLUMN FORMAT_LINE NEW_VALUE _FORMAT_LINE
+COLUMN SCRIPT_FORMAT NEW_VALUE _SCRIPT_FORMAT
 SELECT CASE WHEN  sys_context('USERENV','MODULE') = 'SQLcl'
-            THEN '@|blue _USER|@@@|&_CON_NAME_COLOR &vCNAME|@@|white > |@'
-            ELSE q'[_USER'@'_CONNECT_IDENTIFIER> ]'
-        END FORMAT_LINE
+            THEN 'format_sqlcl.sql'
+            ELSE 'format_sqlplus.sql'
+        END SCRIPT_FORMAT
 FROM DUAL;
 
-set sqlprompt "&&_FORMAT_LINE";
+@&_SCRIPT_FORMAT
+
+set feedback on;
+set termout on;

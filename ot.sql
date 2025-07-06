@@ -1,4 +1,4 @@
-set sqlformat 
+
 set feedback off;
 set lines 400
 set pages 100
@@ -15,15 +15,19 @@ col machine format a50 trunc
 col used_ublk format 999,999,999,999
 col start_date format a25
 col Current_Time format a25
+
 alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
 select sysdate from dual;
+
+set feedback on;
+
 select vs.inst_id, 
        vs.sid,
-	   vs.serial#,
+	 vs.serial#,
        vs.username, 
        vs.program, 
        vs.machine, 
-	   vs.osuser, 
+	 vs.osuser, 
        vt.xidusn, 
        vt.xidslot, 
        vt.xidsqn, 
