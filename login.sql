@@ -3,8 +3,8 @@
 
 SET TAB OFF;
 SET SQLBLANKLINES ON;
-set termout off;
-set feedback off;
+set termout on;
+set feedback on;
 
 COLUMN VERSION NEW_VALUE _ORA_VERSION
 COLUMN VERSION_SUFFIX NEW_VALUE _VERSION_SUFFIX
@@ -17,6 +17,7 @@ SELECT VERSION,
        CASE WHEN VERSION < '12.1' THEN 'DB_NAME' ELSE 'CON_NAME' END AS CON_NAME_COL
   FROM V$INSTANCE;
 
+
 column NODE new_value vNODE 
 column CNAME new_value vCNAME 
 COLUMN DBID NEW_VALUE _DBID
@@ -24,17 +25,7 @@ COLUMN CON_DBID NEW_VALUE _CON_DBID
 COLUMN CON_NAME NEW_VALUE _CON_NAME
 COLUMN CON_NAME_COLOR NEW_VALUE _CON_NAME_COLOR
 COLUMN CONN_TYOE_MSG_INFO NEW_VALUE _CONN_TYOE_MSG_INFO
-select dbid,
-       &_CON_DBID_COL as con_dbid,
-       sys_context('USERENV','&_CON_NAME_COL') as CON_NAME,
-       case when sys_context('USERENV','&_CON_NAME_COL') = 'CDB$ROOT' then 'red' else 'green' end CON_NAME_COLOR,
-       case when sys_context('USERENV','&_CON_NAME_COL') = 'CDB$ROOT' 
-            then 'WARNING: Connected in the CDB$ROOT'
-            else 'INFO: Connected in the PDB'
-        end CONN_TYOE_MSG_INFO,
-        instance_name AS NODE,
-        sys_context('USERENV','DB_NAME') as CNAME 
-from v$database, v$instance;
+@_get_dbname&_VERSION_SUFFIX
 
 /*
 begin
@@ -66,12 +57,9 @@ where v.banner like 'Oracle Database%'
 set termout on;
 
 
--- format sqlcl
-PROMP
-@f1
---PROMP &&_CONN_TYPE_MSG_INFO 
---PROMP &&_MSG_AWR_PDB
-PROMP
+@_format_auto
+PROMP &&_CONN_TYPE_MSG_INFO 
+PROMP &&_MSG_AWR_PDB
 
 set verify off;
 set feedback on;
