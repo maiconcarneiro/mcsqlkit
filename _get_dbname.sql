@@ -1,3 +1,4 @@
+
 select dbid,
        &_CON_DBID_COL as con_dbid,
        sys_context('USERENV','CON_NAME') as CON_NAME,
@@ -14,7 +15,7 @@ select dbid,
              when sys_context('USERENV','CON_ID') = '1' 
                 then 'INFO: Connected in CDB$ROOT' 
              else 'INFO: Connected in PDB'  
-       end) CONN_TYOE_MSG_INFO,
+       end) CONN_TYPE_MSG_INFO,
 
         instance_name AS NODE,
         sys_context('USERENV','DB_NAME') as CNAME 

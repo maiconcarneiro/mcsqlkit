@@ -3,8 +3,8 @@
 
 SET TAB OFF;
 SET SQLBLANKLINES ON;
-set termout on;
-set feedback on;
+set termout off
+set feedback off;
 
 COLUMN VERSION NEW_VALUE _ORA_VERSION
 COLUMN VERSION_SUFFIX NEW_VALUE _VERSION_SUFFIX
@@ -24,7 +24,7 @@ COLUMN DBID NEW_VALUE _DBID
 COLUMN CON_DBID NEW_VALUE _CON_DBID
 COLUMN CON_NAME NEW_VALUE _CON_NAME
 COLUMN CON_NAME_COLOR NEW_VALUE _CON_NAME_COLOR
-COLUMN CONN_TYOE_MSG_INFO NEW_VALUE _CONN_TYOE_MSG_INFO
+COLUMN CONN_TYPE_MSG_INFO NEW_VALUE _CONN_TYPE_MSG_INFO
 @_get_dbname&_VERSION_SUFFIX
 
 /*
@@ -58,8 +58,10 @@ set termout on;
 
 
 @_format_auto
+PROMP **********************************************************************
 PROMP &&_CONN_TYPE_MSG_INFO 
-PROMP &&_MSG_AWR_PDB
+--PROMP &&_MSG_AWR_PDB
+PROMP **********************************************************************
 
 set verify off;
 set feedback on;
