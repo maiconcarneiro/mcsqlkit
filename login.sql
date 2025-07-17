@@ -48,8 +48,8 @@ where name = 'awr_pdb_autoflush_enabled';
 
 COLUMN ora_edition NEW_VALUE _ORA_EDITION
 COLUMN repo_type NEW_VALUE _REPO_TYPE
-select case when v.banner like '%Enterprise%' then 'EE' else 'SE' end as ora_edition,
-       case when v.banner like '%Enterprise%' and p.value like 'DIAGNOSTIC%' then 'awr' else 'sp' end as repo_type 
+select case when v.banner like '%Enterprise%' or v.banner like '%EE%' then 'EE' else 'SE' end as ora_edition,
+       case when (v.banner like '%Enterprise%' or v.banner like '%EE%') and p.value like 'DIAGNOSTIC%' then 'awr' else 'sp' end as repo_type 
 from v$version v, v$parameter p
 where v.banner like 'Oracle Database%'
   and p.name = 'control_management_pack_access';

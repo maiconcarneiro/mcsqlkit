@@ -5,13 +5,14 @@ set feedback off
 set sqlformat
 set pagesize 40
 set verify off
+set lines 400
 col avg_time heading "Avg wait(ms)" format 999,999.99
 col dbtime_percent heading "% DB time" format 99.99
 col wait_class heading "Wait Class" format a20
 col time_waited heading "Time(s)" format 999,999,999,999
 col avg_time heading "Avg Time(ms)" format 999,999.99
 col total_waits heading "Waits" format 999,999,999,999,999
-col event_name heading "Event Name" format a40
+col event_name heading "Event Name" format a50
 
 with time_model as (
 select sum(value_diff)/1000000 as time_total from (

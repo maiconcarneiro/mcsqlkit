@@ -25,7 +25,7 @@ column NEW_COLS   new_value vNEW_COLS
 set termout off;
 select (case when VERSION < '12.1'
            then 'and dbid = (select dbid from v$database)'
-           else 'and con_id = sys_context(''USERENV'',''CON_ID'')'
+           else 'and decode(con_id,0,1,con_id) = sys_context(''USERENV'',''CON_ID'')'
         end)  as FILER_LINE,
        (case when VERSION < '12.1'
            then 'dbid'

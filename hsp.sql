@@ -48,7 +48,7 @@ from dba_hist_sqlstat a
 join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
 and sql_id in ('&1')
-and executions_delta > 0
+--and executions_delta > 0
 and b.begin_interval_time >= trunc(sysdate) - &2
 and (&3 = 0 or b.instance_number = &3)
 and b.dbid = (&_SUBQUERY_DBID)
