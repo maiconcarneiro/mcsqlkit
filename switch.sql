@@ -1,4 +1,5 @@
 set pages 999 lines 400
+col day format a5
 col h0 format 999
 col h1 format 999
 col h2 format 999
