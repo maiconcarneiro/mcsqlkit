@@ -4,11 +4,14 @@ Improve the script plan_fix.sql for RAC when the PLAN_HASH_VALUE is not availabl
 Review the script sta.sql on 12c (PLS-00306: wrong number or types of arguments in call to 'CREATE_TUNING_TASK')
 Complete the sp-topapp.sql script creation.
 Create a awr-topapp.sql like sp-topapp.sql and create a topapp.sql script for dynamic awr / statspack scenarios.
-Review he.sql script for dynamic awr / statspack scenarios.
-Review hea.sql script for dynamic awr / statspack scenarios.
+Improve awr-hs.sql e awr-hsa.sql scripts to include application wait time.
+
+
+## 2025/08/20
 Improve ds.sql e dsa.sql scripts to include application wait time.
 Improve sp-hs.sql e sp-hsa.sql scripts to include application wait time.
-Improve awr-hs.sql e awr-hsa.sql scripts to include application wait time.
+Review hsa.sql and hsp.sql script for dynamic awr / statspack scenarios.
+Review he.sql and hea.sql script for dynamic awr / statspack scenarios.
 
 ## 2025/08/19
 Include  "set timing off" on login.sql
