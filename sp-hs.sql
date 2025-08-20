@@ -27,6 +27,7 @@ col Execs          HEADING "Execs"                 format 999,999,999,999
 col Disk_Reads     HEADING "(Disk Reads avg)"      format 999,999,999,999.99
 col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
+col app_wait_time  HEADING "Application Time (ms)" format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed ms avg)"      format 999,999,999,999.99
 col planos         HEADING "PHVs"                  format 999
 col writes_mbytes   HEADING "(Writes MBytes)"      format 999,999,999,999
@@ -88,11 +89,12 @@ select sql_id,
        to_char(min(begin_interval_time),'hh24:mi')                      as Inicio,
        to_char(max(end_interval_time),'hh24:mi')                        as Final,
        sum(executions_delta)                                            as Execs,
-       sum(buffer_gets_delta)       / greatest(sum(executions_delta),1) as Buffer_Gets,
-       sum(disk_reads_delta)        / greatest(sum(executions_delta),1) as Disk_Reads,
-       sum(rows_processed_delta)    / greatest(sum(executions_delta),1) as rows_processed,
-       sum(cpu_time_delta/1000)     / greatest(sum(executions_delta),1) as CPU_Time,
-       sum(elapsed_time_delta/1000) / greatest(sum(executions_delta),1) as Elapsed_Time
+       sum(buffer_gets_delta)                / greatest(sum(executions_delta),1) as Buffer_Gets,
+       sum(disk_reads_delta)                 / greatest(sum(executions_delta),1) as Disk_Reads,
+       sum(rows_processed_delta)             / greatest(sum(executions_delta),1) as rows_processed,
+       sum(cpu_time_delta/1000)              / greatest(sum(executions_delta),1) as CPU_Time,
+       sum(application_wait_time_delta/1000) / greatest(sum(executions_delta),1) as app_wait_time,
+       sum(elapsed_time_delta/1000)          / greatest(sum(executions_delta),1) as Elapsed_Time
   from sp_sql_stat
  where 1=1
    and executions_delta > 0
