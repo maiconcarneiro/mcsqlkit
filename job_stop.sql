@@ -1,0 +1,1 @@
+exec dbms_scheduler.stop_job(job_name=>'&1');

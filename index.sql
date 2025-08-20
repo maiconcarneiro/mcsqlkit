@@ -14,6 +14,7 @@ PROMP Report..: Column list of indexes
 PROMP Schema..: &1     
 PROMP Table...: &2
 
+SET PAGES 30
 SET LIN 1000
 COL INDEX_NAME    heading 'Index|Name'         FORMAT A30
 COL LAST_ANALYZED heading 'Last|Analyzed'      FORMAT a20

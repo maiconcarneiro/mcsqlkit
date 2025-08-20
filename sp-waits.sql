@@ -168,3 +168,5 @@ select snap_date,
        (case when h22 >= 1000000 then '*' || round(h22/1000000,1) || 'M*' else to_char(h22,'999,999') end) as h22,
        (case when h23 >= 1000000 then '*' || round(h23/1000000,1) || 'M*' else to_char(h23,'999,999') end) as h23
 from matrix;
+
+SET  COLSEP  "";

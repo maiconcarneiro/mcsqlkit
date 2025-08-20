@@ -1,0 +1,17 @@
+
+## TODO
+Improve the script plan_fix.sql for RAC when the PLAN_HASH_VALUE is not available in the current instance
+Review the script sta.sql on 12c (PLS-00306: wrong number or types of arguments in call to 'CREATE_TUNING_TASK')
+Complete the sp-topapp.sql script creation.
+Create a awr-topapp.sql like sp-topapp.sql and create a topapp.sql script for dynamic awr / statspack scenarios.
+
+
+## 2025/08/19
+Include  "set timing off" on login.sql
+Fix the typo error in ds_filter12.sql script.
+Review snaps2.sql script for dynamic awr / statspack scenarios.
+Review topelap.sql script for dynamic awr / statspack scenarios.
+Review topevent.sql script for dynamic awr / statspack scenarios.
+Reset COLSEP at the end of sp-waits.sql script.
+
+

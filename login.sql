@@ -66,3 +66,4 @@ PROMP **********************************************************************
 set verify off;
 set feedback on;
 set termout on;
+set timing off;

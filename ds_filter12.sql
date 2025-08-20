@@ -1,4 +1,4 @@
-@ds_filter11/*
+/*
  Script to query metrics from GV$SQL using different combinations of SELECT/GROUP BY and WHERE
  Syntax: @ds_filter <GROUP BY COLUMNS> <FILTER EXPRESSION> <ORDER BY COLUMNS>
   
@@ -12,7 +12,6 @@
  Author: Maicon Carneiro | dibiei.blog
 */
 
--- resumo do relatorio
 PROMP
 PROMP Metric....: Statistics from GV$SQL (avg per exec)
 PROMP Filter....: &2
