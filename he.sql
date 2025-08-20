@@ -1,1 +1,1 @@
-@&_REPO_TYPE-he.sql &1 &2 &3
+@&_REPO_TYPE-he.sql '&1' &2 &3
