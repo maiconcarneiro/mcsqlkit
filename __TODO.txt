@@ -20,5 +20,3 @@ Review snaps2.sql script for dynamic awr / statspack scenarios.
 Review topelap.sql script for dynamic awr / statspack scenarios.
 Review topevent.sql script for dynamic awr / statspack scenarios.
 Reset COLSEP at the end of sp-waits.sql script.
-
-
