@@ -57,8 +57,8 @@ begin
               begin_snap => vMaxSnap-1, 
               end_snap=> vMaxSnap, 
               sql_id => vSQL_ID, 
-              time_limit => vTimeLimit,
-              dbid       => vDBID
+              time_limit => vTimeLimit
+              -- ,dbid       => vDBID -- not supported with 12c
              );
    end if;
   end if;
