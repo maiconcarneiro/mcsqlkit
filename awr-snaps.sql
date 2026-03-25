@@ -1,15 +1,14 @@
 /*
- Script para gerar uma matriz com a lista de SNAP ID do AWR do início de cada Hora do Dia
- Sintaxe: SQL>@snaps <Qtd. Dias>
- Exemplo: SQL>@snaps 30
+ Script to generate a matrix with the first snap_id of every hour in the AWR
+ Syntax: SQL>@snaps <Qtd. Days>
+ Exemple: SQL>@snaps 30
  
- Maicon Carneiro | Salvador-BA, 23/11/2022
+ Maicon Carneiro (dibiei.blog) | Salvador-BA, 23/11/2022
 */
 
 set verify off
 set feedback off
 alter session set nls_date_format='dd/mm Dy';
-set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 col h0  format 999999
@@ -38,17 +37,13 @@ col h22 format 999999
 col h23 format 999999
 set feedback ON
 
-@_query_dbid.sql
-
 SET termout ON
 
--- resumo do relatorio
 PROMP
-PROMP Metrica...: Snap ID do AWR
-PROMP Qt. Dias..: &1
+PROMP Metric....: AWR First Snapshot ID for Every Hour
+PROMP Qt. Days..: &1
 PROMP Con. Name.: &VNODE 
 
--- query
 with awr as (
 SELECT TO_CHAR (END_INTERVAL_TIME, 'dd/mm/yyyy hh24') as hora,
        min(END_INTERVAL_TIME) as begin_snap,

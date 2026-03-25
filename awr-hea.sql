@@ -12,21 +12,25 @@ col total_waits heading "Waits (qtde)"             format 999,999,999,999
 col avg_time_ms heading "Avg time (ms)"     format 999,999,999,999.99
 
 
--- obtem o nome da instancia
-@_query_dbid
+-- get instance names
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
 
--- resumo do relatorio
 PROMP
-PROMP Metrica...: Event Wait AVG Time (ms) per snapshot
-PROMP Evento....: &1
-PROMP Qt. Horas.: &2 
+PROMP Metric....: Event Wait AVG Time (ms) per snapshot
+PROMP Event.....: &1
+PROMP Qt. Hours.: &2 
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP
 
 select
   snap_id, snap_id+1 as snap_id2,
-  to_char( max(begin_snap) , 'dd/mm/yyyy Dy') as begin_snap,
+  to_char( max(begin_snap) , 'yyyy-mm-dd Dy') as begin_snap,
   to_char( max(begin_snap) , 'hh24:mi') as begin_time,
   to_char( max(end_snap) , 'hh24:mi') as end_tie,
   SUM(total_waits) AS total_waits,

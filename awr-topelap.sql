@@ -1,8 +1,28 @@
+/*
+ script: awr-topelap.sql
+ author: Maicon Carneiro (dibiei.blog)
+*/
+
+
+-- get instance names
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
+
+-- report summary
+PROMP
+PROMP Metricc...: TOP 20 SQL By Elapsed Time
+PROMP Snapshots.: &1 &2
+PROMP Instance..: &VNODE
+PROMP
+
 set feedback off
 set sqlformat 
 set pages 50
 set head on
-column module format a20
 set lines 400
 
 col elapsed heading "Elapsed Time(s)" format 999,999,999.99
@@ -17,20 +37,6 @@ col buffer_gets_avg heading "Gets avg" format 999,999,999.99
 col top heading "Ranking" format 999
 col disk_read_avg heading "Disk Read avg" format 999,999,999.99
 col sql_text format a50
-
--- obtem o nome da instancia
-column NODE new_value VNODE 
-SET termout off
-SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
-SET termout ON
-
--- resumo do relatorio
-PROMP
-PROMP Metrica...: TOP 20 SQL Com Maior DB Time
-PROMP Snapshots.: &1 &2
-PROMP Instance..: &VNODE
-PROMP
-
 
 with time_model as (
 select sum(value_diff) as time_total from (
@@ -71,7 +77,7 @@ from (
  left join dba_hist_sqltext t on (h.dbid = t.dbid and h.sql_id = t.sql_id)
 	 where 1=1 
 	   and (&3 = 0 or h.instance_number = &3)
-	   and h.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
+	   and h.snap_id >  &1 -- based on AWR HTML that do not consider the first snap_id from the interval.
 	   and h.snap_id <= &2 
 	   and h.executions_delta > 0
   group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)

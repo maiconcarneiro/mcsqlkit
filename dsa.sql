@@ -1,3 +1,9 @@
+PROMP
+PROMP Metric....: Statistics from GV$SQL grouped by SQL_ID and PHV (avg per exec)
+PROMP SQL ID....: &1
+PROMP
+
+
 SET VERIFY OFF
 SET PAGES 50
 SET LINES 400

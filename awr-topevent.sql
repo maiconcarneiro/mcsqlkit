@@ -1,6 +1,21 @@
 -- 30/12/2023 - Maicon Carneiro - Criação do Script para exibir o TOP 20 eventos do AWR
 -- 25/04/2024 - Maicon Carneiro - Correção do calculo de "% of Total" e ajuste do begin_snap_id
 
+-- get instance names
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
+
+-- report summary
+PROMP
+PROMP Metric....: TOP 20 Wait Event from AWR
+PROMP Snapshots.: &1 &2
+PROMP Instance..: &VNODE
+PROMP
+
 set feedback off
 set sqlformat
 set pagesize 40

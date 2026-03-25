@@ -16,7 +16,7 @@ col used_ublk format 999,999,999,999
 col start_date format a25
 col Current_Time format a25
 
-alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
+alter session set nls_date_format='yyyy-mm-dd hh24:mi:ss';
 select sysdate from dual;
 
 set feedback on;

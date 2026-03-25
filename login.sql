@@ -1,4 +1,16 @@
 
+/*
+ script: login.sql
+ author: Maicon Carneiro (dibiei.blog)
+
+ This is the default login.sql used by mcsqlkit scripts
+ Run this script as first step is required to use the major AWR and Statspack scripts from the mcsqlkit
+ Please use "export ORACLE_PATH=<path to mcsqlkit scripts>" before start the SQL*PLUS session.
+
+ If you have any questions, please reach out me at contact page from my blog: https://dibiei.blog
+ 
+*/
+
 @_query_dbid
 
 SET TAB OFF;

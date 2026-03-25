@@ -25,6 +25,7 @@ where l.inst_id = s.inst_id
   and l.sid = s.sid
   and l.serial# = s.serial#
 and l.time_remaining > 0
+and l.totalwork > 0
 and param.name = 'db_block_size'
 and l.message like 'RMAN%'
 order by 1, 9;

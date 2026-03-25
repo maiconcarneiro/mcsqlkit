@@ -39,13 +39,15 @@ col h22 format &&COL_NUM_FORMAT
 col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
--- obtem o nome da instancia
+-- get instance names
 column NODE new_value VNODE 
+column CNAME new_value VCNAME 
 SET termout off
-SELECT CASE WHEN &2 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&2 = 0 or inst_id = &2);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
--- resumo do relatorio
+-- set report summary
 PROMP
 PROMP Metrica...: DB Time
 PROMP Qt. Dias..: &1

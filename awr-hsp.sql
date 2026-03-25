@@ -1,6 +1,25 @@
+/*
+ sctipt: awr-hsp.sql
+ author: Maicon Carneiro (dibiei.blog)
+*/
+
+
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
+
+PROMP
+PROMP Metric....: History of SQL per Date and Plan Hash Value (AWR)
+PROMP SQL ID....: &1
+PROMP Qt. Days..: &2
+PROMP Instance..: &VNODE
+PROMP
+
 SET FEEDBACK OFF
-SET SQLFORMAT
-ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
+ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
 SET VERIFY OFF
 SET PAGES 50
 SET LINES 400
@@ -21,17 +40,6 @@ col CPU_Time       HEADING "CPU Time (ms)"     format 999,999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a18
 col plan_hash_value HEADING "Plan|Hash Value"      format 99999999999999
 
--- obtem o nome da instancia
-@_query_dbid
-
--- resumo do relatorio
-PROMP
-PROMP Metrica...: Historico do SQL_ID por Data e Plan Hash Value
-PROMP SQL ID....: &1
-PROMP Qt. Dias..: &2
-PROMP Instance..: &VNODE
-PROMP
-
 select plan_hash_value                                                                 as plan_hash_value,
        trunc(b.begin_interval_time)                                                    as data,
        to_char(min(b.begin_interval_time),'hh24:mi')                                   as menor,
@@ -48,7 +56,7 @@ from dba_hist_sqlstat a
 join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
 and sql_id in ('&1')
---and executions_delta > 0
+-- and executions_delta > 0
 and b.begin_interval_time >= trunc(sysdate) - &2
 and (&3 = 0 or b.instance_number = &3)
 and b.dbid = (&_SUBQUERY_DBID)

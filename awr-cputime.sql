@@ -38,20 +38,21 @@ col h22 format 999,999
 col h23 format 999,999
 set feedback ON
 
--- obtem o nome da instancia
+-- get instance names
 column NODE new_value VNODE 
+column CNAME new_value VCNAME 
 SET termout off
-SELECT CASE WHEN &2 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&2 = 0 or inst_id = &2);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metrica...: DB CPU time
-PROMP Qt. Dias..: &1
+PROMP Metric....: DB CPU time
+PROMP Qt. Days..: &1
 PROMP Instance..: &VNODE
 PROMP
-PROMP Valores negativos aparecem em casos de restart da instancia
-PROMP
+PROMP Negative values can be seen in case instance was restarted between 2 snapshots
 
 -- query
 with awr as (

@@ -1,6 +1,23 @@
+
+-- get instance names
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
+
+PROMP
+PROMP Metric....: History of Wait Event per Day
+PROMP Event.....: &1
+PROMP Qt. Days..: &2
+PROMP Instance..: &VNODE
+PROMP Con. Name.: &VCNAME
+PROMP
+
 set verify off
 set feedback off
-alter session set nls_date_format='dd/mm/yyyy';
+alter session set nls_date_format='yyyy-mm-dd';
 set sqlformat
 set lines 400
 set pages 50
@@ -16,18 +33,6 @@ col total_waits    heading "Total Waits"       format 999,999,999,999
 col min_wait_ms    heading "Min Time (ms)"     format 999,999.9999
 col max_wait_ms    heading "Max Time (ms)"     format 999,999,999.9999
 col x              heading "|"                 format a1
-
--- obtem o nome da instancia
-@_query_dbid
-
--- resumo do relatorio
-PROMP
-PROMP Metrica...: Historico do Wait Event por dia
-PROMP Event.....: &1
-PROMP Qt. Dias..: &2
-PROMP Instance..: &VNODE
-PROMP Con. Name.: &VCNAME
-PROMP
 
 set feedback on
 
