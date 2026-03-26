@@ -7,7 +7,6 @@ PROMP
 
 SET TERMOUT OFF;
 SET VERIFY OFF
-set sqlformat
 SET TERMOUT ON;
 
 

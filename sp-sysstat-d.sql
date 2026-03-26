@@ -3,7 +3,6 @@ set pages 40
 SET FEEDBACK OFF
 alter session set nls_date_format='dd/mm Dy';
 
-SET SQLFORMAT
 set verify off
 
 col snap_time heading 'Snap Time'  format a18

@@ -12,8 +12,8 @@ COL SQL_TEXT FORMAT A70
 SELECT /*+ PARALLEL(2) */
        NAME, 
        SIGNATURE, 
-       TO_CHAR(CREATED,'DD/MM/YYYY HH24:MI:SS')       AS CREATE_DATE, 
-       TO_CHAR(LAST_MODIFIED,'DD/MM/YYYY HH24:MI:SS') AS MODIFIED_DATE, 
+       TO_CHAR(CREATED,'YYYY-MM-DD HH24:MI:SS')       AS CREATE_DATE, 
+       TO_CHAR(LAST_MODIFIED,'YYYY-MM-DD HH24:MI:SS') AS MODIFIED_DATE, 
        FORCE_MATCHING                                 AS FORCE, 
        TASK_EXEC_NAME                                 AS EXEC_NAME, 
 	   translate(SUBSTR(SQL_TEXT,1,70), chr(10) || chr(13) || chr(09), ' ') as sql_text

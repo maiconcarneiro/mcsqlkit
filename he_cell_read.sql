@@ -1,7 +1,6 @@
 set verify off
 set feedback off
-alter session set nls_date_format='dd/mm/yyyy';
-set sqlformat
+alter session set nls_date_format='yy-mm-ddyy';
 set linesize 400
 set pages 50
 col begin_snap  heading "Date"    format a12

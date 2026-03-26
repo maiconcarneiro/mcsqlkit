@@ -1,4 +1,3 @@
-set sqlformat
 set verify off
 col mbytes format 999,999,999,999.99
 select s.name, m.value/1024/1024 mbytes

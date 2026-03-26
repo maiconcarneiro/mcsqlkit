@@ -10,7 +10,6 @@
 set feedback off
 SET  COLSEP  "|"
 alter session set nls_date_format='dd/mm Dy';
-set sqlformat
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 define COL_NUM_FORMAT='a8' -- define the format used in numeric columns

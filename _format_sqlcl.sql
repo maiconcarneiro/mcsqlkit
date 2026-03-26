@@ -4,4 +4,3 @@ SELECT '@|yellow '|| LOWER(USER) || '|@@@|red ' || SYS_CONTEXT('USERENV','CON_NA
 SET SQLPROMPT &my_prompt_var
 
 -- enable SQLPLUS like formatation
-set sqlformat

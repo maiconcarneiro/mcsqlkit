@@ -3,7 +3,6 @@
  Maicon Carneiro - 26/02/2023
 */
 
-set sqlformat
 set pagesize 1000
 set linesize 400
 col n format 99
@@ -30,8 +29,8 @@ username,
 module, 
 status, 
 sql_id,
-to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as logon_time, 
-to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
+to_char(logon_time,'yy-mm-ddyy hh24:mi:ss') as logon_time, 
+to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'yy-mm-ddyy hh24:mi:ss') as last_time, 
 --(sysdate-SQL_EXEC_START)*24*60*60 secs,
 event
 from gv$session s

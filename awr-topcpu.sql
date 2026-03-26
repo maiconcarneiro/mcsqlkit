@@ -1,23 +1,21 @@
 set feedback off
-set sqlformat 
 set pages 50
 set head on
 
 set linesize 400
 
 col module format a20
-col sql_id format a13
+col sql_id format a18
 col elapsed heading "Elapsed Time(s)" format 999,999,999.99
 col cpu_time heading "CPU Time(s)" format 999,999,999.99
 col executions heading "Executions" format 999,999,999,999
 col rows1 heading "Rows" format 999,999,999.99
 col io_wait heading "IO Wait" format 999,999,999.99
 col elap_avg heading "Elap avg (s)" format 999,999.99
-col perc_total heading "% of CPU|DB Time" format 999.99
-col accum_value heading '% Accum | of total' format 999.99
+col perc_total heading "% of Total" format 999.99
 col cpu_avg heading "CPU avg (s)" format 999,999.99
 col buffer_gets_avg heading "Gets avg" format 999,999,999.99
-col top heading "#" format 999
+col top heading "Ranking" format 999
 col sql_text format A50
 
 -- obtem o nome da instancia
@@ -28,7 +26,7 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: TOP 20 SQL Com Maior Tempo de CPU
+PROMP Report....: TOP 20 SQL by CPU Time (AWR)
 PROMP Snapshots.: &1 &2
 PROMP Instance..: &VNODE
 PROMP
@@ -46,16 +44,7 @@ group by instance_number, snap_id, value
  )
 )
 select rownum as top, 
-       x.sql_id,
-       executions,
-	   cpu_time,   
-	   perc_total,
-	   sum (perc_total) over ( order by rownum ) accum_value,
-	   cpu_avg,
-	   elapsed,
-	   elap_avg,
-	   buffer_gets_avg,
-	   sql_text
+       x.* 
 from (
 select 
      sql_id,
@@ -65,7 +54,6 @@ select
 	 round(cpu_time/executions,4) as cpu_avg,
 	 elapsed,
 	 round(elapsed/executions ,4) as elap_avg,
-     buffer_gets,
 	 buffer_gets/executions as buffer_gets_avg
 	 ,translate(sql_text, chr(10) || chr(13) || chr(09), ' ') as sql_text
 from (
@@ -85,10 +73,8 @@ from (
 	   and h.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
 	   and h.snap_id <= &2 
 	   and h.executions_delta > 0
-	   and t.command_type not in (47)
   group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)
   order by cpu_time desc
   )
-) x where rownum <= 20;
-
-PROMP
+) x where rownum <= 20
+/

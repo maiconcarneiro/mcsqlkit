@@ -9,7 +9,6 @@
 
 set feedback off
 alter session set nls_date_format='dd/mm Dy';
-set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 define COL_NUM_FORMAT='999.99' -- define the format used in numeric columns
@@ -39,20 +38,24 @@ col h22 format &&COL_NUM_FORMAT
 col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
+column CNAME new_value VCNAME
+column CDATE new_value VCDATE
 SET termout off
-SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME, to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') as cdate FROM dual;
 SET termout ON
 
 DEFINE vMedida = "'&4'";
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metrica...: Average Elapsed Time (&vMedida)
+PROMP Metric....: Average Elapsed Time (&vMedida)
 PROMP SQL ID....: &1
-PROMP Qt. Dias..: &2 
+PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
+PROMP Sysdate...: &VCDATE
 PROMP
 
 -- query

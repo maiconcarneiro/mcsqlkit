@@ -25,8 +25,8 @@ SELECT /*+ PARALLEL(2) */
          from table( dbms_xplan.display_sql_plan_baseline('' || SQL_HANDLE || '','' || PLAN_NAME || '') )
         where plan_table_output like '%Plan hash value%'
        ) as PLAN_HASH_VALUE,
-       TO_CHAR(CREATED,'DD/MM/YY HH24:MI') CREATED,
-       TO_CHAR(LAST_MODIFIED,'DD/MM/YY HH24:MI') AS MODIFIED, 
+       TO_CHAR(CREATED,'YY-MM-DD HH24:MI') CREATED,
+       TO_CHAR(LAST_MODIFIED,'YY-MM-DD HH24:MI') AS MODIFIED, 
        ENABLED, 
        ACCEPTED, 
 	   REPRODUCED,
@@ -46,8 +46,8 @@ COL FORCE HEADING "Force|Matching"
 SELECT /*+ PARALLEL(2) */
        NAME,
 	   CATEGORY,
-       TO_CHAR(CREATED,'DD/MM/YY HH24:MI')       AS CREATED,
-       TO_CHAR(LAST_MODIFIED,'DD/MM/YY HH24:MI') AS MODIFIED,
+       TO_CHAR(CREATED,'YY-MM-DD HH24:MI')       AS CREATED,
+       TO_CHAR(LAST_MODIFIED,'YY-MM-DD HH24:MI') AS MODIFIED,
        FORCE_MATCHING                            AS FORCE,
 	   STATUS,
 	   TYPE

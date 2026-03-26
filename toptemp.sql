@@ -38,8 +38,8 @@ PROMP
 select rownum as top, x.*
 from (select sql_id, 
              max(temp_max) temp_max,
-             to_char(min(sample_time),'dd/mm/yyyy hh24:mi:ss') as first_used, 
-             to_char(max(sample_time),'dd/mm/yyyy hh24:mi:ss') as last_used
+             to_char(min(sample_time),'yy-mm-ddyy hh24:mi:ss') as first_used, 
+             to_char(max(sample_time),'yy-mm-ddyy hh24:mi:ss') as last_used
         from (select h.sample_time, 
                      h.sql_id, 
                      round(sum(nvl(h.temp_space_allocated, 0))/1024/1024,2) temp_max

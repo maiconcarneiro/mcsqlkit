@@ -29,7 +29,7 @@ compute avg of avg_etime_se on sql_id
 compute avg of avg_etime_ms on sql_id
 compute avg of execs on sql_id
 
-ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD/MM/YYYY HH24:MI:SS';
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
 
 SELECT 
     node,

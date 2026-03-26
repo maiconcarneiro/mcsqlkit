@@ -1,4 +1,3 @@
-set sqlformat
 set linesize 132
 set pages 105
 set pause off

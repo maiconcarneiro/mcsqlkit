@@ -1,5 +1,5 @@
 set feedback off;
-alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
+alter session set nls_date_format='yy-mm-ddyy hh24:mi:ss';
 set feedback on;
 SELECT dbid, 
        snap_id,

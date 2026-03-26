@@ -2,7 +2,6 @@
   Maicon Carneiro
 */
 
-SET SQLFORMAT
 
 PROMP Situacao da tablespace temp
 PROMP ======================================================================================
@@ -29,7 +28,7 @@ COL USERNAME FORMAT A30
 COL INST_ID FORMAT 99
 COL SQL_ID FORMAT a15
 COL temp_size HEADING "Temp Size (MB)" FORMAT 999,999,999,999
-SELECT TO_CHAR(SYSDATE,'DD/MM/YYYY HH24:MI:SS') AS DATA,
+SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS') AS DATA,
 NVL(a.username, '(oracle)') AS username,
 a.sql_id,
 ROUND( sum((b.blocks*p.value)/1024/1024),2) AS temp_size
@@ -38,7 +37,7 @@ WHERE p.name = 'db_block_size'
 AND a.saddr = b.session_addr
 AND a.inst_id=b.inst_id 
 AND a.inst_id=p.inst_id
-group by NVL(a.username, '(oracle)'), a.sql_id, TO_CHAR(SYSDATE,'DD/MM/YYYY HH24:MI:SS')
+group by NVL(a.username, '(oracle)'), a.sql_id, TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
 ORDER BY temp_size desc;
 
 
@@ -64,7 +63,7 @@ compute avg sum label "Total : " of temp_size on report
 
 SELECT 
 b.tablespace,
-TO_CHAR(SYSDATE,'DD/MM/YYYY HH24:MI:SS') AS DATA,
+TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS') AS DATA,
 NVL(a.username, '(oracle)') AS username,
 a.osuser,
 a.sid,
@@ -88,5 +87,5 @@ group by NVL(a.username, '(oracle)'),
 		 a.serial#, 
 		 a.status, 
 		 a.event,  
-		 TO_CHAR(SYSDATE,'DD/MM/YYYY HH24:MI:SS')
+		 TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
 ORDER BY temp_size desc;

@@ -8,7 +8,6 @@
 def AGGR_FUNC='&4'
 
 set feedback off
-set sqlformat
 set verify off
 set linesize 400
 set pages 50
@@ -41,7 +40,7 @@ PROMP Con. Name.: &VCNAME
 PROMP Aggregate.: &AGGR_FUNC
 PROMP
 
-alter session set nls_date_format='dd/mm/yyyy Dy';
+alter session set nls_date_format='yy-mm-ddyy Dy';
 set feedback on;
 
 PROMP 

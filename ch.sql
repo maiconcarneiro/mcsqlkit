@@ -1,7 +1,6 @@
 PROMP
 
 set feedback off;
-set sqlformat
 set linesize 300
 col inst_id heading "Inst | ID" format 99
 col sql_id format a18

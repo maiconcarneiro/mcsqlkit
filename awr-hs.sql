@@ -28,7 +28,6 @@ PROMP
 
 alter session set nls_date_format='yyyy-mm-dd Dy';
 
-SET SQLFORMAT
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400

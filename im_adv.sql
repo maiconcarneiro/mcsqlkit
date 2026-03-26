@@ -1,4 +1,3 @@
-set sqlformat
 set long 99999
 set linesize 400
 COL TASK_ID                             HEADING 'Task|ID'  FORMAT 999999

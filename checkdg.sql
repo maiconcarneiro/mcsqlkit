@@ -3,7 +3,7 @@ SET FEEDBACK OFF
 PROMPT
 PROMPT ############################### SCN do Controlfile ############################################
 PROMPT
-ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY HH24:MI:SS';
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS';
 set linesize 400
 COL CURRENT_SCN           format 99999999999999999999
 COL CHECKPOINT_CHANGE#    format 99999999999999999999
@@ -43,15 +43,15 @@ PROMPT ################################ Checkpoint do Standby ##################
 PROMPT
 col dtcoleta format a20
 col min_time format a20
-select to_char(sysdate,'dd/mm/yyyy hh24:mi:ss') as dtcoleta,
+select to_char(sysdate,'yy-mm-ddyy hh24:mi:ss') as dtcoleta,
 max(SEQUENCE#) sequence,
-to_char(max(FIRST_TIME),'dd/mm/yyyy hh24:mi:ss') min_time
+to_char(max(FIRST_TIME),'yy-mm-ddyy hh24:mi:ss') min_time
 from v$log_history;
 
 PROMPT
 PROMPT ############################### Checkpoint dos Datafiles #####################################
 PROMPT
-alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
+alter session set nls_date_format='yy-mm-ddyy hh24:mi:ss';
 select checkpoint_time, count(*)
 from v$datafile_header d
 group by checkpoint_time

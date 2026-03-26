@@ -15,7 +15,7 @@
             and ss.instance_number = s.instance_number
             and ss.snap_id = s.snap_id
             and ss.executions_delta > 0
-            and s.BEGIN_INTERVAL_TIME >= to_date('&1 00:00:00','dd/mm/yyyy hh24:mi:ss')
+            and s.BEGIN_INTERVAL_TIME >= to_date('&1 00:00:00','yy-mm-ddyy hh24:mi:ss')
         group by ss.sql_id, ss.plan_hash_value
         )
         group by sql_id, phv
@@ -47,7 +47,7 @@
             and ss.instance_number = s.instance_number
             and ss.snap_id = s.snap_id
             and ss.executions_delta > 0
-            and s.BEGIN_INTERVAL_TIME < to_date('&1 00:00:00','dd/mm/yyyy hh24:mi:ss')
+            and s.BEGIN_INTERVAL_TIME < to_date('&1 00:00:00','yy-mm-ddyy hh24:mi:ss')
         group by ss.sql_id, ss.plan_hash_value)
         group by sql_id, phv
      ) h on a.sql_id = h.sql_id and a.phv = h.phv

@@ -3,7 +3,6 @@
 -- 23/05/2023 - Maicon Carneiro - Script "sp-topevent" criado com base no "topevent" e adaptado para usar STATSPACK
 
 set feedback off
-set sqlformat
 set pagesize 40
 set verify off
 col avg_time heading "Avg wait(ms)" format 999,999.99

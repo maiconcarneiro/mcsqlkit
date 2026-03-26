@@ -16,7 +16,7 @@ col src_dbname format a30
 col tablespace_name format a20
 col registration_type format a30
 col most_recent_snap_id heading 'Most Recent|Snap ID' format 999999
-alter session set nls_timestamp_format='dd/mm/yyyy hh24:mi:ss';
+alter session set nls_timestamp_format='yy-mm-ddyy hh24:mi:ss';
 
 -- check the release version of the database
 -- 12cR1+ include the CON_ID column in the views
@@ -25,7 +25,11 @@ column NEW_COLS   new_value vNEW_COLS
 set termout off;
 select (case when VERSION < '12.1'
            then 'and dbid = (select dbid from v$database)'
-           else 'and decode(con_id,0,1,con_id) = sys_context(''USERENV'',''CON_ID'')'
+           --else 'and decode(con_id,0,1,con_id) = sys_context(''USERENV'',''CON_ID'')'
+
+           -- when 12c+ and CDB, the CON_ID column is 0 and the sys_context is 1
+           -- forcing the minimum of 1 for the both columsn and works with non-CDB and CDB
+           else 'and greatest(con_id,1) = greatest(sys_context(''USERENV'',''CON_ID''),1)'
         end)  as FILER_LINE,
        (case when VERSION < '12.1'
            then 'dbid'

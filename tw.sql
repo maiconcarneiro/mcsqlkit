@@ -2,7 +2,6 @@
 set feedback off
 set heading off
 set verify off
-set sqlformat
 set linesize 1000
 set long 999999
 --select sql_text from dba_hist_sqltext where sql_id='&1' and rownum=1;

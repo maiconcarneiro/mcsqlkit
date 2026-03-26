@@ -7,7 +7,6 @@
 
 set feedback off
 alter session set nls_date_format='Mon/dd Dy';
-set sqlformat
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 define COL_NUM_FORMAT='99,999' -- define the format used in numeric columns

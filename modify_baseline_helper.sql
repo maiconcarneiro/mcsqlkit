@@ -29,7 +29,7 @@ BEGIN
  end if;
  
  -- get current attributes
- select to_char(last_modified,'DD/MM/YYYY HH24:MI:SS'), &3 into vModifiedBefore, vValueBefore 
+ select to_char(last_modified,'YYYY-MM-DD HH24:MI:SS'), &3 into vModifiedBefore, vValueBefore 
    from dba_sql_plan_baselines 
   where sql_handle='&1' and plan_name='&2';
  

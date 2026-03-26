@@ -23,8 +23,8 @@ username,
 module,
 action, 
 sql_id,
---to_char(logon_time,'dd/mm/yyyy hh24:mi:ss') as last_time, 
-to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as sql_exec_start, 
+--to_char(logon_time,'yy-mm-ddyy hh24:mi:ss') as last_time, 
+to_char(NVL(SQL_EXEC_START,PREV_EXEC_START),'yy-mm-ddyy hh24:mi:ss') as sql_exec_start, 
 event
 from gv$session s
 where 1=1

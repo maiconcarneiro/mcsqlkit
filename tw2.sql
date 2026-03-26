@@ -1,7 +1,6 @@
 set feedback off
 set heading off
 set verify off
-set sqlformat
 set linesize 1000
 set long 999999
 col sql_text format a500

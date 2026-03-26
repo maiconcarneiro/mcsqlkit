@@ -1,6 +1,5 @@
 SET FEEDBACK OFF
-SET SQLFORMAT
-ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
+ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400
@@ -42,8 +41,8 @@ with phv_list as (
 )
 select a.plan_hash_value                                                               as plan_hash_value,
        max(p.adaptive_plan)                                                            as adaptive_plan,
-       to_char(min(b.begin_interval_time),'dd/mm/yy hh24:mi')                          as first,
-       to_char(max(b.end_interval_time),'dd/mm/yy hh24:mi')                            as last,
+       to_char(min(b.begin_interval_time),'yy-mm-dd hh24:mi')                          as first,
+       to_char(max(b.end_interval_time),'yy-mm-dd hh24:mi')                            as last,
        sum(executions_delta)                                                           as Execs,
        sum(rows_processed_delta)                   / greatest(sum(executions_delta),1) as rows_processed,
        sum(disk_reads_delta)                       / greatest(sum(executions_delta),1) as Disk_Reads,

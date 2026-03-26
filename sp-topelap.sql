@@ -1,5 +1,4 @@
 set feedback off
-set sqlformat 
 set pages 50
 set head on
 column module format a20

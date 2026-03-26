@@ -3,7 +3,6 @@ set pages 50
 SET FEEDBACK OFF
 alter session set nls_date_format='dd/mm Dy';
 
-SET SQLFORMAT
 set verify off
 
 set pages 999 lines 400

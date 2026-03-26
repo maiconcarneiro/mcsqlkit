@@ -1,5 +1,4 @@
 set feedback off
-set sqlformat
 set linesize 400
 set pages 50
 col snap_id        heading "snap1"             format 999999
@@ -37,7 +36,7 @@ select
   --event_name,
   --wait_class,
   snap_id, snap_id+1 as snap_id2,
-  to_char( max(begin_snap) , 'dd/mm/yyyy Dy') as begin_snap,
+  to_char( max(begin_snap) , 'yy-mm-ddyy Dy') as begin_snap,
   to_char( max(begin_snap) , 'hh24:mi') as begin_time,
   to_char( max(end_snap) , 'hh24:mi') as end_tie,
   SUM(total_waits - total_waits_fg) AS total_waits_bg,

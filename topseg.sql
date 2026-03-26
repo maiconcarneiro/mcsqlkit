@@ -1,1 +1,1 @@
-@topseg-&_REPO_TYPE
+@&_REPO_TYPE-topseg.sql

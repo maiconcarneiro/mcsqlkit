@@ -1,5 +1,4 @@
 set feedback off
-set sqlformat 
 set pages 50
 set head on
 column module format a20
@@ -26,7 +25,7 @@ SET termout ON
 
 -- report summary
 PROMP
-PROMP Report....: TOP 20 SQL Com Maior CPU Time (STATSPACK)
+PROMP Report....: TOP 20 SQL by CPU Time (STATSPACK)
 PROMP Snapshots.: &1 &2
 PROMP Instance..: &VNODE
 PROMP

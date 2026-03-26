@@ -10,13 +10,13 @@ col Phys_IO_MBps_Write format 999,999,999,999.99
 col Phys_IO_MBps_Total format 999,999,999,999.99
 col inicio format a20
 col fim format a20
-alter session set nls_date_format='dd/mm/yyyy hh24:mi';
+alter session set nls_date_format='yy-mm-ddyy hh24:mi';
 PROMPT ###############################################################################################
 PROMPT #                      TOP 10 IOPS e THROUGHPUT do AWR
 PROMPT ###############################################################################################
 select instance_name as instance, host_name as Servidor, sysdate as "Data da coleta:" from gv$instance;
 select min(begin_time) MAIS_ANTIGO , max(end_time) MAIS_RECENTE from dba_hist_sysmetric_summary;
---alter session set nls_date_format='dd/mm/yyyy';
+--alter session set nls_date_format='yy-mm-ddyy';
 PROMPT
 PROMPT ********************************** TOP 30 IOPS **************************************************
 select * from (

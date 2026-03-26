@@ -9,9 +9,8 @@
  Author: Maicon Carneiro | dibiei.blog
 */
 SET FEEDBACK OFF
-alter session set nls_date_format='dd/mm/yyyy Dy';
+alter session set nls_date_format='yy-mm-ddyy Dy';
 
-SET SQLFORMAT
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400

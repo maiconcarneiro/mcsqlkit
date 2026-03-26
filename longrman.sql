@@ -1,4 +1,3 @@
-set sqlformat
 set linesize 300
 set pagesize 500
 col sid format 99999
@@ -13,7 +12,7 @@ select s.machine,
        l.inst_id,
        l.sid,
        l.target,
-       to_char(start_time,'dd/mm/yyyy hh24:mi:ss') as "Start time",
+       to_char(start_time,'yy-mm-ddyy hh24:mi:ss') as "Start time",
        round(l.elapsed_seconds/60,2)  as "Min Elapsed",
        round(time_remaining/60,2)     as "Min Remaining",
        round(sofar/totalwork*100,2)   as "% Work",

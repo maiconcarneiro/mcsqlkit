@@ -1,6 +1,5 @@
 set linesize 9999
 set pages 9999
-SET SQLFORMAT
 COL NAME HEADING "Disksgroup"
 COL TYPE HEADING "Redundancy"
 COL TOTAL_GB HEADING "Total GB" FORMAT 999,999,999,999  
@@ -20,7 +19,6 @@ FROM (
 --- new version
 set linesize 9999
 set pages 9999
-SET SQLFORMAT
 COL NAME HEADING "Disksgroup"
 COL TYPE HEADING "Redundancy"
 COL TOTAL_GB HEADING "Total GB" FORMAT 999,999,999,999  

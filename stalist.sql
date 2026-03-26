@@ -5,8 +5,6 @@
 */
 
 set feedback off
-set sqlformat
-SET SQLFORMAT
 SET PAGES 50
 set linesize 400
 COL JOB_NAME FORMAT A40
@@ -24,7 +22,7 @@ SELECT lower(REGEXP_SUBSTR(JOB_NAME, '[^_]+_[^_]+_[^_]+_(.*)', 1, 1, NULL, 1)) A
        REGEXP_SUBSTR(JOB_NAME, '^[^_]+_([^_]+_[^_]+)', 1, 1, NULL, 1) AS TASK_NAME,
        JOB_NAME,
        STATE, 
-       TO_CHAR(START_DATE,'DD/MM/YYYY HH24:MI:SS') AS START_DATE,
+       TO_CHAR(START_DATE,'YYYY-MM-DD HH24:MI:SS') AS START_DATE,
        SUBSTR(COMMENTS,1,70) AS COMMENTS
 FROM DBA_SCHEDULER_JOBS 
 WHERE JOB_NAME LIKE 'STA%';
@@ -35,7 +33,7 @@ PROMP Jobs Finalizados:
 SELECT lower(REGEXP_SUBSTR(JOB_NAME, '[^_]+_[^_]+_[^_]+_(.*)', 1, 1, NULL, 1)) AS SQL_ID, 
        REGEXP_SUBSTR(JOB_NAME, '^[^_]+_([^_]+_[^_]+)', 1, 1, NULL, 1) AS TASK_NAME, 
        JOB_NAME,
-       TO_CHAR(LOG_DATE,'DD/MM/YYYY HH24:MI:SS') AS LOG_DATE,
+       TO_CHAR(LOG_DATE,'YYYY-MM-DD HH24:MI:SS') AS LOG_DATE,
        STATUS
 FROM DBA_SCHEDULER_JOB_LOG 
 WHERE JOB_NAME LIKE 'STA%' 

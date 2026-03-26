@@ -32,7 +32,7 @@
 	         and i.index_name  = s.index_name 
 	         and i.table_owner = s.table_owner 
 	         and i.table_name  = s.table_name 
-         )) , 'DD/MM/YYYY HH24:MI:SS') as last_analyzed,
+         )) , 'YYYY-MM-DD HH24:MI:SS') as last_analyzed,
          LISTAGG(i.column_name, ', ') WITHIN GROUP (ORDER BY i.column_position) AS INDEX_COLUMNS
     FROM dba_ind_columns i
    WHERE 1=1 

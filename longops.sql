@@ -1,4 +1,3 @@
-set sqlformat
 set linesize 300
 set pagesize 500
 col sid format 99999
@@ -11,7 +10,7 @@ col message format a100
 select inst_id,
        sid,
        target,
-       to_char(start_time,'dd/mm/yyyy hh24:mi:ss') start_time,
+       to_char(start_time,'yy-mm-ddyy hh24:mi:ss') start_time,
        elapsed_seconds/60 elapsed,
        round(time_remaining/60,2) "min_remaining",
        round(sofar/totalwork*100,2) as work,

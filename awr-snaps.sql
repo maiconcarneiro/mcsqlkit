@@ -45,13 +45,13 @@ PROMP Qt. Days..: &1
 PROMP Con. Name.: &VNODE 
 
 with awr as (
-SELECT TO_CHAR (END_INTERVAL_TIME, 'dd/mm/yyyy hh24') as hora,
+SELECT TO_CHAR (END_INTERVAL_TIME, 'yy-mm-ddyy hh24') as hora,
        min(END_INTERVAL_TIME) as begin_snap,
 	     min(SNAP_ID) as snap_id
  FROM DBA_HIST_SNAPSHOT
  WHERE END_INTERVAL_TIME >= trunc(sysdate) - &1
    AND DBID = (&_SUBQUERY_DBID)
-GROUP BY TO_CHAR (END_INTERVAL_TIME, 'dd/mm/yyyy hh24')
+GROUP BY TO_CHAR (END_INTERVAL_TIME, 'yy-mm-ddyy hh24')
 )
 SELECT TRUNC(begin_snap) snap_date,
  max (DECODE (TO_CHAR (begin_snap, 'hh24'), '00', snap_id, null)) "h0",

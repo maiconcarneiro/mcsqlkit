@@ -1,9 +1,8 @@
 set linesize 400
 set pages 50
 SET FEEDBACK OFF
-alter session set nls_date_format='dd/mm/yyyy hh24:mi';
+alter session set nls_date_format='yy-mm-ddyy hh24:mi';
 
-SET SQLFORMAT
 set verify off
 
 col snap_id heading 'Snap ID' format 999999

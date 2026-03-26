@@ -1,6 +1,5 @@
 
 set feedback off
-set sqlformat
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400
@@ -15,8 +14,8 @@ col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed avg ms)"      format 999,999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a15
-ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
-ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD/MM/YYYY';
+ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD';
 set feedback on
 
 -- obtem o nome da instancia

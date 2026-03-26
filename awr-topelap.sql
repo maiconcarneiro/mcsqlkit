@@ -14,13 +14,12 @@ SET termout ON
 
 -- report summary
 PROMP
-PROMP Metricc...: TOP 20 SQL By Elapsed Time
+PROMP Metricc...: TOP 20 SQL By Elapsed Time (AWR)
 PROMP Snapshots.: &1 &2
 PROMP Instance..: &VNODE
 PROMP
 
 set feedback off
-set sqlformat 
 set pages 50
 set head on
 set linesize 400

@@ -1,5 +1,4 @@
 
-set sqlformat
 set verify off
 set pagesize 50
 set linesize 300
@@ -13,13 +12,13 @@ col output_gbytes for 9,999,999 heading "OUTPUT|GBYTES"
 col input_gbytes for 9,999,999 heading "INPUT|GBYTES"
 col compression_ratio for 99.99 heading "Compression|Ratio"
 COL COMMAND_ID FORMAT a40
-alter session set NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS';
+alter session set NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS';
 select
 SESSION_RECID,
 SESSION_KEY, 
 INPUT_TYPE, STATUS,
-to_char(START_TIME,'dd/mm/yyyy hh24:mi') start_time,
-to_char(END_TIME,'dd/mm/yyyy hh24:mi')   end_time,
+to_char(START_TIME,'yy-mm-ddyy hh24:mi') start_time,
+to_char(END_TIME,'yy-mm-ddyy hh24:mi')   end_time,
 elapsed_seconds/3600 as hrs,
 elapsed_seconds/60 as minutes,
 (input_bytes/1024/1024/1024) input_gbytes,

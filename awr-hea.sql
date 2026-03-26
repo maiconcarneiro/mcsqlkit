@@ -1,4 +1,3 @@
-set sqlformat
 set linesize 400
 set pages 50
 col snap_id     heading "snap1"           format 999999

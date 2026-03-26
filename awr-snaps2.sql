@@ -4,7 +4,7 @@ col snap_id format 9999999
 col begin_interval_time format a20
 col end_interval_time format a20
 set feedback off;
-alter session set nls_timestamp_format='dd/mm/yyyy hh24:mi:ss';
+alter session set nls_timestamp_format='yy-mm-ddyy hh24:mi:ss';
 set feedback on;
 SELECT dbid, snap_id,
        min(BEGIN_INTERVAL_TIME) BEGIN_INTERVAL_TIME,

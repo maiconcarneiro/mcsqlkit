@@ -17,6 +17,7 @@ SET TAB OFF;
 SET SQLBLANKLINES ON;
 set termout off
 set feedback off;
+SET SQLFORMAT;
 
 COLUMN VERSION NEW_VALUE _ORA_VERSION
 COLUMN VERSION_SUFFIX NEW_VALUE _VERSION_SUFFIX
@@ -71,7 +72,7 @@ set termout on;
 
 @_format_auto
 PROMP **********************************************************************
-PROMP &&_CONN_TYPE_MSG_INFO 
+PROMP &&_CONN_TYPE_MSG_INFO - Repository used: &&_REPO_TYPE (&&_ORA_EDITION)
 --PROMP &&_MSG_AWR_PDB
 PROMP **********************************************************************
 

@@ -17,7 +17,6 @@ PROMP Instance..: &VNODE
 PROMP
 
 set feedback off
-set sqlformat
 set pagesize 40
 set verify off
 set linesize 400

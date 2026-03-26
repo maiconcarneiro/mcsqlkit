@@ -24,7 +24,7 @@ s.module,
 sq.plan_hash_value,
 s.sql_child_number as child,
 to_char(logon_time,'dd/mm hh24:mi:ss') as logon_time, 
---to_char(NVL(s.SQL_EXEC_START,s.PREV_EXEC_START),'dd/mm/yyyy hh24:mi:ss') as last_time, 
+--to_char(NVL(s.SQL_EXEC_START,s.PREV_EXEC_START),'yy-mm-ddyy hh24:mi:ss') as last_time, 
 to_char(s.SQL_EXEC_START,'dd/mm hh24:mi:ss') as last_time, 
 event
 from gv$session s

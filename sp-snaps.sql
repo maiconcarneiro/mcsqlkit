@@ -10,7 +10,6 @@
 set verify off
 set feedback off
 alter session set nls_date_format='dd/mm Dy';
-set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 col h0  format 999999
@@ -51,13 +50,13 @@ PROMP Con. Name.: &VNODE
 
 -- query
 with statspack as (
-SELECT TO_CHAR (SNAP_TIME, 'dd/mm/yyyy hh24') as hora,
+SELECT TO_CHAR (SNAP_TIME, 'yy-mm-ddyy hh24') as hora,
        min(SNAP_TIME) as begin_snap,
 	   min(SNAP_ID) as snap_id
  FROM STATS$SNAPSHOT
  WHERE SNAP_TIME >= trunc(sysdate) - &1
    AND DBID = (&_SUBQUERY_DBID)
-GROUP BY TO_CHAR (SNAP_TIME, 'dd/mm/yyyy hh24')
+GROUP BY TO_CHAR (SNAP_TIME, 'yy-mm-ddyy hh24')
 )
 SELECT TRUNC(begin_snap) snap_date,
  max (DECODE (TO_CHAR (begin_snap, 'hh24'), '00', snap_id, null)) "h0",

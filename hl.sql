@@ -9,7 +9,6 @@
 set verify off
 set feedback off
 alter session set nls_date_format='dd/mm Dy';
-set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 col h0  format 999.99

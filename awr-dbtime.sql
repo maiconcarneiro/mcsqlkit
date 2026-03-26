@@ -9,7 +9,6 @@
 set verify off
 set feedback off
 alter session set nls_date_format='Mon/dd Dy';
-set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
 define COL_NUM_FORMAT='99,999' -- define the format used in numeric columns
@@ -43,7 +42,7 @@ set feedback ON
 column NODE new_value VNODE 
 column CNAME new_value VCNAME 
 SET termout off
-SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&2 = 0 or inst_id = &2);
 SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
