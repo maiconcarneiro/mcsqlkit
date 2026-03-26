@@ -1,6 +1,6 @@
 def LAST_DAYS="&1"
 set verify off
-set lines 400
+set linesize 400
 set pages 100
 COL NAME FORMAT A30
 COL SIGNATURE FORMAT 99999999999999999999999

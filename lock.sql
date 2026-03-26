@@ -1,4 +1,4 @@
-SET LINES 400
+set linesize 400
 SET PAGES 50
 COL sess FORMAT A20
 COL serial# FORMAT A15

@@ -1,5 +1,5 @@
 set verify off
-set lines 400
+set linesize 400
 col servidor format a30
 col Phys_IOPS_Read format 999,999,999,999.99
 col Phys_IO_Tot_MBps format 999,999,999,999.99

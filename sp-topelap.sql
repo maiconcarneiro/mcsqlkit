@@ -3,7 +3,7 @@ set sqlformat
 set pages 50
 set head on
 column module format a20
-set lines 400
+set linesize 400
 
 col elapsed heading "Elapsed Time(s)" format 999,999,999.99
 col cpu_time heading "CPU Time(s)" format 999,999,999.99

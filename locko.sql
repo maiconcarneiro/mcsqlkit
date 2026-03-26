@@ -78,6 +78,7 @@ where locks.id1 = objs.object_id
  and vs.inst_id = locks.inst_id
  and objs.owner = tbls.owner
  and objs.object_name =  tbls.table_name
+ and objs.object_name like upper ('%&1%')
  --and &1
  --and locks.sid = 4028 and locks.inst_id = 2
  order by lock_time_in_minutes desc;

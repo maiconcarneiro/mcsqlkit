@@ -11,7 +11,7 @@ set sqlformat
 set pages 50
 set head on
 column module format a20
-set lines 400
+set linesize 400
 
 col top heading "Ranking" format 999
 col sql_id heading "SQL Id" format a20 

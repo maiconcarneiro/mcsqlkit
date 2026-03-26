@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col owner format a20
 col segment_name         heading 'Segment | name'          format a25
 col segment_full_name    heading 'Segment | Full name'     format a35

@@ -2,7 +2,7 @@
 set sqlformat
 set verify off
 set pagesize 50
-set lines 300
+set linesize 300
 col STATUS format a25
 col hrs format 999.99
 col minutes format 999,999.99

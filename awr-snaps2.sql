@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col dbid format 99999999999999
 col snap_id format 9999999
 col begin_interval_time format a20

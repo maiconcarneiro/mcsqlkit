@@ -1,6 +1,6 @@
 
 set feedback off;
-set lines 400
+set linesize 400
 set pages 100
 col inst_id format 99
 col xidusn format 999999999

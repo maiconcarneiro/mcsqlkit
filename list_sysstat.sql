@@ -1,4 +1,4 @@
-set lines 200
+set linesize 200
 set pages 50
 col class format 9999
 col statistic# format 99999

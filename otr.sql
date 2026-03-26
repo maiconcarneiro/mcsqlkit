@@ -1,3 +1,4 @@
+-- shows Open Transactions in Rollback state
 SELECT
     s.sid,
     s.serial#,

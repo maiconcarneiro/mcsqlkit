@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 set verify off
 col child_number heading "Child #" format 999
 col plan_hash_value heading "Plan|Hash Value" format 999999999999

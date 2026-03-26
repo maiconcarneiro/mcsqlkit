@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 set pages 50
 col wait_class format a20
 col event format a40

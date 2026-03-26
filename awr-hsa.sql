@@ -20,13 +20,12 @@ PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP
 
-set feedback off
 SET VERIFY OFF
 SET PAGES 50
-SET LINES 400
+set linesize 400
 def NUMBER_FORMAT='999,999,999,999.99'
 def NUMBER_FORMAT_INT='999,999,999,999'
-col Date           HEADING "Date"                  format a10
+col hist_date      HEADING "Date"                  format a10
 col First          HEADING "First"                 format a10
 col Last           HEADING "Last"                  format a10
 col Execs          HEADING "Execs"                 format &NUMBER_FORMAT_INT
@@ -38,7 +37,7 @@ col CPU_Time       HEADING "(CPU Time avg ms)"     format &NUMBER_FORMAT
 col Elapsed_Time   HEADING "(Elapsed avg ms)"      format &NUMBER_FORMAT
 col sql_id         HEADING  "SQL Id"               format a20
 
-
+set feedback off
 ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD';
 set feedback on
@@ -46,7 +45,7 @@ set feedback on
 select sql_id,
        plan_hash_value,
        a.snap_id,
-       min(b.begin_interval_time)                                       as Date,
+       min(b.begin_interval_time)                                       as hist_date,
        to_char(min(b.begin_interval_time),'hh24:mi:ss')                 as First,
        to_char(max(b.end_interval_time),'hh24:mi:ss')                   as Last,
        sum(executions_delta)                                            as Execs,
@@ -59,7 +58,7 @@ from dba_hist_sqlstat a
 join dba_hist_snapshot b on (a.dbid = b.dbid and a.snap_id = b.snap_id and a.instance_number = b.instance_number)
 where 1=1
 and sql_id in ('&1')
---and executions_delta > 0
+and executions_delta > 0
 and b.begin_interval_time >= sysdate - &2
 and (&3 = 0 or b.instance_number = &3)
 group by sql_id, plan_hash_value, a.snap_id

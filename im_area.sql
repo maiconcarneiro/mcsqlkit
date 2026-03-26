@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col populate_status heading 'Populate | Status'  format a15
 col alloc_mbytes    heading 'Allocated (MB)'     format 999,999,999.99
 col used_mbytes     heading 'Used (MB)'          format 999,999,999.99

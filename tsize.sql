@@ -1,6 +1,6 @@
 
 set pages 50
-set lines 400
+set linesize 400
 col owner format a20
 col table_name format a30
 col tbsize format 999,999,999,999

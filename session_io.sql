@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 set pages 50
 col inst_id format 999
 col sid format 99999

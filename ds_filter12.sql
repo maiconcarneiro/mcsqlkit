@@ -26,7 +26,7 @@ SET TERMOUT ON;
 
 
 SET PAGES 50
-SET LINES 400
+set linesize 400
 col inst_id        HEADING "Inst ID"               format 999
 col Data           HEADING "Data"                  format a10
 col Inicio         HEADING "Inicio"                format a10

@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col sql_id format a15
 col plan_hash_value HEADING "Plan|Hash Value"  format 99999999999999
 col adaptive_plan  HEADING "Is|Adaptive?" format a10

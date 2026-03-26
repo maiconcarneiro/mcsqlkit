@@ -22,12 +22,11 @@ PROMP
 
 SET TERMOUT OFF;
 SET VERIFY OFF;
-set sqlformat
 SET TERMOUT ON;
 
 
+SET LINESIZE 400
 SET PAGES 50
-SET LINES 400
 col inst_id        HEADING "Inst ID"               format 999
 col Data           HEADING "Data"                  format a10
 col Inicio         HEADING "Inicio"                format a10

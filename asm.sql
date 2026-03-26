@@ -1,4 +1,4 @@
-set lines 9999
+set linesize 9999
 set pages 9999
 SET SQLFORMAT
 COL NAME HEADING "Disksgroup"
@@ -18,7 +18,7 @@ FROM (
 
 
 --- new version
-set lines 9999
+set linesize 9999
 set pages 9999
 SET SQLFORMAT
 COL NAME HEADING "Disksgroup"

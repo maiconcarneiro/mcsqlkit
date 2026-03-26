@@ -12,11 +12,8 @@ SET TERMOUT ON;
 
 
 SET PAGES 50
-SET LINES 400
+set linesize 400
 col inst_id        HEADING "Inst ID"               format 999
-col Data           HEADING "Data"                  format a10
-col Inicio         HEADING "Inicio"                format a10
-col Final          HEADING "Final"                 format a10
 col Buffer_Gets    HEADING "Buffer Gets"           format 999,999,999,999.99
 col Elapsed_Time   HEADING "Elapsed|Time (ms)"     format 999,999,999,999.99
 col Execs          HEADING "Executions|Count"      format 999,999,999,999

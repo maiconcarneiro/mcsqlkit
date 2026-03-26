@@ -14,7 +14,7 @@ alter session set nls_date_format='dd/mm/yyyy Dy';
 SET SQLFORMAT
 SET VERIFY OFF
 SET PAGES 50
-SET LINES 400
+set linesize 400
 SET FEEDBACK ON
 
 col sql_id         HEADING "SQL Id"                format a18

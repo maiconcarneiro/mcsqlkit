@@ -5,7 +5,7 @@
    13/04/2025
 */
 
-set lines 200
+set linesize 200
 col vault_name       heading 'Vault|Name'                     format a20
 col hc_iops_prov     heading 'High Capacity|IOPS Provisioned' format 999,999,999.99
 col hc_space_prov    heading 'High Capacity|Provisioned (GB)' format 999,999,999.99

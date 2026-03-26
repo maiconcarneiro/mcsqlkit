@@ -13,7 +13,7 @@
 SET VERIFY OFF
 SET FEEDBACK OFF
 
-SET LINES 1000
+set linesize 1000
 SET PAGES 50
 
 -- entrada do usuario para instance e qtde. dias para listar snaps

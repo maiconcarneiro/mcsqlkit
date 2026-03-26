@@ -19,7 +19,7 @@ set verify off
 set feedback off
 alter session set nls_date_format='yyyy-mm-dd';
 set sqlformat
-set lines 400
+set linesize 400
 set pages 50
 col begin_snap     heading "Date"              format a10
 col event_name     heading "Event"             format a30 trunc

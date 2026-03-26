@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col sql_id format a20
 col pga_max format 999,999,999.99 heading "PGA Usage |Max (MB)"
 

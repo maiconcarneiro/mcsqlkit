@@ -1,5 +1,5 @@
 set sqlformat
-set lines 132
+set linesize 132
 set pages 105
 set pause off
 set echo off

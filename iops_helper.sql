@@ -10,7 +10,7 @@ def AGGR_FUNC='&4'
 set feedback off
 set sqlformat
 set verify off
-set lines 400
+set linesize 400
 set pages 50
 col begin_time         heading "Date"                             format a15
 col instance_number    heading "Inst ID"                          format 999

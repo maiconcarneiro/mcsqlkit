@@ -8,7 +8,7 @@
 
 set verify off
 set feedback off
-alter session set nls_date_format='dd/mm Dy';
+alter session set nls_date_format='Mon/dd Dy';
 set sqlformat 
 set pages 999 lines 400
 col snap_date heading "Date" format a10
@@ -49,11 +49,11 @@ SET termout ON
 
 -- set report summary
 PROMP
-PROMP Metrica...: DB Time
-PROMP Qt. Dias..: &1
+PROMP Metric....: DB Time
+PROMP Qt. Days..: &1
 PROMP Instance..: &VNODE
 PROMP
-PROMP Valores negativos aparecem em casos de restart da instancia
+PROMP Negative values can be displayed in case instance restart between 2 snapshots
 PROMP
 
 -- query

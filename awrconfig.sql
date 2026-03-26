@@ -7,7 +7,7 @@
 
 set verify off;
 set feedback off;
-set lines 400
+set linesize 400
 col dbid format 99999999999999
 col snap_interval format a30
 col retention format a30

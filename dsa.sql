@@ -6,23 +6,25 @@ PROMP
 
 SET VERIFY OFF
 SET PAGES 50
-SET LINES 400
+set linesize 400
 col Data           HEADING "Data"                  format a10
 col Inicio         HEADING "Inicio"                format a10
 col Final          HEADING "Final"                 format a10
-col Buffer_Gets    HEADING "Buffer Gets avg"       format 999,999,999,999.99
-col Elapsed_Time   HEADING "(Elapsed Time avg ms)" format 999,999,999,999.99
-col Execs          HEADING "Execs"                 format 999,999,999,999
-col Disk_Reads     HEADING "(Disk Reads avg)"      format 999,999,999,999.99
-col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
-col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
+col Buffer_Gets    HEADING "Buffer Gets|per exec"      format 999,999,999,999.99
+col Elapsed_Time   HEADING "Elapsed Time |per exec" format 999,999,999,999.99
+col Execs          HEADING "Executions|Count"                 format 999,999,999,999
+col Disk_Reads     HEADING "Disk Reads|per exec"      format 999,999,999,999.99
+col rows_processed HEADING "Rows|processed|per exec"              format 999,999,999,999.99
+col CPU_Time       HEADING "CPU Time|per exec"       format 999,999,999,999.99
+col io_time        HEADING "IO Time|per exec"        format 999,999,999.99
+col app_wait_time  HEADING "App Time|per exec"       format 999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a18
 col avg_px         HEADING  "(AVG Px)"             format a20
-col offload        HEADING  "Scan|(Offload)"            format a10
-col io_saved_perc  HEADING  "Smart|(IO Saved %)"         format 999,999.99
+col offload        HEADING  "Smart|Scan|Used?"       format a10
+col io_saved_perc  HEADING  "% IO Saved|Smart Scan"   format 999,999.99
 col child_number   HEADING  "Child"                format 999
 col inst_id        HEADING  "Inst"                 format 99 
-col plan_hash_value HEADING "PHV"                  format 999999999999
+col plan_hash_value HEADING "Plan|Hash Value"                  format 999999999999
 select sql_id,
        plan_hash_value, 
        child_number,
@@ -31,7 +33,7 @@ select sql_id,
        (buffer_gets)            / (case when executions = 0 then 1 else executions end) Buffer_Gets,
        (disk_reads)             / (case when executions = 0 then 1 else executions end) Disk_Reads,
        (rows_processed)         / (case when executions = 0 then 1 else executions end) rows_processed,
-       (user_io_wait_time/1000) / (case when executions = 0 then 1 else executions end) as io_time,
+       (user_io_wait_time/1000) / (case when executions = 0 then 1 else executions end) io_time,
        (cpu_time/1000)          / (case when executions = 0 then 1 else executions end) CPU_Time,
        (elapsed_time/1000)      / (case when executions = 0 then 1 else executions end) Elapsed_Time,
        (application_wait_time/1000) / greatest((executions),1) as app_wait_time,

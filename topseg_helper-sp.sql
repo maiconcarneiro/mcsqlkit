@@ -13,7 +13,7 @@ PROMP Con. Name.: &VCNAME
 PROMP
 
 set verify off
-set lines 400
+set linesize 400
 set pages 10
 col tablespace_name heading 'Tablespace Name' format a20
 col owner heading 'Owner' format a20

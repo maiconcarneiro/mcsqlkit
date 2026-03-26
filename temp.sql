@@ -7,7 +7,7 @@ SET SQLFORMAT
 PROMP Situacao da tablespace temp
 PROMP ======================================================================================
 
-SET LINES 400
+set linesize 400
 COL TABLESPACE FORMAT A15
 COL SIZE_GB FORMAT 999,999,999.99
 COL ALLOCATED_GB FORMAT 999,999,999.99
@@ -22,7 +22,7 @@ FROM DBA_TEMP_FREE_SPACE;
 PROMP TOP SQL ID usando TEMP atualmente
 PROMP ======================================================================================
 
-SET LINES 400
+set linesize 400
 SET PAGES 100
 COL DATA FORMAT A20
 COL USERNAME FORMAT A30
@@ -48,7 +48,7 @@ ORDER BY temp_size desc;
 
 PROMP Consumo de TEMP por Sessao (GV$SESSION)
 PROMP ======================================================================================
-SET LINES 9999
+set linesize 9999
 SET PAGES 100
 COL DATA FORMAT A20
 COL USERNAME FORMAT A15

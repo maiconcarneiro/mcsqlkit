@@ -2,7 +2,7 @@ set feedback off
 set sqlformat
 SET VERIFY OFF
 SET PAGES 50
-SET LINES 400
+set linesize 400
 def NUMBER_FORMAT='999,999,999,999.99'
 def NUMBER_FORMAT_INT='999,999,999,999'
 col Data           HEADING "Data"                  format a10

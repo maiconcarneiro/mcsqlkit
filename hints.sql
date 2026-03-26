@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col hint for a200
 select hint from (
 select p.name, p.signature, p.category,

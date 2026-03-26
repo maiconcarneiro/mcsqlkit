@@ -1,6 +1,6 @@
   set pagesize 5000
   col x_melhor format 999999999.99
-  set lines 400
+  set linesize 400
   with atual as (
      select sql_id,
                phv ,

@@ -1,6 +1,6 @@
 set sqlformat
 set long 99999
-SET LINES 400
+set linesize 400
 COL TASK_ID                             HEADING 'Task|ID'  FORMAT 999999
 COL INMEMORY_SIZE                       HEADING 'In-Memory|Size (MB)'  FORMAT 999,999,999
 COL ESTIMATED_DB_TIME_LOW               HEADING 'Low|Estimated|DB Time'  FORMAT 999999

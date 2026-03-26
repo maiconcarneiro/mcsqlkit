@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 set pages 50
 SET FEEDBACK OFF
 alter session set nls_date_format='dd/mm Dy';

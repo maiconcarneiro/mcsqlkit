@@ -9,7 +9,7 @@
 undefine sql_id
 clear breaks
 
-set lines 200
+set linesize 200
 set pagesize 100
 set verify off;
 

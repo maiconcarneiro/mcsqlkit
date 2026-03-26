@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 col text_line format a60
 with base_plan_table as ( /*+ MATERIALIZE */
 select id, parent_id, position, depth, operation, options, object_name

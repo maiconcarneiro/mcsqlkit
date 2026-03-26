@@ -1,4 +1,4 @@
-set lines 400
+set linesize 400
 set pages 1000
 col exec_name  format a15
 col sql_id format a18

@@ -20,7 +20,7 @@ set feedback off
 set sqlformat
 set pagesize 40
 set verify off
-set lines 400
+set linesize 400
 col avg_time heading "Avg wait(ms)" format 999,999.99
 col dbtime_percent heading "% DB time" format 99.99
 col wait_class heading "Wait Class" format a20

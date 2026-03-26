@@ -1,5 +1,5 @@
 PROMP ******************************* SGA Advisor ******************************************************
-SET LINES 400
+set linesize 400
 SET PAGES 100
 COL INST_ID FORMAT 99
 COL SGA_SIZE                HEADING "SGA Size (GB)" FORMAT 999,999,999,999,999.99
@@ -45,7 +45,7 @@ WHERE name = 'DEFAULT'
   AND advice_status = 'ON';
   
 PROMP ******************************* PGA Advisor ******************************************************
-SET LINES 400
+set linesize 400
 SET PAGES 50
 COL INST_ID FORMAT 99
 COL PGA_GBYTES FORMAT 999,999,999,999,999.99

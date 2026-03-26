@@ -7,9 +7,9 @@
 
 set verify off
 set feedback off
-alter session set nls_date_format='dd/mm Dy';
-set sqlformat
-set pages 999 lines 400
+alter session set nls_date_format='Mon/dd Dy';
+set linesize 400
+set pages 999
 col snap_date heading "Date" format a10
 define COL_NUM_FORMAT='999.99' -- define the format used in numeric columns
 col h0  format &&COL_NUM_FORMAT
@@ -39,21 +39,26 @@ col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
 
--- obtem o nome da instancia
-@_query_dbid
+-- get instance names
+column NODE new_value VNODE 
+column CNAME new_value VCNAME 
+SET termout off
+SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
+SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
+SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metrica...: Wait AVG Time (ms)
-PROMP Evento....: &1
-PROMP Qt. Dias..: &2 
+PROMP Metric....: Wait AVG Time (ms)
+PROMP Event.....: &1
+PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP
 
---PROMP Valoes sao exibidos em multiplos de 1.000 (Ex: 10 = 10.000 / 100 = 100.000 / 1.000 = 1.000.000)
 PROMP
 
+-- query
 with awr as (
 select
   trunc(begin_snap) as begin_snap,

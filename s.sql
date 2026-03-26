@@ -2,7 +2,7 @@ set feedback off
 set sqlformat
 set verify off
 set pagesize 1000
-set lines 500
+set linesize 500
 col n format 99
 col sid format 999999
 col serial# format 99999
