@@ -1,6 +1,6 @@
 /*
  Script para gerar uma matriz com o DB Time da instancia por dia e hora
- Sintaxe: SQL>@dbtime <Qtd. Dias> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
+ Sintaxe: SQL>@dbtime <Qtd. Days> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
  Exemplo: SQL>@dbtime 30 1 
  
  Maicon Carneiro | Salvador-BA, 11/11/2022

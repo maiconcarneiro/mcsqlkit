@@ -22,7 +22,7 @@ VARIABLE QTDIAS NUMBER;
 
 PROMPT Informe 0 para gerar um AWR Global (RAC) ou o Nº da Instance especifica (default = instance local)
 ACCEPT user_INSTID   CHAR PROMPT 'Inst ID: '
-ACCEPT user_QTDIAS NUMBER PROMPT 'Qtde. Dias: '
+ACCEPT user_QTDIAS NUMBER PROMPT 'Qtde. Days: '
 
 
 BEGIN

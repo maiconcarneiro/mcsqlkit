@@ -26,7 +26,7 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Sessoes Ativas na GV$SESSION
+PROMP Metric....: Sessoes Ativas na GV$SESSION
 PROMP Instance..: &VNODE
 PROMP
 

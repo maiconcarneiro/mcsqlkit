@@ -25,7 +25,7 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: TOP 20 SQL Com Maior DB Time (STATSPACK)
+PROMP Metric....: TOP 20 SQL by DB Time (STATSPACK)
 PROMP Snapshots.: &1 &2
 PROMP Instance..: &VNODE
 PROMP

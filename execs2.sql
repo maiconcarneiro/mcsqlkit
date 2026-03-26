@@ -1,6 +1,6 @@
 /*
  Script para gerar uma matriz com a contagem de execucoes do SQL ID por dia e hora
- Sintaxe: SQL>@execs <SQL_ID> <Qtd. Dias> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
+ Sintaxe: SQL>@execs <SQL_ID> <Qtd. Days> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
  Exemplo: SQL>@execs @execs c3bpu9sapxhpw 10 1 
  
  Maicon Carneiro | Salvador-BA, 11/11/2022
@@ -46,9 +46,9 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Executions
+PROMP Metric....: Executions
 PROMP SQL ID....: &1
-PROMP Qt. Dias..: &2 
+PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
 PROMP
 PROMP Os valors abaixo sao multiplos de 1000 (ex: 250 = 250.000 / 2.500 = 2.500.000)

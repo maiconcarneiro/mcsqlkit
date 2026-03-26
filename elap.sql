@@ -1,6 +1,6 @@
 /*
  Script para gerar uma matriz com a contagem de execucoes do SQL ID por dia e hora
- Sintaxe: SQL>@execs <SQL_ID> <Qtd. Dias> <Inst ID> <medida> (Onde Inst ID = 0 soma todas as instancias do cluster)
+ Sintaxe: SQL>@execs <SQL_ID> <Qtd. Days> <Inst ID> <medida> (Onde Inst ID = 0 soma todas as instancias do cluster)
  "medida" pode ser ms para Milisegundos ou sec para segundos
  Exemplo: SQL>@execs c3bpu9sapxhpw 10 1 ms
  

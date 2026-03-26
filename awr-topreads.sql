@@ -31,7 +31,7 @@ SET termout ON
 
 -- report summary
 PROMP
-PROMP Metrica...: TOP 20 SQL Com Maior "Disk Physical Reads"
+PROMP Metric....: TOP 20 SQL by "Disk Physical Reads"
 PROMP Snapshots.: &1 &2
 PROMP Instance..: &VNODE
 PROMP

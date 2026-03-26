@@ -33,7 +33,7 @@ SET termout ON
 
 -- report sumamry
 PROMP
-PROMP Metrica...: Physical IOPS and MBPS History from AWR
+PROMP Metric....: Physical IOPS and MBPS History from AWR
 PROMP Days......: &2
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME

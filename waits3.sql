@@ -41,9 +41,9 @@ set feedback ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Waits Count
+PROMP Metric....: Waits Count
 PROMP Evento....: &1
-PROMP Qt. Dias..: &2 
+PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP

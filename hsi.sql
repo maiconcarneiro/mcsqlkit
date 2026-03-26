@@ -26,9 +26,9 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metrica...: Historico do SQL_ID por Data e Snapshot
+PROMP Metric....: Historico do SQL_ID por Data e Snapshot
 PROMP SQL ID....: &1
-PROMP Qt. Dias..: &2
+PROMP Qt. Days..: &2
 PROMP Instance..: &VNODE
 PROMP
 
