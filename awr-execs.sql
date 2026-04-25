@@ -1,7 +1,7 @@
 /*
  Script to generate a matrix with the executions count per hour
  Syntax: SQL>@execs <SQL_ID> <Qtd. Days> <Inst ID> (Where Inst ID = 0 stands for all cluster instances)
- Example: SQL>@execs @execs c3bpu9sapxhpw 10 1 
+ Example: SQL>@execs c3bpu9sapxhpw 10 1 
  
  Maicon Carneiro | Salvador-BA, 2022-11-11
 */
@@ -46,7 +46,7 @@ SET termout ON
 
 -- report summary
 PROMP
-PROMP Metric....: Executions
+PROMP Metric....: SQL Executions count per Hour
 PROMP SQL ID....: &1
 PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE

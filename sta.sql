@@ -13,9 +13,9 @@
 
    Date       Author             | History
  ----------- -------------------- ------------------------------------------------------------------------
- 04/11/2022 | Maicon Carneiro    | Script sta.sql created supporting Cursor Cache only
- 24/04/2022 | Maicon Carneiro    | Script sta2.sql created supporting AWR only and requiring snapshots to be passed in parameters
- 13/11/2024 | Maicon Carneiro    | Script sta.sql enhaced to include the AWR funcionality in dynamic way.
+ 2022/11/04 | Maicon Carneiro    | Script sta.sql created supporting Cursor Cache only
+ 2022/04/24 | Maicon Carneiro    | Script sta2.sql created supporting AWR only and requiring snapshots to be passed in parameters
+ 2024/11/13 | Maicon Carneiro    | Script sta.sql enhaced to include the AWR funcionality in dynamic way.
 
 */
 
@@ -73,7 +73,7 @@ begin
      start_date    =>  systimestamp,  
      enabled       =>  true,  
      auto_drop     =>  true,  
-     comments      =>  'Run SQL Tuning Advisor Task ' || vTASK || ' for SQL ID ' || vSQL_ID
+     comments      =>  'SQL Tuning Advisor Task ' || vTASK || ' for SQL ID ' || vSQL_ID
     );
  
  dbms_output.put_line ('JOB ' || vJobName || ' executing Task ' || vTASK || ' using ' || vSource);

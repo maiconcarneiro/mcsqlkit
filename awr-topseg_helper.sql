@@ -15,8 +15,8 @@ set pages 10
 col tablespace_name heading 'Tablespace Name' format a20
 col owner heading 'Owner' format a20
 col object_name heading 'Object Name' format a30
-col subobject_name heading 'Subobject Name' format a20
-col object_type heading 'Object Type' format a15
+col subobject_name heading 'Subobject Name' format a30
+col object_type heading 'Object Type' format a25
 col obj# heading 'Obj#' format 9999999999
 col dataobj# heading 'Dataobj#' format 9999999999
 col pct_total heading '% of Capture' format 999.99

@@ -18,15 +18,15 @@ col sql_id format a15
 col secs format 999,999
 set feedback on
 
--- obtem o nome da instancia
+-- get instance name
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &1 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&1 = 0 or inst_id = &1);
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metric....: Sessoes Ativas na GV$SESSION
+PROMP Metric....: Active sessions from GV$SESSION
 PROMP Instance..: &VNODE
 PROMP
 
@@ -44,8 +44,8 @@ from gv$session s
 where 1=1
 and type = 'USER'
 and status = 'ACTIVE'
+and (&1 = 0 or inst_id = &1)
 order by s.logon_time;
 
 PROMP
 
---and (&1 = 0 or inst_id = &1)

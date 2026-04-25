@@ -16,7 +16,7 @@ COL COMMENTS FORMAT A70
 COL TASK_NAME FORMAT A15
 COL LOG_DATE FORMAT A20
 
-PROMP Jobs Pendentes:
+PROMP Running jobs:
 
 SELECT lower(REGEXP_SUBSTR(JOB_NAME, '[^_]+_[^_]+_[^_]+_(.*)', 1, 1, NULL, 1)) AS SQL_ID, 
        REGEXP_SUBSTR(JOB_NAME, '^[^_]+_([^_]+_[^_]+)', 1, 1, NULL, 1) AS TASK_NAME,
@@ -28,7 +28,7 @@ FROM DBA_SCHEDULER_JOBS
 WHERE JOB_NAME LIKE 'STA%';
 
 PROMP
-PROMP Jobs Finalizados:
+PROMP Completed jobs:
 
 SELECT lower(REGEXP_SUBSTR(JOB_NAME, '[^_]+_[^_]+_[^_]+_(.*)', 1, 1, NULL, 1)) AS SQL_ID, 
        REGEXP_SUBSTR(JOB_NAME, '^[^_]+_([^_]+_[^_]+)', 1, 1, NULL, 1) AS TASK_NAME, 

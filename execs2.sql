@@ -46,12 +46,12 @@ SET termout ON
 
 -- resumo do relatorio
 PROMP
-PROMP Metric....: Executions
+PROMP Metric....: SQL Executions count per Hour
 PROMP SQL ID....: &1
 PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
 PROMP
-PROMP Os valors abaixo sao multiplos de 1000 (ex: 250 = 250.000 / 2.500 = 2.500.000)
+PROMP Values are multiples of 1.000 (example: 250 = 250.000 / 2.500 = 2.500.000)
 
 -- query
 with awr as (
