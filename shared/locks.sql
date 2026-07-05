@@ -120,9 +120,9 @@ DECLARE
           AND sw.paddr  = pw.addr (+)
           AND sh.paddr  = ph.addr (+)
           AND sw.sql_address  = aw.address
-        ORDER BY
-            iw.instance_name
-          , lw.sid;
+        --ORDER BY iw.instance_name, lw.sid
+        ORDER BY lw.id1, lw.request
+        ;
 
     TYPE t_BlockingLockRecord IS RECORD (
           WaitingInstanceName       VARCHAR2(16)

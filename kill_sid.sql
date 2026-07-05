@@ -1,0 +1,1 @@
+@kill "sid=&1 and inst_id=&2"

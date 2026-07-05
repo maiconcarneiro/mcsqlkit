@@ -1,84 +1,39 @@
-/*
- Script para consultar lock por objeto
-*/
-
 set linesize 400
-set pagesize 300
-col lock_time_in_minutes format 99,999,999,999.99
-col audsid format 99999
-col inst_id format 99
-col sid format 999999
-col serial format 9999
-col oracle_user format a20
-col os_user format a20
-col program format a30 trunc
-col module format a30 trunc
-col action format a20 trunc
-col process format 9999999
-col lock_type format a15
-col object_owner format a20
-col object_name format a30
-col object_type format a20
-
-select round( locks.ctime/60, 2 ) lock_time_in_minutes,
---vs.audsid audsid,
-locks.inst_id,
-locks.sid sid,
---to_char(vs.serial#) serial,
-vs.username oracle_user,
-vs.osuser os_user,
---vs.program program,
---vs.module module,
---vs.action action,
---vs.process process,
-decode(locks.lmode,
-       1, NULL,
-       2, 'Row Share',
-       3, 'Row Exclusive',
-       4, 'Share',
-       5, 'Share Row Exclusive',
-       6, 'Exclusive', 'None') lock_mode_held,
- decode(locks.request,
-       1, NULL,
-       2, 'Row Share',
-       3, 'Row Exclusive',
-       4, 'Share',
-       5, 'Share Row Exclusive',
-       6, 'Exclusive', 'None') lock_mode_requested,
- decode(locks.type,
-       'MR', 'Media Recovery',
-       'RT', 'Redo Thread',
-       'UN', 'User Name',
-       'TX', 'Transaction',
-       'TM', 'DML',
-       'UL', 'PL/SQL User Lock',
-       'DX', 'Distributed Xaction',
-       'CF', 'Control File',
-       'IS', 'Instance State',
-       'FS', 'File Set',
-       'IR', 'Instance Recovery',
-       'ST', 'Disk Space Transaction',
-       'TS', 'Temp Segment',
-       'IV', 'Library Cache Invalidation',
-       'LS', 'Log Start or Log Switch',
-       'RW', 'Row Wait',
-       'SQ', 'Sequence Number',
-       'TE', 'Extend Table',
-       'TT', 'Temp Table',
-       locks.type) lock_type,
- objs.owner object_owner,
- objs.object_name object_name,
- objs.object_type object_type
-from gv$session vs,
-     gv$lock locks,
-     all_objects objs,
-     all_tables tbls
-where locks.id1 = objs.object_id
- and vs.sid = locks.sid
- and vs.inst_id = locks.inst_id
- and objs.owner = tbls.owner
- and objs.object_name =  tbls.table_name
- and objs.object_name like upper ('%&1%')
- --and &1
- --and locks.sid = 4028 and locks.inst_id = 2
- order by lock_time_in_minutes desc;
+SET PAGES 50
+COL sess FORMAT A20
+COL serial# FORMAT A8
+COL status FORMAT A12
+COL MACHINE FORMAT A20 TRUNC
+COL LOCKED_OBJECT FORMAT A30
+COL USERNAME FORMAT A15
+COL SQL_ADDRESS FORMAT A20
+COL SQL_ID FORMAT A18
+COL INST_ID FORMAT 99
+COL blocker format a10
+COL blocking_session heading 'Blocker|Session' format 99999
+COL blocking_instance heading 'Blocker|Instance' format 99
+COL blocking_session_status heading 'Blocker|Status' format a10
+SELECT --DECODE(request, 0, 'Holder: ', '  Waiter: ') || l.sid || ' ' || l.inst_id sess,
+       DECODE(s.final_blocking_session,NULL,'','  ') || DECODE (request, 0, 'Holder: ', ' Waiter: ') || s.sid || ' ' || s.inst_id sess,
+       s.serial#,
+       s.status,
+       s.blocking_session || ' ' || s.blocking_instance as blocker,
+       s.blocking_session_status,
+       do.owner || '.' || do.object_name as locked_object,
+       --gv$session.username,
+       s.sql_id,
+       substr(machine,1,instr(machine,'.')-1) as machine,
+	  -- gv$session.sql_hash_value,
+	   s.event
+  FROM gv$lock l
+  join gv$session s
+    on l.sid = s.sid
+   and l.inst_id = s.inst_id
+  join gv$locked_object lo
+    on l.SID = lo.SESSION_ID
+   and l.inst_id = lo.inst_id
+  join dba_objects do
+    on lo.OBJECT_ID = do.OBJECT_ID
+WHERE (id1, id2, l.type) IN
+       (SELECT id1, id2, type FROM gv$lock WHERE request > 0)
+ORDER BY id1, request;

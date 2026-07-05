@@ -42,7 +42,9 @@ SELECT inst_id,
  FROM GV$DB_CACHE_ADVICE
 WHERE name = 'DEFAULT'
   AND (&1 = 0 or inst_id = &1)
-  AND advice_status = 'ON';
+ -- AND size_factor = 1
+  AND advice_status = 'ON'
+ORDER BY INST_ID, size_factor;
   
 PROMP ******************************* PGA Advisor ******************************************************
 set linesize 400

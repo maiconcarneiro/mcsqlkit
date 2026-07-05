@@ -1,35 +1,44 @@
-set linesize 400
-SET PAGES 50
-COL sess FORMAT A20
-COL serial# FORMAT A15
+SET LINESIZE 400
+SET PAGESIZE 200
+
+COL blocking_tree FORMAT A30 HEADING 'Blocking Tree|(Holder -> Waiter)'
+COL username FORMAT A15
+COL sql_id FORMAT A13
+COL machine FORMAT A20 TRUNC
+COL program FORMAT A20 TRUNC
+COL event FORMAT A30 TRUNC
 COL status FORMAT A12
-COL MACHINE FORMAT A20 TRUNC
-COL LOCKED_OBJECT FORMAT A30
-COL USERNAME FORMAT A15
-COL SQL_ADDRESS FORMAT A20
-COL SQL_ID FORMAT A18
-COL INST_ID FORMAT 99
-SELECT DECODE(request, 0, 'Holder: ', 'Waiter: ') || gv$lock.sid sess,
-       gv$session.serial#,
-       gv$session.status,
-       gv$lock.INST_ID,
-       gv$session.sql_id,
-       --gv$session.username,
-       substr(machine,1,instr(machine,'.')-1) as machine,
-       do.object_name as locked_object,
-       gv$session.BLOCKING_SESSION,
-       gv$session.inst_id,
-	  -- gv$session.sql_hash_value,
-	   gv$session.event
-  FROM gv$lock
-  join gv$session
-    on gv$lock.sid = gv$session.sid
-   and gv$lock.inst_id = gv$session.inst_id
-  join gv$locked_object lo
-    on gv$lock.SID = lo.SESSION_ID
-   and gv$lock.inst_id = lo.inst_id
-  join dba_objects do
-    on lo.OBJECT_ID = do.OBJECT_ID
-WHERE (id1, id2, gv$lock.type) IN
-       (SELECT id1, id2, type FROM gv$lock WHERE request > 0)
-ORDER BY id1, request;
+COL seconds_in_wait FORMAT 999,999,999 HEADING 'Wait Sec'
+col blocker format a15
+col final_blocker format a15
+
+SELECT 
+    -- Visualizes the hierarchy. Root holders have no indentation; waiters are indented.
+    LPAD(' ', 3 * (LEVEL - 1)) || 
+        CASE 
+            WHEN LEVEL = 1 THEN 'Holder: ' 
+            ELSE 'Waiter: ' 
+        END || ss.sid || ' ' || ss.inst_id AS blocking_tree,
+    ss.username,
+    ss.sql_id,
+    ss.machine,
+    substr(ss.program,1, instr(ss.program,' ',1,1)-1) AS program,
+    ss.event,
+    ss.status,
+    ss.seconds_in_wait,
+    ss.blocking_session || ' ' || ss.blocking_instance AS blocker,
+    ss.final_blocking_session || ' ' || ss.final_blocking_instance AS final_blocker
+FROM gv$session ss
+WHERE ss.sid IN (
+    -- Filter to only include sessions that are either blockers or actively blocked
+    SELECT sid FROM gv$session WHERE blocking_session IS NOT NULL
+    UNION
+    SELECT blocking_session FROM gv$session WHERE blocking_session IS NOT NULL
+)
+-- Establish the hierarchy: Parent is the blocking session, Child is the waiting session
+START WITH ss.blocking_session IS NULL 
+       AND ss.sid IN (SELECT blocking_session FROM gv$session WHERE blocking_session IS NOT NULL)
+CONNECT BY PRIOR ss.sid = ss.blocking_session
+       AND PRIOR ss.inst_id = COALESCE(ss.blocking_instance, ss.inst_id)
+-- Keeps the tree structure intact while ordering waiters of the same level by wait time
+ORDER SIBLINGS BY ss.seconds_in_wait DESC;
