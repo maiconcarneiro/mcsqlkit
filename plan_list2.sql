@@ -57,7 +57,7 @@ ORDER BY LAST_MODIFIED;
 
 PROMP
 PROMP
-PROMP 3) Planos carregados em memoria (GV$SQL):
+PROMP 3) Plans loaded in memory (GV$SQL):
 PROMP ==================================================================================
 col sql_id format a18
 col plan_hash_value heading "Plan | Hash Value" format 999999999999

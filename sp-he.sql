@@ -16,12 +16,12 @@ col min_wait_ms    heading "Min Time (ms)"     format 999,999.9999
 col max_wait_ms    heading "Max Time (ms)"     format 999,999,999.9999
 col x              heading "|"                 format a1
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
 def _DATE_FILTER=&2
 @_get_interval
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: History of Event wais per day (STATSPACK)
 PROMP Event.....: &1

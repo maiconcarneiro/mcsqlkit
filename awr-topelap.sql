@@ -11,11 +11,12 @@ SET termout off
 SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
+@_get_interval_snap-awr &1 &2
 
 -- report summary
 PROMP
 PROMP Metricc...: TOP 20 SQL By Elapsed Time (AWR)
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 

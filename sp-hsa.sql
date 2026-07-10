@@ -4,9 +4,9 @@ SET PAGES 50
 set linesize 400
 def NUMBER_FORMAT='999,999,999,999.99'
 def NUMBER_FORMAT_INT='999,999,999,999'
-col Data           HEADING "Data"                  format a10
-col Inicio         HEADING "Inicio"                format a10
-col Final          HEADING "Final"                 format a10
+col report_date    HEADING "Date"                  format a10
+col start_time     HEADING "Start"                 format a10
+col end_time       HEADING "End"                   format a10
 col Execs          HEADING "Execs"                 format &NUMBER_FORMAT_INT
 col Buffer_Gets    HEADING "(Buffer Gets avg)"     format &NUMBER_FORMAT
 col Elapsed_Time   HEADING "(Elapsed Time avg ms)" format &NUMBER_FORMAT
@@ -22,7 +22,7 @@ ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD';
 set feedback on
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 column CNAME new_value VCNAME 
 SET termout off
@@ -30,7 +30,7 @@ SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM 
 SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: History of SQL_ID per Snapshot (STATSPACK)
 PROMP SQL ID....: &1
@@ -75,9 +75,9 @@ order by s.dbid, s.instance_number, s.snap_id
 )
 select sql_id,
        snap_id,
-       min(end_interval_time)                                       as Data,
-       to_char(min(begin_interval_time),'hh24:mi:ss')                 as Inicio,
-       to_char(max(end_interval_time),'hh24:mi:ss')                   as Final,
+       min(end_interval_time)                                       as report_date,
+       to_char(min(begin_interval_time),'hh24:mi:ss')                 as start_time,
+       to_char(max(end_interval_time),'hh24:mi:ss')                   as end_time,
        sum(executions_delta)                                            as Execs,
        sum(buffer_gets_delta)                / greatest(sum(executions_delta),1) as Buffer_Gets,
        sum(disk_reads_delta)                 / greatest(sum(executions_delta),1) as Disk_Reads,

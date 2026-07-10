@@ -1,5 +1,5 @@
 /*
- Consulta os SQL ID de queries executados pelo SQL_ID de um PLSQL
+ Queries the SQL IDs of queries executed by the SQL_ID of a PLSQL
  Rodrigo Gonçalves
 */
 

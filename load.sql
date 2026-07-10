@@ -1,7 +1,7 @@
 /*
- Script para gerar uma matriz com o Load Average da CPU do DB Node (capturado pelo AWR)
- Sintaxe: SQL>@load <Qtd. Days> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
- Exemplo: SQL>@execs @execs c3bpu9sapxhpw 10 1 
+ Script to generate a matrix with the DB Node CPU Load Average (captured by AWR)
+ Syntax: SQL>@load <Qtd. Days> <Inst ID> (Where Inst ID = 0 sums all instances in the cluster)
+ Example: SQL>@execs @execs c3bpu9sapxhpw 10 1 
  
  Maicon Carneiro | Salvador-BA, 18/11/2022
 */
@@ -37,7 +37,7 @@ col h22 format 999.99
 col h23 format 999.99
 set feedback on;
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: OS Load Average
 PROMP Qt. Days..: &1

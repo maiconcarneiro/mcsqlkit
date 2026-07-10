@@ -17,16 +17,17 @@ col top heading "Ranking" format 999
 col disk_read_avg heading "Disk Read avg" format 999,999,999.99
 col sql_text format a50
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
+@_get_interval_snap-sp &1 &2
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: TOP 20 SQL by DB Time (STATSPACK)
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 

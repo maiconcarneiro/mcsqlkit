@@ -46,7 +46,7 @@ from (select sql_id,
                 from dba_hist_active_sess_history h
                where 1=1 
 	             and (:INSTID = 0 or h.instance_number = :INSTID)
-	             and h.snap_id >  :SNAP1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
+	             and h.snap_id >  :SNAP1 -- The TOP 10 in the HTML AWR report excludes the snapshot
 	             and h.snap_id <= :SNAP2
                  and nvl(h.temp_space_allocated, 0) > 0
             group by sample_time, sql_id

@@ -7,9 +7,9 @@ PROMP
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400
-col Data           HEADING "Data"                  format a10
-col Inicio         HEADING "Inicio"                format a10
-col Final          HEADING "Final"                 format a10
+col report_date    HEADING "Date"                  format a10
+col start_time     HEADING "Start"                 format a10
+col end_time       HEADING "End"                   format a10
 col Buffer_Gets    HEADING "Buffer Gets|per exec"      format 999,999,999,999.99
 col Elapsed_Time   HEADING "Elapsed Time |per exec" format 999,999,999,999.99
 col Execs          HEADING "Executions|Count"                 format 999,999,999,999

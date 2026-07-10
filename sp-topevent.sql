@@ -1,6 +1,6 @@
--- 30/12/2023 - Maicon Carneiro - Criação do Script para exibir o TOP 20 eventos do AWR
--- 25/04/2024 - Maicon Carneiro - Correção do calculo de "% of Total" e ajuste do begin_snap_id
--- 23/05/2023 - Maicon Carneiro - Script "sp-topevent" criado com base no "topevent" e adaptado para usar STATSPACK
+-- 30/12/2023 - Maicon Carneiro - Created the script to display the TOP 20 AWR events
+-- 25/04/2024 - Maicon Carneiro - Fixed the "% of Total" calculation and adjusted begin_snap_id
+-- 23/05/2023 - Maicon Carneiro - Script "sp-topevent" created based on "topevent" and adapted to use STATSPACK
 
 set feedback off
 set pagesize 40

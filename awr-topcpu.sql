@@ -18,16 +18,17 @@ col buffer_gets_avg heading "Gets avg" format 999,999,999.99
 col top heading "Ranking" format 999
 col sql_text format A50
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
+@_get_interval_snap-awr &1 &2
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Report....: TOP 20 SQL by CPU Time (AWR)
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 
@@ -70,7 +71,7 @@ from (
  left join dba_hist_sqltext t on (h.dbid = t.dbid and h.sql_id = t.sql_id)
 	 where 1=1 
 	   and (&3 = 0 or h.instance_number = &3)
-	   and h.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
+	   and h.snap_id >  &1 -- the TOP 10 in the AWR HTML report disregards the snapshot 
 	   and h.snap_id <= &2 
 	   and h.executions_delta > 0
   group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)

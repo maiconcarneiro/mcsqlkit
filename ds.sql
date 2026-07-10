@@ -1,6 +1,6 @@
 /*
- Script para consulta as metricas de um SQL ID na GV$SQL e retorna valores médios por execução
- Exemplo: @ds <SQL_ID>
+ Script to query metrics for a SQL ID in GV$SQL and return average values per execution
+ Example: @ds <SQL_ID>
 
  Maicon Carneiro | dibiei.blog
 */

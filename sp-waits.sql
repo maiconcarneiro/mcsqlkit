@@ -1,5 +1,5 @@
 /*
- Script para gerar uma matriz com a contagem de waits de um evento de espera
+ Script to generate a matrix with the wait count of a wait event
  Script: sp-waits.sql
  Generates a matrix with event waits per hour using STATSPACK metrics
  Syntax: SQL>@sp-waits '<event name>' <days> <instance number>

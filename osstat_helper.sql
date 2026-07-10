@@ -1,7 +1,7 @@
 /*
- Script para gerar uma matriz com estatisticas do SO capturadas pelo AWR por dia e hora
- Sintaxe: SQL>@osstat_helper <STAT_NAME> <Qtd. Days> <Inst ID> <Aggregation type>
- Exemplo: SQL>@osstat_helper SYS_TIME 30 1 avg
+ Script to generate a matrix with OS statistics captured by AWR by day and hour
+ Syntax: SQL>@osstat_helper <STAT_NAME> <Qtd. Days> <Inst ID> <Aggregation type>
+ Example: SQL>@osstat_helper SYS_TIME 30 1 avg
  
  Maicon Carneiro | Salvador-BA, 01/11/2024
 */

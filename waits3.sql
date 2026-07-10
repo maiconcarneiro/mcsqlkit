@@ -1,6 +1,6 @@
 /*
- Script para gerar uma matriz com a contagem de waits de um evento de espera
- Sintaxe: SQL>@waits <dias> '<nome do evento>'
+ Script to generate a matrix with the wait count of a wait event
+ Syntax: SQL>@waits <days> '<event name>'
  
  Maicon Carneiro | Salvador-BA, 10/11/2022
 */
@@ -39,10 +39,10 @@ col h23 format &&COL_NUM_FORMAT JUSTIFY RIGHT
 set feedback ON
 
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: Waits Count
-PROMP Evento....: &1
+PROMP Event.....: &1
 PROMP Qt. Days..: &2 
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
@@ -64,7 +64,7 @@ select
 from (
  select dbid, instance_number, snap_id, event_name, wait_class, total_waits, round(time_waited_micro/1000000, 2) time_waited
   from dba_hist_system_event
-  where event_name = '&1' -- filtro especifico
+  where event_name = '&1' -- specific filter
 ) stats, dba_hist_snapshot s
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id

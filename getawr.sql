@@ -1,12 +1,12 @@
 /*
 
  getawr.sql v1.0
- Script para gerar relatorio AWR do lado do Client (SQL*PLUS ou SQLcl)
- Pode ser usado para gerar report em HTML para a Intance Local, qualquer instance do Cluster ou Global
- 
- Data       | Autor              | Modificacao
+ Script to generate AWR report on the Client side (SQL*PLUS or SQLcl)
+ Can be used to generate an HTML report for the Local Instance, any instance in the Cluster, or Global
+
+ Date       | Author             | Modification
  ----------- -------------------- ------------------------------------------------------------------------
- 08/04/2022 | Maicon Carneiro    | Cricao do script
+ 08/04/2022 | Maicon Carneiro    | Created the script
  
 */
 
@@ -16,13 +16,13 @@ SET FEEDBACK OFF
 set linesize 1000
 SET PAGES 50
 
--- entrada do usuario para instance e qtde. dias para listar snaps
+-- user input for instance and number of days to list snaps
 VARIABLE INSTID NUMBER;
-VARIABLE QTDIAS NUMBER;
+VARIABLE NUM_DAYS NUMBER;
 
-PROMPT Informe 0 para gerar um AWR Global (RAC) ou o Nº da Instance especifica (default = instance local)
+PROMPT Enter 0 to generate a Global AWR (RAC) or the specific Instance number (default = local instance)
 ACCEPT user_INSTID   CHAR PROMPT 'Inst ID: '
-ACCEPT user_QTDIAS NUMBER PROMPT 'Qtde. Days: '
+ACCEPT user_NUM_DAYS NUMBER PROMPT 'Number of Days: '
 
 
 BEGIN
@@ -31,31 +31,31 @@ BEGIN
    ELSE
     :INSTID := '&user_INSTID';
  END IF;
- IF &user_QTDIAS > 0 THEN
-   :QTDIAS := &user_QTDIAS;
+ IF &user_NUM_DAYS > 0 THEN
+   :NUM_DAYS := &user_NUM_DAYS;
   ELSE
-   :QTDIAS := 1;
+   :NUM_DAYS := 1;
  END IF;
 END;
 /
 
 COL INST_ID FORMAT A10
 COL SNAP_TIME FORMAT A20
--- lista os snaps
+-- list the snaps
 SELECT DISTINCT DECODE(:INSTID,0,'GLOBAL',INSTANCE_NUMBER) INST_ID, 
        TO_CHAR(END_INTERVAL_TIME,'YYYY-MM-DD HH24:MI')  SNAP_TIME,
  	   SNAP_ID
 FROM DBA_HIST_SNAPSHOT
-WHERE END_INTERVAL_TIME >= TRUNC(sysdate+1) - :QTDIAS
+WHERE END_INTERVAL_TIME >= TRUNC(sysdate+1) - :NUM_DAYS
   AND END_INTERVAL_TIME <= sysdate
   AND (INSTANCE_NUMBER = :INSTID OR :INSTID = 0)
 ORDER BY SNAP_ID;
 
-ACCEPT SNAP_INICIAL NUMBER PROMPT 'SNAP Inicial: '
-ACCEPT SNAP_FINAL   NUMBER PROMPT 'SNAP Final: '
+ACCEPT SNAP_BEGIN NUMBER PROMPT 'SNAP Begin: '
+ACCEPT SNAP_END   NUMBER PROMPT 'SNAP End: '
 
 
--- variaveis que definem o tipo de relatorio e a definicao do nome do arquivo .html
+-- variables that define the report type and the .html file name
 column FUNCTION_NAME new_value FNAME          
 column INSTANCE_NAME new_value INSTNAME FORMAT A30
 column HOST_NAME     new_value HOSTNAME FORMAT A40
@@ -73,16 +73,16 @@ SELECT DECODE(:INSTID,0, D.NAME, I.INSTANCE_NAME) AS INSTANCE_NAME,
  WHERE (I.INST_ID = :INSTID OR :INSTID = 0)
    AND ROWNUM = 1;
 
--- inicio da geracao do AWR
+-- start of AWR generation
 SET TERMOUT OFF
 SET HEADING OFF
-SPOOL &INSTNAME-&HOSTNAME-&SNAP_INICIAL-&SNAP_FINAL-.html
+SPOOL &INSTNAME-&HOSTNAME-&SNAP_BEGIN-&SNAP_END-.html
 
 SELECT OUTPUT FROM TABLE(DBMS_WORKLOAD_REPOSITORY.&FNAME (
   l_dbid     => (SELECT DBID FROM V$DATABASE),
   l_inst_num => DECODE(:INSTID,0,'&LISTA_INSTANCES',:INSTID),
-  l_bid      => &SNAP_INICIAL,
-  l_eid      => &SNAP_FINAL
+  l_bid      => &SNAP_BEGIN,
+  l_eid      => &SNAP_END
   ));
 
 SPOOL OFF;
@@ -92,4 +92,4 @@ SET HEADING ON
 SET TERMOUT ON
 SET FEEDBACK ON
 
-PROMPT Relatorio gerado: &INSTNAME-&HOSTNAME-&SNAP_INICIAL-&SNAP_FINAL-.html
+PROMPT Report created: &INSTNAME-&HOSTNAME-&SNAP_BEGIN-&SNAP_END-.html

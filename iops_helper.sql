@@ -14,8 +14,8 @@ set pages 50
 col begin_time         heading "Date"                             format a15
 col instance_number    heading "Inst ID"                          format 999
 col snap_id            heading "Snap ID"                          format 999999
-col inicio             heading 'Begin'                            format a5
-col fim                heading 'End'                              format a5
+col start_time          heading 'Begin'                            format a5
+col end_time            heading 'End'                              format a5
 col Phys_IOPS_Read     heading 'Physical IOPS|Read (&AGGR_FUNC)'  format 999,999,999,999.99
 col Phys_IOPS_Write    heading 'Physical IOPS|Write (&AGGR_FUNC)' format 999,999,999,999.99
 col Phys_IOPS_Tot      heading 'Physical IOPS|Total (&AGGR_FUNC)' format 999,999,999,999.99
@@ -49,8 +49,8 @@ PROMP Physical MPPS: Physical Read Total Bytes Per Sec       + Physical Write To
 PROMP
 
 select trunc(&1) as &1, 
-       to_char(min(begin_time),'hh24:mi') inicio, 
-       to_char(max(end_time),'hh24:mi') fim,
+       to_char(min(begin_time),'hh24:mi') start_time,
+       to_char(max(end_time),'hh24:mi') end_time,
 round( &AGGR_FUNC(case metric_name when 'Physical Read Total IO Requests Per Sec' then maxval end),2) as Phys_IOPS_Read,
 round( &AGGR_FUNC(case metric_name when 'Physical Write Total IO Requests Per Sec' then maxval end) +
        &AGGR_FUNC(case metric_name when 'Redo Writes Per Sec' then maxval end)

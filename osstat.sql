@@ -1,7 +1,7 @@
 /*
- Script para gerar uma matriz com estatisticas do SO capturadas pelo AWR por dia e hora
- Sintaxe: SQL>@osstat <STAT_NAME> <Qtd. Days> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
- Exemplo: SQL>@osstat SYS_TIME 30 1 
+ Script to generate a matrix with OS statistics captured by AWR per day and hour
+ Syntax: SQL>@osstat <STAT_NAME> <Number of Days> <Inst ID> (Where Inst ID = 0 sums all cluster instances)
+ Example: SQL>@osstat SYS_TIME 30 1
  
  Maicon Carneiro | Salvador-BA, 01/11/2024
 */
@@ -24,8 +24,8 @@ SET termout ON
 
 -- report summary
 PROMP
-PROMP Metric....: Estatisticas de OS capturadas no AWR (&1)
-PROMP Qt. Days..: &2
+PROMP Metric....: OS statistics captured in AWR (&1)
+PROMP Num. Days.: &2
 PROMP Instance..: &VNODE
 PROMP Type......: &vOP 
 PROMP 

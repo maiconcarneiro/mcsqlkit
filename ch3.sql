@@ -1,9 +1,9 @@
 /*
- Script para listar os TOP Wait Events de um SQL ID pelo AWR-ASH
- Exemplo: @ch3 <SQL_ID>  <DIAS>
- 
- 2022 - Compartilhado por Marcelo Favero (@enkitec)
- 2023 - Maicon Carneiro: Ajustado o script para listar um evento por linha ao invés de serem separados por vírgula.
+ Script to list the TOP Wait Events of a SQL ID via AWR-ASH
+ Example: @ch3 <SQL_ID>  <DAYS>
+
+ 2022 - Shared by Marcelo Favero (@enkitec)
+ 2023 - Maicon Carneiro: Adjusted the script to list one event per line instead of separated by comma.
 */
 
 undefine sql_id

@@ -1,6 +1,6 @@
 /*
- Script para gerar uma matriz com a contagem de waits de um evento de espera
- Sintaxe: SQL>@waitavg '<event name>' <days>  <instance number>
+ Script to generate a matrix with the wait count of a wait event
+ Syntax: SQL>@waitavg '<event name>' <days>  <instance number>
  
  Maicon Carneiro | Salvador-BA, 10/11/2022
 */
@@ -77,12 +77,12 @@ from (
    from (
       select dbid, instance_number, snap_id, event_name, wait_class, total_waits, time_waited_micro as time_waited
        from dba_hist_system_event
-       where event_name = '&1' -- filtro especifico
+       where event_name = '&1' -- specific filter
    ) stats, dba_hist_snapshot s
    where stats.instance_number=s.instance_number
      and stats.snap_id=s.snap_id
      and stats.dbid=s.dbid
-     and s.dbid=(select dbid from v$database) /* removido para CDB */
+     and s.dbid=(select dbid from v$database) /* removed for CDB */
      and s.begin_interval_time >= trunc(sysdate) - &2
      and (&3 = 0 or s.instance_number = &3) 
 order by snap_id

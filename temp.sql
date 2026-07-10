@@ -3,7 +3,7 @@
 */
 
 
-PROMP Situacao da tablespace temp
+PROMP Temp tablespace status
 PROMP ======================================================================================
 
 set linesize 400
@@ -18,7 +18,7 @@ SELECT TABLESPACE_NAME AS TABLESPACE,
 FROM DBA_TEMP_FREE_SPACE;
 
 
-PROMP TOP SQL ID usando TEMP atualmente
+PROMP TOP SQL ID currently using TEMP
 PROMP ======================================================================================
 
 set linesize 400
@@ -45,7 +45,7 @@ ORDER BY temp_size desc;
  ??
 */
 
-PROMP Consumo de TEMP por Sessao (GV$SESSION)
+PROMP TEMP usage per Session (GV$SESSION)
 PROMP ======================================================================================
 set linesize 9999
 SET PAGES 100

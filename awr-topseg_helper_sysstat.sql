@@ -1,11 +1,12 @@
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
+@_get_interval_snap-awr &1 &2
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: Top Segments by "&_AWR_TOPSEG_DESCRIPTION" (AWR)
-PROMP Snaps.....: &1 &2 
+PROMP Snaps.....: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP

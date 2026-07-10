@@ -4,10 +4,11 @@ PROMP
 
 -- get instance name
 @_query_dbid
+@_get_interval_snap-sp &1 &2
 
 -- report summary
 PROMP Report....: Top Segments by "&_AWR_TOPSEG_DESCRIPTION" (STATSPACK)
-PROMP Snaps.....: &1 &2 
+PROMP Snaps.....: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP Con. Name.: &VCNAME
 PROMP

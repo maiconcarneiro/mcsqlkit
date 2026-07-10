@@ -3,7 +3,7 @@
  script: plan_disable.sql
  Syntax: @plan_disable <Plan Baseline Name>
  
- obtem o SQL_HANDLE do PLAN_NAME e chama o script modify_baseline_helper
+ gets the SQL_HANDLE of the PLAN_NAME and calls the modify_baseline_helper script
 */
 
 SET TERMOUT OFF

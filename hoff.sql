@@ -5,9 +5,9 @@ SET PAGES 50
 set linesize 400
 SET FEEDBACK ON
 
-col Data           HEADING "Data"                  format a10
-col Inicio         HEADING "Inicio"                format a10
-col Final          HEADING "Final"                 format a10
+col report_date    HEADING "Date"                  format a10
+col start_time     HEADING "Start"                 format a10
+col end_time       HEADING "End"                   format a10
 col Buffer_Gets    HEADING "Buffer Gets avg"       format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed Time avg ms)" format 999,999,999,999.99
 col Execs          HEADING "Execs"                 format 999,999,999,999
@@ -20,10 +20,10 @@ col offload        HEADING  "(Offload)"            format a10
 col io_saved_perc  HEADING  "(IO Saved %)"         format 999,999.99
 
 select sql_id,
-trunc(b.begin_interval_time) data,
-to_char(min(b.begin_interval_time),'hh24:mi:ss')    as Inicio,
-to_char(max(b.end_interval_time),'hh24:mi:ss')      as Final,
-count(distinct(PLAN_HASH_VALUE)) as planos,
+trunc(b.begin_interval_time) report_date,
+to_char(min(b.begin_interval_time),'hh24:mi:ss')    as start_time,
+to_char(max(b.end_interval_time),'hh24:mi:ss')      as end_time,
+count(distinct(PLAN_HASH_VALUE)) as plan_count,
 sum(executions_delta)                                            as Execs,
 sum(buffer_gets_delta)       / greatest(sum(executions_delta),1) as Buffer_Gets,
 sum(disk_reads_delta)        / greatest(sum(executions_delta),1) as Disk_Reads,

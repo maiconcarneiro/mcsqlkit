@@ -29,10 +29,10 @@ col h22 format &&_COL_NUM_FORMAT
 col h23 format &&_COL_NUM_FORMAT
 set feedback ON
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: PGA Workarea Pass/Multipass Counts History in AWR
 PROMP Count Type: &_PGA_PASS_HELPER_COLUMN

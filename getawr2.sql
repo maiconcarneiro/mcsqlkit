@@ -1,12 +1,12 @@
 /*
  getawr2.sql v1.2
  Script to generate AWR report on client side using SQL*PLUS or SQLcl
- Can be used to generate report at Instance Level ou Global level (RAC)
+ Can be used to generate report at Instance Level or Global level (RAC)
 
   Syntax: @getawr2 <begin snap> <end snap> (inst_id)    <<== where inst_id=0 is RAC/GLOBAL report
  Example: @getawr2 104782 104786 0
  
- Data       | Autor              | Modificacao
+ Date       | Author             | Modification
  ----------- -------------------- ------------------------------------------------------------------------
  08/04/2022 | Maicon Carneiro    | Script getawr.sql created
  23/04/2022 | Maicon Carneiro    | Adapted to work un silent mode

@@ -1,5 +1,5 @@
 /*
- Script para consultar lock por objeto
+ Script to query locks by object
 */
 
 set linesize 400

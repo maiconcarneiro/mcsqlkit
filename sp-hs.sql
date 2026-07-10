@@ -17,9 +17,9 @@ set linesize 400
 SET FEEDBACK ON
 
 col sql_id         HEADING "SQL Id"                format a18
-col Data           HEADING "Data"                  format a15
-col Inicio         HEADING "First"                 format a5
-col Final          HEADING "Last"                  format a5
+col report_date    HEADING "Date"                  format a15
+col start_time     HEADING "First"                 format a5
+col end_time       HEADING "Last"                  format a5
 col Buffer_Gets    HEADING "(Buffer Gets avg)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed Time avg ms)" format 999,999,999,999.99
 col Execs          HEADING "Execs"                 format 999,999,999,999
@@ -28,10 +28,10 @@ col rows_processed HEADING "(Rows Processed avg)"  format 999,999,999,999.99
 col CPU_Time       HEADING "(CPU Time avg ms)"     format 999,999,999,999.99
 col app_wait_time  HEADING "Application Time (ms)" format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed ms avg)"      format 999,999,999,999.99
-col planos         HEADING "PHVs"                  format 999
+col plan_count     HEADING "PHVs"                  format 999
 col writes_mbytes   HEADING "(Writes MBytes)"      format 999,999,999,999
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 column CNAME new_value VCNAME 
 SET termout off
@@ -39,7 +39,7 @@ SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM 
 SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: History of SQL ID per day (STATSPACK)
 PROMP SQL ID....: &1
@@ -84,9 +84,9 @@ with sp_sql_stat as (
 order by s.dbid, s.instance_number, s.snap_id
 )
 select sql_id,
-       trunc(begin_interval_time)                                       as data,
-       to_char(min(begin_interval_time),'hh24:mi')                      as Inicio,
-       to_char(max(end_interval_time),'hh24:mi')                        as Final,
+       trunc(begin_interval_time)                                       as report_date,
+       to_char(min(begin_interval_time),'hh24:mi')                      as start_time,
+       to_char(max(end_interval_time),'hh24:mi')                        as end_time,
        sum(executions_delta)                                            as Execs,
        sum(buffer_gets_delta)                / greatest(sum(executions_delta),1) as Buffer_Gets,
        sum(disk_reads_delta)                 / greatest(sum(executions_delta),1) as Disk_Reads,

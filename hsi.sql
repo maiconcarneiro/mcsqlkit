@@ -3,9 +3,9 @@ set feedback off
 SET VERIFY OFF
 SET PAGES 50
 set linesize 400
-col Data           HEADING "Data"                  format a10
-col Inicio         HEADING "Inicio"                format a10
-col Final          HEADING "Final"                 format a10
+col report_date    HEADING "Date"                  format a10
+col start_time     HEADING "Start"                 format a10
+col end_time       HEADING "End"                   format a10
 col Execs          HEADING "Execs"                 format 999,999,999,999
 col Buffer_Gets    HEADING "(Buffer Gets avg)"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "(Elapsed Time avg ms)" format 999,999,999,999.99
@@ -18,15 +18,15 @@ ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD';
 set feedback on
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metric....: Historico do SQL_ID por Data e Snapshot
+PROMP Metric....: SQL_ID History by Date and Snapshot
 PROMP SQL ID....: &1
 PROMP Qt. Days..: &2
 PROMP Instance..: &VNODE
@@ -36,9 +36,9 @@ PROMP
 select sql_id,
 plan_hash_value,
 a.snap_id, a.instance_number as inst_id,
-min(b.begin_interval_time)                                       as Data,
-to_char(min(b.begin_interval_time),'hh24:mi:ss')                 as Inicio,
-to_char(max(b.end_interval_time),'hh24:mi:ss')                   as Final,
+min(b.begin_interval_time)                                       as report_date,
+to_char(min(b.begin_interval_time),'hh24:mi:ss')                 as start_time,
+to_char(max(b.end_interval_time),'hh24:mi:ss')                   as end_time,
 sum(executions_delta)                                            as Execs,
 sum(buffer_gets_delta)       / greatest(sum(executions_delta),1) as Buffer_Gets,
 sum(disk_reads_delta)        / greatest(sum(executions_delta),1) as Disk_Reads,

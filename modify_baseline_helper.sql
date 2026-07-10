@@ -23,8 +23,8 @@ BEGIN
  
  -- exit if the baseline don't exists.
  if vQT = 0 then 
-  dbms_output.put_line('ERROR: Nao existe baseline com esse nome.');
-  dbms_output.put_line('Use o script "@plan_list <SQL ID>" para listar os planos existentes de um SQL ID.');
+  dbms_output.put_line('ERROR: No baseline exists with that name.');
+  dbms_output.put_line('Use the script "@plan_list <SQL ID>" to list the existing plans for a SQL ID.');
   return;
  end if;
  
@@ -35,8 +35,8 @@ BEGIN
  
  -- exit if then change is not required
  if vValueBefore = vValueAfter then
-  dbms_output.put_line('WARNING: O baseline nao precisa ser alterado.');
-  dbms_output.put_line('O valor atual do atributo corresponde ao que esta sendo informado.');
+  dbms_output.put_line('WARNING: The baseline does not need to be changed.');
+  dbms_output.put_line('The current attribute value matches the one being provided.');
   return;
  end if;
  
@@ -48,15 +48,15 @@ BEGIN
    attribute_value => '&4');
    
    if vChange > 0 then 
-    dbms_output.put_line('INFO: Baseline alterado com sucesso.' || chr(13) );
+    dbms_output.put_line('INFO: Baseline successfully changed.' || chr(13) );
 	dbms_output.put_line('SQL Handle.........: &1');
 	dbms_output.put_line('Plan Name..........: &2');
-	dbms_output.put_line('Ultima Modificacao.: ' || vModifiedBefore);
-	dbms_output.put_line('Atributo alterado..: &3');
-	dbms_output.put_line('Valor anterior.....: ' || vValueBefore);
-	dbms_output.put_line('Valor atual........: &4');
+	dbms_output.put_line('Last Modified......: ' || vModifiedBefore);
+	dbms_output.put_line('Attribute Changed..: &3');
+	dbms_output.put_line('Previous Value.....: ' || vValueBefore);
+	dbms_output.put_line('Current Value......: &4');
    else
-    dbms_output.put_line('WARNING: Nenhum baseline foi alterado.');
+    dbms_output.put_line('WARNING: No baseline was changed.');
    end if;
 END;
 /

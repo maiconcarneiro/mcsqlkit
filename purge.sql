@@ -16,14 +16,14 @@ set serveroutput on;
 declare
  vJobName varchar2(200);
  vSQL_ID varchar2(15) := '&1';
- cursor listaCursores is
+ cursor cursor_list is
     select inst_id, sql_id, hash_value, 'begin SYS.DBMS_SHARED_POOL.PURGE ('''||address||','||hash_value||''',''C''); end;' cmd 
       from GV$SQLAREA 
      where SQL_ID = vSQL_ID
   order by inst_id;
 
 begin
-  for i in listaCursores loop
+  for i in cursor_list loop
   if i.inst_id = sys_context('USERENV','INSTANCE') then 
   -- normal execution for local node
    vJobName := 'LOCAL';

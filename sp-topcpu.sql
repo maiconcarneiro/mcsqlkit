@@ -22,11 +22,12 @@ column NODE new_value VNODE
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
+@_get_interval_snap-sp &1 &2
 
 -- report summary
 PROMP
 PROMP Report....: TOP 20 SQL by CPU Time (STATSPACK)
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 

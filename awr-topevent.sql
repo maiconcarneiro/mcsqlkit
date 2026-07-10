@@ -1,5 +1,5 @@
--- 30/12/2023 - Maicon Carneiro - Criação do Script para exibir o TOP 20 eventos do AWR
--- 25/04/2024 - Maicon Carneiro - Correção do calculo de "% of Total" e ajuste do begin_snap_id
+-- 30/12/2023 - Maicon Carneiro - Created the script to display the TOP 20 AWR events
+-- 25/04/2024 - Maicon Carneiro - Fixed the "% of Total" calculation and adjusted begin_snap_id
 
 -- get instance names
 column NODE new_value VNODE 
@@ -8,11 +8,12 @@ SET termout off
 SELECT LISTAGG(instance_name, ',') WITHIN GROUP (ORDER BY inst_id) AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SELECT sys_context('USERENV','CON_NAME') as CNAME FROM dual;
 SET termout ON
+@_get_interval_snap-awr &1 &2
 
 -- report summary
 PROMP
 PROMP Metric....: TOP 20 Wait Event from AWR
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 
@@ -76,7 +77,7 @@ from (
        and stats.dbid=s.dbid
        and s.dbid = (&_SUBQUERY_DBID)
        and (&3 = 0 or s.instance_number = &3)
-       and s.snap_id >=  &1 -- O TOP 10 Wait Event no AWR em HTML considera o snapshot inicial (diferente do TOP SQL)
+       and s.snap_id >=  &1 -- The TOP 10 Wait Event in the HTML AWR report includes the initial snapshot (unlike TOP SQL)
        and s.snap_id <= &2 
     ) 
   where snap_id > min_snap_id 

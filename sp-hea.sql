@@ -16,12 +16,12 @@ col total_waits_fg heading "FG Waits"          format 999,999,999,999
 col total_waits    heading "Total Waits"       format 999,999,999,999
 col x              heading ""                  format a1
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
 def _DATE_FILTER=&2/24
 @_get_interval
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: Event Waits per snapshot (STATSPACK)
 PROMP Event.....: &1
@@ -77,7 +77,7 @@ from (
         (time_waited_micro/1000000) as time_waited
   from STATS$SYSTEM_EVENT e
   join V$EVENT_NAME n on (e.event_id = n.event_id)
-  where e.event = '&1' -- filtro especifico
+  where e.event = '&1' -- specific filter
 ) stats, STATS$SNAPSHOT s
  where stats.instance_number=s.instance_number
   and stats.snap_id=s.snap_id

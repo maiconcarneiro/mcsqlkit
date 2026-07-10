@@ -34,7 +34,7 @@ set linesize 400
 SET FEEDBACK ON
 
 col sql_id         HEADING "SQL Id"                format a18
-col Data           HEADING "Data"                  format a15
+col report_date    HEADING "Date"                  format a15
 col begin         HEADING "First"                 format a5
 col end          HEADING "Last"                  format a5
 col Buffer_Gets    HEADING "(Buffer Gets avg)"     format 999,999,999,999.99
@@ -48,7 +48,7 @@ col phvs         HEADING "PHVs"                  format 999
 col writes_mbytes   HEADING "(Writes MBytes)"      format 999,999,999,999
 
 select sql_id,
- trunc(b.begin_interval_time)                                     as data,
+ trunc(b.begin_interval_time)                                     as report_date,
  to_char(min(b.begin_interval_time),'hh24:mi')                    as begin,
  to_char(max(b.end_interval_time),'hh24:mi')                      as end,
  count(distinct(PLAN_HASH_VALUE))                                 as phvs,

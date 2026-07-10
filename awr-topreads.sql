@@ -1,8 +1,8 @@
 /*
  Maicon Carneiro - 30/12/2023
  script : topreads.sql
- sintaxe: @topreads <begin snap> <end snap> <inst id>
- exemplo: @topreads 141817 141821 1 (inst id = 0 para considerar todo o cluster)
+ syntax: @topreads <begin snap> <end snap> <inst id>
+ example: @topreads 141817 141821 1 (inst id = 0 to consider the whole cluster)
 */
 
 set verify off
@@ -28,11 +28,12 @@ column NODE new_value VNODE
 SET termout off
 SELECT CASE WHEN &3 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&3 = 0 or inst_id = &3);
 SET termout ON
+@_get_interval_snap-awr &1 &2
 
 -- report summary
 PROMP
 PROMP Metric....: TOP 20 SQL by "Disk Physical Reads"
-PROMP Snapshots.: &1 &2
+PROMP Snapshots.: &1 &2 (&_START_DATE to &_END_DATE)
 PROMP Instance..: &VNODE
 PROMP
 
@@ -76,7 +77,7 @@ from (
  left join dba_hist_sqltext t on (h.dbid = t.dbid and h.sql_id = t.sql_id)
 	 where 1=1 
 	   and (&3 = 0 or h.instance_number = &3)
-	   and h.snap_id >  &1 -- O TOP 10 no AWR em HTML desconsidera o snapshot 
+	   and h.snap_id >  &1 -- The TOP 10 in the HTML AWR report excludes the snapshot
 	   and h.snap_id <= &2 
 	   and h.executions_delta > 0
   group by h.sql_id, dbms_lob.substr(t.sql_text,50,1)

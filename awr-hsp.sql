@@ -26,9 +26,9 @@ set linesize 400
 SET FEEDBACK ON
 
 col con_id         HEADING "Con|ID"                format 999
-col Data           HEADING "Data"                  format a10
-col menor          HEADING "Min|hh:mi"             format a6
-col maior          HEADING "Max|hh:mi"             format a6
+col report_date    HEADING "Date"                  format a10
+col min_time       HEADING "Min|hh:mi"             format a6
+col max_time       HEADING "Max|hh:mi"             format a6
 col Buffer_Gets    HEADING "Buffer Gets"     format 999,999,999,999.99
 col Elapsed_Time   HEADING "Elapsed | Time (ms)" format 999,999,999,999.99
 col Execs          HEADING "Execs"                 format 999,999,999,999
@@ -41,9 +41,9 @@ col sql_id         HEADING  "SQL Id"               format a18
 col plan_hash_value HEADING "Plan|Hash Value"      format 99999999999999
 
 select plan_hash_value                                                                 as plan_hash_value,
-       trunc(b.begin_interval_time)                                                    as data,
-       to_char(min(b.begin_interval_time),'hh24:mi')                                   as menor,
-       to_char(max(b.end_interval_time),'hh24:mi')                                     as maior,
+       trunc(b.begin_interval_time)                                                    as report_date,
+       to_char(min(b.begin_interval_time),'hh24:mi')                                   as min_time,
+       to_char(max(b.end_interval_time),'hh24:mi')                                     as max_time,
        sum(executions_delta)                                                           as Execs,
        sum(rows_processed_delta)                   / greatest(sum(executions_delta),1) as rows_processed,
        sum(disk_reads_delta)                       / greatest(sum(executions_delta),1) as Disk_Reads,
@@ -61,4 +61,4 @@ and b.begin_interval_time >= trunc(sysdate) - &2
 and (&3 = 0 or b.instance_number = &3)
 and b.dbid = (&_SUBQUERY_DBID)
 group by trunc(b.begin_interval_time), plan_hash_value
-order by data, plan_hash_value;
+order by report_date, plan_hash_value;

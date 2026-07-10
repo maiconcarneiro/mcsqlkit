@@ -1,7 +1,7 @@
 SET FEEDBACK OFF
 
 PROMPT
-PROMPT ############################### SCN do Controlfile ############################################
+PROMPT ############################### Controlfile SCN ###############################################
 PROMPT
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS';
 set linesize 400
@@ -14,7 +14,7 @@ SELECT CURRENT_SCN,
  FROM V$DATABASE;
 
 PROMPT
-PROMPT ################################# Processos do Data Guard ####################################
+PROMPT ################################# Data Guard Processes ########################################
 PROMPT
 set pagesize 500
 set linesize 300
@@ -27,7 +27,7 @@ FROM v$managed_standby
 order by process, group#, thread#, sequence#;
 
 PROMPT
-PROMPT ################################# Status do Data Guard #######################################
+PROMPT ################################# Data Guard Status ###########################################
 PROMPT
 set linesize 300
 col name format a25
@@ -39,17 +39,17 @@ SET FEEDBACK ON
 
 
 PROMPT
-PROMPT ################################ Checkpoint do Standby #######################################
+PROMPT ################################ Standby Checkpoint ###########################################
 PROMPT
-col dtcoleta format a20
+col collection_date format a20
 col min_time format a20
-select to_char(sysdate,'yy-mm-ddyy hh24:mi:ss') as dtcoleta,
+select to_char(sysdate,'yy-mm-ddyy hh24:mi:ss') as collection_date,
 max(SEQUENCE#) sequence,
 to_char(max(FIRST_TIME),'yy-mm-ddyy hh24:mi:ss') min_time
 from v$log_history;
 
 PROMPT
-PROMPT ############################### Checkpoint dos Datafiles #####################################
+PROMPT ############################### Datafile Checkpoints ##########################################
 PROMPT
 alter session set nls_date_format='yy-mm-ddyy hh24:mi:ss';
 select checkpoint_time, count(*)

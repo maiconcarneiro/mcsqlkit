@@ -19,10 +19,10 @@ col CPU_Time       HEADING "CPU Time (ms)"     format 999,999,999,999.99
 col sql_id         HEADING  "SQL Id"               format a18
 col plan_hash_value HEADING "Plan|Hash Value"      format 99999999999999
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: Summary for all Plan Hash Value in AWR
 PROMP SQL ID....: &1

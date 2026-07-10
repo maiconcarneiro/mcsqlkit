@@ -1,7 +1,7 @@
 /*
- Script para contar sessoes ativas de usuario em diferentes niveos de agrupamento.
- Sintaxe: @count <column_list> <inst_id>
- Exemplos:
+ Script to count active user sessions at different grouping levels.
+ Syntax: @count <column_list> <inst_id>
+ Examples:
   @count sql_id 0
   @count username,module 0
   @count sql_id,event 1
@@ -29,3 +29,5 @@ and s.type <>'BACKGROUND'
 and (nvl(&2,0) = 0 or inst_id = &2)
 group by &1
 order by total desc;
+
+promp

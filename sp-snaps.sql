@@ -1,7 +1,7 @@
 /*
- Script para gerar uma matriz com a lista de SNAP ID do AWR do início de cada Hora do Dia
- Sintaxe: SQL>@snaps <Qtd. Days>
- Exemplo: SQL>@snaps 30
+ Script to generate a matrix with the list of AWR SNAP ID for the start of each hour of the day
+ Syntax: SQL>@snaps <Qty. Days>
+ Example: SQL>@snaps 30
  
  Maicon Carneiro | Salvador-BA, 23/11/2022 : snaps.sql created for AWR
  Maicon Carneiro | Salvador-BA, 22/05/2025 : sp-snaps.sql adapted for STATSPACK
@@ -42,9 +42,9 @@ set feedback ON
 
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
-PROMP Metric....: Snap ID do STATSPACK
+PROMP Metric....: STATSPACK Snap ID
 PROMP Qt. Days..: &1
 PROMP Con. Name.: &VNODE 
 

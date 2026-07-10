@@ -1,8 +1,8 @@
 
--- obtem o nome da instancia
+-- get the instance name
 @_query_dbid
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: Segment Stats in AWR (&_AWR_TOPSEG_DESCRIPTION)
 PROMP Object....: &1 &2

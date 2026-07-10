@@ -1,7 +1,7 @@
 /*
- Script para gerar uma matriz com o DB Time da instancia por dia e hora
- Sintaxe: SQL>@sp-dbtime <Qtd. Days> <Inst ID> (Onde Inst ID = 0 soma todas as instancias do cluster)
- Exemplo: SQL>@sp-dbtime 30 1 
+ Script to generate a matrix with the instance DB Time per day and hour
+ Syntax: SQL>@sp-dbtime <Qtd. Days> <Inst ID> (Where Inst ID = 0 sums all instances in the cluster)
+ Example: SQL>@sp-dbtime 30 1 
  
  Maicon Carneiro | Salvador-BA, 22/05/2025
 */
@@ -38,19 +38,19 @@ col h22 format &&COL_NUM_FORMAT
 col h23 format &&COL_NUM_FORMAT
 set feedback ON
 
--- obtem o nome da instancia
+-- get the instance name
 column NODE new_value VNODE 
 SET termout off
 SELECT CASE WHEN &2 = 0 THEN 'Cluster' ELSE instance_name || ' / ' || host_name END AS NODE FROM GV$INSTANCE WHERE (&2 = 0 or inst_id = &2);
 SET termout ON
 
--- resumo do relatorio
+-- report summary
 PROMP
 PROMP Metric....: CPU Time (STATSPACK)
 PROMP Days......: &1
 PROMP Instance..: &VNODE
 PROMP
-PROMP Valores negativos aparecem em casos de restart da instancia
+PROMP Negative values appear in cases of instance restart
 PROMP
 
 -- query

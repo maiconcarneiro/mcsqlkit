@@ -2,7 +2,7 @@ SET FEEDBACK ON;
 SET VERIFY OFF;
 SET TIMING ON;
 
-PROMP Coletando estatisticas para: ONWER = &1 TABLE_NAME = &2
+PROMP Gathering statistics for: OWNER = &1 TABLE_NAME = &2
 BEGIN 
 DBMS_STATS.GATHER_TABLE_STATS(
  OWNNAME=> upper('&1'),
